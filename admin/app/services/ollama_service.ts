@@ -3,7 +3,7 @@ import OpenAI from 'openai'
 import type { ChatCompletionChunk, ChatCompletionMessageParam } from 'openai/resources/chat/completions.js'
 import type { Stream } from 'openai/streaming.js'
 import { NomadOllamaModel } from '../../types/ollama.js'
-import { FALLBACK_RECOMMENDED_OLLAMA_MODELS } from '../../constants/ollama.js'
+import { EMBEDDING_MODEL_NAME, FALLBACK_RECOMMENDED_OLLAMA_MODELS } from '../../constants/ollama.js'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import logger from '@adonisjs/core/services/logger'
@@ -470,8 +470,54 @@ export class OllamaService {
   }
 
   /**
+   * Hard char cap per embed input, applied as a runtime safety net regardless of
+   * which backend path runs. The chunker in RagService caps at MAX_SAFE_TOKENS=1600
+   * (3200 chars at the conservative 2 chars/token estimate), but dense technical
+   * content has been observed to slip past on multi-batch ZIM ingestion (#881).
+   *
+   * 4000 chars ≈ 1000–2000 tokens depending on density, which keeps us comfortably
+   * under nomic-embed-text:v1.5's default 2048-token context even on the OpenAI-compat
+   * fallback path (which can't pass `truncate:true`/`num_ctx` to the model).
+   */
+  public static readonly EMBED_MAX_INPUT_CHARS = 4000
+
+  /**
+   * Aggressive 2048-safe character cap, applied only on a context-length retry. nomic-embed-text:v1.5
+   * defaults to a 2048-token context, and on the OpenAI-compat fallback path (or an older Ollama that
+   * ignores num_ctx for embeddings) we cannot widen it at request time. 2000 chars stays under 2048
+   * tokens even for the densest content (~1 char/token code/markup), so an oversized chunk gets
+   * truncated-and-kept instead of silently dropped from Qdrant — and the embed job stops re-embedding
+   * the whole file 30x on the one bad chunk (#881).
+   */
+  public static readonly EMBED_CONTEXT_SAFE_CHARS = 2000
+
+  /**
+   * True if the error is the model rejecting input that exceeds its context window
+   * ("input length exceeds the context length"). Matches both the native /api/embed axios error
+   * shape and the OpenAI-compat BadRequestError. Drives the truncate-and-retry here and the
+   * non-retryable classification in EmbedFileJob (#881).
+   */
+  public static isContextLengthError(err: unknown): boolean {
+    const parts: string[] = []
+    if (err instanceof Error && err.message) parts.push(err.message)
+    const anyErr = err as any
+    const data = anyErr?.response?.data
+    if (data) parts.push(typeof data === 'string' ? data : JSON.stringify(data))
+    if (anyErr?.error) parts.push(typeof anyErr.error === 'string' ? anyErr.error : JSON.stringify(anyErr.error))
+    const haystack = parts.join(' ').toLowerCase()
+    return (
+      (haystack.includes('context length') && haystack.includes('exceed')) ||
+      haystack.includes('input length exceeds')
+    )
+  }
+
+  /**
    * Generate embeddings for the given input strings.
    * Tries the Ollama native /api/embed endpoint first, falls back to /v1/embeddings.
+   *
+   * If the first attempt fails because a chunk exceeds the model's context window, retries once
+   * with an aggressive 2048-safe truncation (EMBED_CONTEXT_SAFE_CHARS) so the chunk is embedded
+   * (start-of-chunk) rather than silently dropped from Qdrant (#881).
    */
   public async embed(model: string, input: string[]): Promise<{ embeddings: number[][] }> {
     await this._ensureDependencies()
@@ -479,11 +525,52 @@ export class OllamaService {
       throw new Error('AI service is not initialized.')
     }
 
+    const cap = (arr: string[], max: number) => arr.map((s) => (s.length > max ? s.slice(0, max) : s))
+
+    // Generous pre-cap (#881): fine for the native path (num_ctx=8192) but can still exceed a
+    // 2048-context fallback on dense content. The context-length retry below is the hard backstop.
+    const safeInput = cap(input, OllamaService.EMBED_MAX_INPUT_CHARS)
+
     try {
-      // Prefer Ollama native endpoint (supports batch input natively)
+      return await this._embedWithFallback(model, safeInput)
+    } catch (err) {
+      if (!OllamaService.isContextLengthError(err)) throw err
+      // One or more chunks exceeded the model's context even after the pre-cap — typically an
+      // older Ollama that ignores num_ctx for embeddings, or the OpenAI-compat fallback path.
+      // Retry once, truncated hard enough to fit a 2048-token context at any density, so the
+      // chunk is embedded (truncated) instead of dropped and the job doesn't storm.
+      const hardCapped = cap(input, OllamaService.EMBED_CONTEXT_SAFE_CHARS)
+      const reduced = hardCapped.reduce((n, s, i) => (s.length < safeInput[i].length ? n + 1 : n), 0)
+      logger.warn(
+        '[OllamaService] embed: context-length overflow; retrying %d/%d inputs hard-capped at %d chars',
+        reduced,
+        input.length,
+        OllamaService.EMBED_CONTEXT_SAFE_CHARS
+      )
+      return await this._embedWithFallback(model, hardCapped)
+    }
+  }
+
+  /**
+   * Single embed attempt: native /api/embed first, then the OpenAI-compat /v1/embeddings fallback.
+   * Both paths request num_ctx/truncate (Ollama's OpenAI-compat shim forwards them). A context-length
+   * error from the native path is re-thrown rather than falling back, because the fallback has a
+   * smaller effective context and would only fail the same way — the caller (embed) retries it
+   * truncated instead.
+   */
+  private async _embedWithFallback(model: string, input: string[]): Promise<{ embeddings: number[][] }> {
+    try {
+      // Pass num_ctx explicitly so we don't depend on the embedding model's modelfile defaults.
+      // Some installs ship nomic-embed-text:v1.5 with num_ctx=2048; 8192 matches its RoPE-extrapolated
+      // max. truncate:true is a server-side net for any chunk that still overshoots.
       const response = await axios.post(
         `${this.baseUrl}/api/embed`,
-        { model, input },
+        {
+          model,
+          input,
+          truncate: true,
+          options: { num_ctx: 8192 },
+        },
         { timeout: 60000 }
       )
       // Some backends (e.g. LM Studio) return HTTP 200 for unknown endpoints with an incompatible
@@ -492,14 +579,132 @@ export class OllamaService {
         throw new Error('Invalid /api/embed response — missing embeddings array')
       }
       return { embeddings: response.data.embeddings }
-    } catch {
-      // Fall back to OpenAI-compatible /v1/embeddings
-      // Explicitly request float format — some backends (e.g. LM Studio) don't reliably
-      // implement the base64 encoding the OpenAI SDK requests by default.
-      logger.info('[OllamaService] /api/embed unavailable, falling back to /v1/embeddings')
-      const results = await this.openai.embeddings.create({ model, input, encoding_format: 'float' })
+    } catch (err) {
+      // Let context-length errors bubble so embed() can retry with a smaller cap; the fallback
+      // endpoint (smaller effective context, no num_ctx honored on older Ollama) can't help here.
+      if (OllamaService.isContextLengthError(err)) throw err
+      // Log the original error so we know *why* we fell back. Earlier bare catches here masked
+      // recurring failures for months (#369, #670, #881).
+      logger.warn(
+        '[OllamaService] /api/embed failed, falling back to /v1/embeddings: %s',
+        err instanceof Error ? err.message : String(err)
+      )
+      // Fall back to OpenAI-compatible /v1/embeddings. Explicitly request float format — some
+      // backends (e.g. LM Studio) don't reliably implement the base64 the OpenAI SDK defaults to.
+      // truncate/num_ctx are forwarded by Ollama's OpenAI-compat shim; the SDK types omit them,
+      // hence the cast. We only ever talk to a local Ollama here, not real OpenAI.
+      const results = await this.openai!.embeddings.create({
+        model,
+        input,
+        encoding_format: 'float',
+        truncate: true,
+        options: { num_ctx: 8192 },
+      } as any)
       return { embeddings: results.data.map((e) => e.embedding as number[]) }
     }
+  }
+
+  /**
+   * Returns true if Ollama is currently running an embedding model with non-zero VRAM
+   * (i.e., GPU-offloaded). Returns false if the model is running CPU-only OR if it's
+   * not currently loaded OR if /api/ps is unreachable.
+   *
+   * Used by EmbedFileJob to pace continuation batches when the embedding model is
+   * CPU-bound — sustained 100% CPU on a multi-batch ZIM ingestion can starve other
+   * services (sshd, etc.) hard enough to require a power-cycle. AMD ROCm installs
+   * hit this today because Ollama's ROCm build doesn't accelerate nomic-bert; on
+   * NVIDIA, nomic-embed-text runs at 100% GPU and pacing is unnecessary.
+   *
+   * Only the Ollama-native endpoint is supported — backends that expose
+   * `/v1/embeddings` (LM Studio, llama.cpp) don't surface placement info.
+   */
+  public async isEmbeddingGpuAccelerated(): Promise<boolean> {
+    await this._ensureDependencies()
+    if (!this.baseUrl) return false
+
+    try {
+      const response = await axios.get(`${this.baseUrl}/api/ps`, { timeout: 5000 })
+      const models: Array<{ name?: string; size_vram?: number }> = response.data?.models ?? []
+      // Match any loaded model whose name signals it's an embedding model.
+      // nomic-embed-text, mxbai-embed-large, snowflake-arctic-embed, etc. all follow this convention.
+      return models.some(
+        (m) => m.name?.toLowerCase().includes('embed') && (m.size_vram ?? 0) > 0
+      )
+    } catch (err: any) {
+      // /api/ps unreachable (Ollama down, non-native backend, etc.) — fail closed: assume CPU,
+      // which means we'll pace. Better to over-pace than risk box-killing CPU saturation.
+      logger.warn(
+        `[OllamaService] Could not check embedding placement via /api/ps: ${err?.message ?? err}`
+      )
+      return false
+    }
+  }
+
+  /**
+   * Enforces the "at most one chat model resident in VRAM" invariant by firing
+   * `keep_alive: 0` against every currently-loaded model except (a) the
+   * embedding model (always exempt) and (b) `targetModel` (the one we want
+   * loaded next — leaving it alone preserves a hot model when the target is
+   * already loaded).
+   *
+   * Best-effort: queries `/api/ps` and POSTs unload hints in parallel. Network
+   * or Ollama errors are swallowed and logged — neither chat nor page-load
+   * should fail just because the unload housekeeping didn't go through.
+   *
+   * Returns the list of model names that were sent the unload hint, so the
+   * caller (and tests) can confirm what actually happened.
+   *
+   * Pass `targetModel: null` to unload every chat model (used for the future
+   * "free up VRAM" path; not exposed yet but the helper supports it).
+   *
+   * Note that `keep_alive: 0` is a post-completion hint, not a force-kill —
+   * Ollama defers eviction until the runner is idle, so in-flight inference
+   * on the same model is never interrupted. See the design doc for the race
+   * analysis behind this.
+   */
+  public async unloadAllChatModelsExcept(targetModel: string | null): Promise<string[]> {
+    await this._ensureDependencies()
+    if (!this.baseUrl) return []
+
+    let loadedModels: string[] = []
+    try {
+      const response = await axios.get(`${this.baseUrl}/api/ps`, { timeout: 5000 })
+      loadedModels = (response.data?.models ?? [])
+        .map((m: { name?: string }) => m.name)
+        .filter((name: unknown): name is string => typeof name === 'string')
+    } catch (err: any) {
+      logger.warn(
+        `[OllamaService] unloadAllChatModelsExcept: /api/ps unreachable, skipping unload sweep: ${err?.message ?? err}`
+      )
+      return []
+    }
+
+    const toUnload = loadedModels.filter(
+      (name) => name !== EMBEDDING_MODEL_NAME && name !== targetModel
+    )
+
+    await Promise.all(
+      toUnload.map(async (modelName) => {
+        try {
+          await axios.post(
+            `${this.baseUrl}/api/generate`,
+            { model: modelName, prompt: '', keep_alive: 0 },
+            { timeout: 10000 }
+          )
+        } catch (err: any) {
+          logger.warn(
+            `[OllamaService] Failed to send unload hint for ${modelName}: ${err?.message ?? err}`
+          )
+        }
+      })
+    )
+
+    if (toUnload.length > 0) {
+      logger.info(
+        `[OllamaService] Sent unload hint for ${toUnload.length} chat model(s): ${toUnload.join(', ')}`
+      )
+    }
+    return toUnload
   }
 
   public async getModels(includeEmbeddings = false): Promise<NomadInstalledModel[]> {
