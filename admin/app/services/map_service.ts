@@ -389,11 +389,7 @@ export class MapService implements IMapService {
   }
 
   async ensureBaseAssets(): Promise<boolean> {
-    const exists = await this.checkBaseAssetsExist()
-    if (!exists) {
-      const downloaded = await this.downloadBaseAssets()
-      if (!downloaded) return false
-    }
+    if (!(await this.ensureBaseAssetFiles())) return false
 
     try {
       await this.ensureWorldBasemap()
@@ -402,6 +398,35 @@ export class MapService implements IMapService {
     }
 
     return true
+  }
+
+  /**
+   * Whether the low-zoom world basemap is present on disk. Checked directly (rather than trusting
+   * the in-process `worldBasemapReady` flag) so callers get an accurate answer regardless of whether
+   * `ensureWorldBasemap()` has run yet this process. Used to warn the user instead of showing a
+   * silent grey map when the basemap was never provisioned (e.g. installed straight offline, #1030).
+   */
+  async checkWorldBasemapExists(): Promise<boolean> {
+    const basePath = resolve(join(this.baseDirPath, 'pmtiles'))
+    const filepath = resolve(join(basePath, WORLD_BASEMAP_FILENAME))
+    if (!filepath.startsWith(basePath + sep)) return false
+    const stats = await getFileStatsIfExists(filepath)
+    const exists = !!stats && Number(stats.size) > 0
+    if (exists) this.worldBasemapReady = true
+    return exists
+  }
+
+  /**
+   * Explicitly (re)provision the world basemap on demand. Ensures base assets exist, then extracts
+   * the basemap if it isn't present yet. Requires internet — surfaced to the user as a "download the
+   * base map" action so the one network dependency can be satisfied deliberately while online (#1030).
+   */
+  async provisionWorldBasemap(): Promise<boolean> {
+    // Skip ensureBaseAssets(): it runs its own swallowed ensureWorldBasemap(), so a failure there
+    // would clear the in-flight promise and the call below would launch a second extract.
+    if (!(await this.ensureBaseAssetFiles())) return false
+    await this.ensureWorldBasemap()
+    return this.checkWorldBasemapExists()
   }
 
   /**
@@ -420,6 +445,13 @@ export class MapService implements IMapService {
       this.worldBasemapInFlight = null
     })
     return this.worldBasemapInFlight
+  }
+
+  /** Download the style/sprite/font base assets if missing. Does not touch the world basemap. */
+  private async ensureBaseAssetFiles(): Promise<boolean> {
+    const exists = await this.checkBaseAssetsExist()
+    if (exists) return true
+    return this.downloadBaseAssets()
   }
 
   private async _setupWorldBasemap(): Promise<void> {

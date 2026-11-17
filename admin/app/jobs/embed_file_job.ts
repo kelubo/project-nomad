@@ -20,9 +20,10 @@ export interface EmbedFileJobParams {
   isFinalBatch?: boolean // Whether this is the last batch (prevents premature deletion)
   // Running total of chunks embedded across prior batches in this dispatch chain.
   // Carried forward so the final batch can persist an accurate `chunks_embedded`
-  // count via KbIngestState.markIndexed (see #933 — without this, only the last
+  // count via KbIngestState.markIndexed (see #933 -- without this, only the last
   // batch's chunk count was stored while Qdrant held the full set).
   chunksSoFar?: number
+  collection?: string
 }
 
 export class EmbedFileJob {
@@ -56,7 +57,16 @@ export class EmbedFileJob {
   }
 
   async handle(job: Job) {
-    const { filePath, fileName, batchOffset, totalArticles } = job.data as EmbedFileJobParams
+    const { filePath, fileName, batchOffset, totalArticles, collection } = job.data as EmbedFileJobParams
+
+    // Only the direct KB-upload controller passes `collection` on dispatch; the other
+    // six dispatch sites (download auto-index, scan/sync, re-embed, local ZIM upload,
+    // replaced-file reconcile, and this job's own ZIM batch continuation) do not. Fall
+    // back to whatever the file is already assigned to, so an assignment made *before*
+    // the file was indexed still reaches the vectors. Resolving it here rather than at
+    // each dispatch site keeps one source of truth and covers batch continuations too.
+    const effectiveCollection =
+      collection ?? (await KbIngestState.findBy('file_path', filePath))?.collection ?? undefined
 
     const isZimBatch = batchOffset !== undefined
     const batchInfo = isZimBatch ? ` (batch offset: ${batchOffset})` : ''
@@ -136,7 +146,8 @@ export class EmbedFileJob {
         filePath,
         allowDeletion,
         batchOffset,
-        onProgress
+        onProgress,
+        effectiveCollection
       )
 
       if (!result.success) {
@@ -190,6 +201,9 @@ export class EmbedFileJob {
           totalArticles: totalArticles || result.totalArticles,
           isFinalBatch: false, // Explicitly not final
           chunksSoFar: chunksSoFarNext,
+          // Carry the collection across batches, otherwise only batch 1 of a ZIM
+          // would be tagged and the rest would land uncategorized.
+          ...(effectiveCollection ? { collection: effectiveCollection } : {}),
         })
 
         // Calculate progress based on articles processed.
@@ -242,7 +256,7 @@ export class EmbedFileJob {
       // BullMQ's :completed retention (50 jobs) ages out, so the state row is
       // the only durable record of "this file finished embedding".
       try {
-        await KbIngestState.markIndexed(filePath, totalChunks)
+        await KbIngestState.markIndexed(filePath, totalChunks, effectiveCollection)
       } catch (stateErr) {
         logger.warn(
           `[EmbedFileJob] Failed to persist ingest state for ${fileName}: %s`,
@@ -373,6 +387,33 @@ export class EmbedFileJob {
     }
     if (!isContinuation && !force) {
       jobOptions.jobId = initialJobId
+    }
+
+    // Deterministic-jobId dispatches must clear a terminal record before adding.
+    // `queue.add` with an existing custom jobId returns that job instead of
+    // throwing, so a retained failed entry (held by `removeOnFail: { count: 20 }`)
+    // made re-indexing that file a silent no-op: the caller got 202 "Indexing
+    // queued" and nothing was enqueued. In-flight jobs are still returned as-is
+    // so a re-click during an active embed stays idempotent.
+    if (!isContinuation && !force) {
+      const existing = await queue.getJob(initialJobId)
+      if (existing) {
+        const state = await existing.getState()
+        if (state === 'active' || state === 'waiting' || state === 'delayed') {
+          logger.info(`[EmbedFileJob] Job already in progress for file: ${params.fileName}`)
+          return {
+            job: existing,
+            created: false,
+            jobId: initialJobId,
+            message: `Embedding job already exists for: ${params.fileName}`,
+          }
+        }
+        try {
+          await existing.remove()
+        } catch {
+          // May already be gone
+        }
+      }
     }
 
     try {

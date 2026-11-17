@@ -12,6 +12,9 @@ import { CheckServiceUpdatesJob } from '#jobs/check_service_updates_job'
 import { AutoUpdateJob } from '#jobs/auto_update_job'
 import { AppAutoUpdateJob } from '#jobs/app_auto_update_job'
 import { ContentAutoUpdateJob } from '#jobs/content_auto_update_job'
+import { DownloadDrugDataJob } from '#jobs/download_drug_data_job'
+import { IngestDrugDataJob } from '#jobs/ingest_drug_data_job'
+import { stallOptionsForQueue, type StallOptions } from '../../app/utils/queue_stall_options.js'
 
 export default class QueueWork extends BaseCommand {
   static commandName = 'queue:work'
@@ -51,6 +54,7 @@ export default class QueueWork extends BaseCommand {
 
     // Create a worker for each queue
     for (const queueName of queuesToProcess) {
+      const stall = this.getStallOptionsForQueue(queueName)
       const worker = new Worker(
         queueName,
         async (job) => {
@@ -65,7 +69,14 @@ export default class QueueWork extends BaseCommand {
         {
           connection: queueConfig.connection,
           concurrency: this.getConcurrencyForQueue(queueName),
-          lockDuration: 300000,
+          // lockDuration/maxStalledCount are per-queue — see
+          // getStallOptionsForQueue for which queues override the default
+          // (300000, BullMQ's default maxStalledCount) and why. Queues without
+          // an entry there are unaffected.
+          lockDuration: stall.lockDuration,
+          ...(stall.maxStalledCount !== undefined
+            ? { maxStalledCount: stall.maxStalledCount }
+            : {}),
           autorun: true,
         }
       )
@@ -172,6 +183,8 @@ export default class QueueWork extends BaseCommand {
     handlers.set(AutoUpdateJob.key, new AutoUpdateJob())
     handlers.set(AppAutoUpdateJob.key, new AppAutoUpdateJob())
     handlers.set(ContentAutoUpdateJob.key, new ContentAutoUpdateJob())
+    handlers.set(DownloadDrugDataJob.key, new DownloadDrugDataJob())
+    handlers.set(IngestDrugDataJob.key, new IngestDrugDataJob())
 
     queues.set(RunDownloadJob.key, RunDownloadJob.queue)
     queues.set(RunExtractPmtilesJob.key, RunExtractPmtilesJob.queue)
@@ -183,8 +196,24 @@ export default class QueueWork extends BaseCommand {
     queues.set(AutoUpdateJob.key, AutoUpdateJob.queue)
     queues.set(AppAutoUpdateJob.key, AppAutoUpdateJob.queue)
     queues.set(ContentAutoUpdateJob.key, ContentAutoUpdateJob.queue)
+    queues.set(DownloadDrugDataJob.key, DownloadDrugDataJob.queue)
+    queues.set(IngestDrugDataJob.key, IngestDrugDataJob.queue)
 
     return [handlers, queues]
+  }
+
+  /**
+   * Per-queue BullMQ stall-recovery options. See `queue_stall_options.ts` for
+   * the reasoning behind each queue's entry; the decision itself is kept pure
+   * and unit-tested there.
+   */
+  private getStallOptionsForQueue(queueName: string): StallOptions {
+    return stallOptionsForQueue(queueName, {
+      embedFile: EmbedFileJob.queue,
+      download: RunDownloadJob.queue,
+      drugDownload: DownloadDrugDataJob.queue,
+      drugIngest: IngestDrugDataJob.queue,
+    })
   }
 
   /**
@@ -201,6 +230,12 @@ export default class QueueWork extends BaseCommand {
       [RunBenchmarkJob.queue]: 1, // Run benchmarks one at a time for accurate results
       [EmbedFileJob.queue]: 2, // Lower concurrency for embedding jobs, can be resource intensive
       [CheckUpdateJob.queue]: 1, // No need to run more than one update check at a time
+      // Drug download: one part at a time — a ~150 MB resumable HTTP pull per
+      // part, no benefit to parallelism and easier on the storage volume.
+      [DownloadDrugDataJob.queue]: 1,
+      // Drug ingest: one heavy stream at a time — unzipping + parsing ~150 MB
+      // of JSON into batched DB inserts; serial keeps memory bounded.
+      [IngestDrugDataJob.queue]: 1,
       default: 3,
     }
 

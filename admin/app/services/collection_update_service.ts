@@ -10,6 +10,7 @@ import type {
   ContentUpdateCheckResult,
 } from '../../types/collections.js'
 import { KiwixCatalogService, reconcileResourceUpdateState } from './kiwix_catalog_service.js'
+import { CollectionManifestService } from './collection_manifest_service.js'
 
 const MAP_STORAGE_PATH = '/storage/maps'
 
@@ -24,7 +25,21 @@ export class CollectionUpdateService {
    * state (version + cool-off anchor) so the auto-updater can act on it later.
    */
   async checkForUpdates(): Promise<ContentUpdateCheckResult> {
-    const installed = await InstalledResource.all()
+    // ZIM/map catalog update path only — exclude `dataset` resources (e.g. the
+    // FDA drug labels), which are not filename-versioned and get their own
+    // freshness path. No-op today (no dataset rows are written in this slice).
+    const allInstalled = await InstalledResource.query().whereNot('resource_type', 'dataset')
+
+    // Content we host ourselves is versioned by the manifest, not by the Kiwix
+    // catalog, so it has no business in this check. Excluding it also means a
+    // resource-id collision can't let a third-party mirror present itself as a
+    // newer version and overwrite our content. See resolveZimDownload, which
+    // pins the same resources to their manifest URL on the install path.
+    const gatedIds = await new CollectionManifestService().getGatedZimResourceIds()
+    const installed = allInstalled.filter(
+      (r) => !(r.resource_type === 'zim' && gatedIds.has(r.resource_id))
+    )
+
     if (installed.length === 0) {
       return {
         updates: [],
@@ -35,7 +50,11 @@ export class CollectionUpdateService {
     try {
       const catalog = new KiwixCatalogService()
       const latestByKey = await catalog.getLatestForResources(
-        installed.map((r) => ({ resource_id: r.resource_id, resource_type: r.resource_type }))
+        // `dataset` rows are filtered out above, so the type narrows to ZIM/map.
+        installed.map((r) => ({
+          resource_id: r.resource_id,
+          resource_type: r.resource_type as 'zim' | 'map',
+        }))
       )
 
       const now = DateTime.now()
@@ -47,7 +66,7 @@ export class CollectionUpdateService {
         if (latest && latest.version > resource.version) {
           updates.push({
             resource_id: resource.resource_id,
-            resource_type: resource.resource_type,
+            resource_type: resource.resource_type as 'zim' | 'map',
             installed_version: resource.version,
             latest_version: latest.version,
             download_url: latest.download_url,
@@ -80,15 +99,19 @@ export class CollectionUpdateService {
     update: ResourceUpdateInfo,
     options?: { auto?: boolean }
   ): Promise<{ success: boolean; jobId?: string; error?: string }> {
-    // Check if a download is already in progress for this URL
-    const existingJob = await RunDownloadJob.getByUrl(update.download_url)
+    // Only block when a download is genuinely in progress. getActiveByUrl
+    // removes any terminal (failed/completed) job for this URL first, so a
+    // previous failed attempt doesn't leave a stale job that blocks the
+    // re-dispatch below. Using the raw getByUrl here (unlike every other
+    // dispatch site) meant a failed download stuck the resource forever: the
+    // failed job survived under the deterministic jobId, dispatch hit "job
+    // already exists" and returned it, and applyUpdate reported success while
+    // nothing was re-downloaded.
+    const existingJob = await RunDownloadJob.getActiveByUrl(update.download_url)
     if (existingJob) {
-      const state = await existingJob.getState()
-      if (state === 'active' || state === 'waiting' || state === 'delayed') {
-        return {
-          success: false,
-          error: `A download is already in progress for ${update.resource_id}`,
-        }
+      return {
+        success: false,
+        error: `A download is already in progress for ${update.resource_id}`,
       }
     }
 
@@ -101,7 +124,6 @@ export class CollectionUpdateService {
       timeout: 30000,
       allowedMimeTypes:
         update.resource_type === 'zim' ? ZIM_MIME_TYPES : PMTILES_MIME_TYPES,
-      forceNew: true,
       filetype: update.resource_type,
       title: update.resource_id,
       totalBytes: update.size_bytes,

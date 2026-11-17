@@ -1,4 +1,5 @@
 import {
+  CatalogLanguage,
   ListRemoteZimFilesResponse,
   RawRemoteZimFileEntry,
   RemoteZimFileEntry,
@@ -27,12 +28,20 @@ import WikipediaSelection from '#models/wikipedia_selection'
 import InstalledResource from '#models/installed_resource'
 import CollectionManifest from '#models/collection_manifest'
 import { RunDownloadJob } from '#jobs/run_download_job'
+import { DownloadDrugDataJob } from '#jobs/download_drug_data_job'
+import { DrugReferenceService } from './drug_reference_service.js'
 import { SERVICE_NAMES } from '../../constants/service_names.js'
 import { CollectionManifestService } from './collection_manifest_service.js'
+import { KiwixCatalogService } from './kiwix_catalog_service.js'
 import { KiwixLibraryService } from './kiwix_library_service.js'
+import { RagService } from './rag_service.js'
+import { OllamaService } from './ollama_service.js'
 import type { CategoryWithStatus } from '../../types/collections.js'
 import CustomLibrarySource from '#models/custom_library_source'
 import { assertNotPrivateUrl } from '#validators/common'
+import { resolveZimDownload } from '../utils/zim_download_resolution.js'
+import { getHostedContentHeaders } from '../utils/hosted_content_auth.js'
+import { KIWIX_CATALOG_BASE_URL } from '../../constants/kiwix.js'
 
 const ZIM_MIME_TYPES = ['application/x-zim', 'application/x-openzim', 'application/octet-stream']
 const WIKIPEDIA_OPTIONS_URL = 'https://raw.githubusercontent.com/Crosstalk-Solutions/project-nomad/refs/heads/main/collections/wikipedia.json'
@@ -71,12 +80,19 @@ export class ZimService {
     start,
     count,
     query,
+    language = 'eng',
   }: {
     start: number
     count: number
     query?: string
+    /**
+     * ISO-639-3 code to filter the catalog by, or `all` for no filter. Defaults to
+     * English, which is what this browser has always shown -- but it is now a default
+     * the user can change, not a hardcode. English is ~1,300 of the catalog's ~10,900
+     * books, so the filter was hiding the large majority of the library.
+     */
+    language?: string
   }): Promise<ListRemoteZimFilesResponse> {
-    const LIBRARY_BASE_URL = 'https://browse.library.kiwix.org/catalog/v2/entries'
     // Kiwix returns pages of content unaware of what the user has installed locally. When
     // the installed set is large, a single 12-item Kiwix page can come back with everything
     // already installed → 0 post-filter items → frontend deadlock (#731). Accumulate across
@@ -102,11 +118,12 @@ export class ZimService {
     let totalResults = 0
 
     for (let i = 0; i < MAX_KIWIX_FETCHES; i++) {
-      const res = await axios.get(LIBRARY_BASE_URL, {
+      const res = await axios.get(KIWIX_CATALOG_BASE_URL, {
         params: {
           start: currentStart,
           count: KIWIX_PAGE_SIZE,
-          lang: 'eng',
+          // `all` means "no filter", which the catalog expresses by omitting `lang`.
+          ...(language && language !== 'all' ? { lang: language } : {}),
           ...(query ? { q: query } : {}),
         },
         responseType: 'text',
@@ -164,6 +181,13 @@ export class ZimService {
           download_url,
           author: entry.author.name,
           file_name,
+          language: entry.language,
+          category: entry.category,
+          tags: entry.tags,
+          article_count: entry.articleCount,
+          media_count: entry.mediaCount,
+          publisher: entry.publisher?.name,
+          issued: entry['dc:issued'],
         })
       }
 
@@ -176,6 +200,62 @@ export class ZimService {
       has_more: currentStart < totalResults,
       total_count: totalResults,
       next_start: currentStart,
+    }
+  }
+
+  /**
+   * The languages the Kiwix catalog actually holds books in, newest count first.
+   *
+   * Sourced live from the catalog rather than a bundled ISO list, so the options are
+   * always exactly what can be browsed, and each carries a real book count. Titles are
+   * the catalog's own endonyms ("français", "中文"), which is what a reader scanning for
+   * their own language recognises.
+   *
+   * Requires internet, like the rest of this browser. Failures return an empty list
+   * rather than throwing: a missing language filter should degrade to "English only",
+   * never take down the page that lists the books.
+   */
+  async listCatalogLanguages(): Promise<CatalogLanguage[]> {
+    const LANGUAGES_URL = 'https://opds.library.kiwix.org/catalog/v2/languages'
+    try {
+      const res = await axios.get(LANGUAGES_URL, { responseType: 'text', timeout: 15000 })
+      const parser = new XMLParser({
+        ignoreAttributes: false,
+        attributeNamePrefix: '',
+        textNodeName: '#text',
+      })
+      const parsed = parser.parse(res.data)
+      const rawEntries = parsed?.feed?.entry
+        ? Array.isArray(parsed.feed.entry)
+          ? parsed.feed.entry
+          : [parsed.feed.entry]
+        : []
+
+      const languages: CatalogLanguage[] = []
+      for (const raw of rawEntries) {
+        if (!raw || typeof raw !== 'object') continue
+        // `dc:language` is the ISO-639-3 code; `thr:count` is how many books carry it.
+        const code = raw['dc:language']
+        const label = raw.title
+        const bookCount = Number(raw['thr:count'])
+        if (typeof code !== 'string' || !code.trim()) continue
+        if (!Number.isFinite(bookCount) || bookCount <= 0) continue
+        languages.push({
+          code: code.trim(),
+          label: typeof label === 'string' && label.trim() ? label.trim() : code.trim(),
+          book_count: bookCount,
+        })
+      }
+
+      languages.sort((a, b) => b.book_count - a.book_count)
+      return languages
+    } catch (error) {
+      logger.warn(
+        `[ZimService] Catalog language list unavailable: ${
+          error instanceof Error ? error.message : error
+        }`
+      )
+      return []
     }
   }
 
@@ -210,7 +290,6 @@ export class ZimService {
       filepath,
       timeout: 30000,
       allowedMimeTypes: ZIM_MIME_TYPES,
-      forceNew: true,
       filetype: 'zim',
       title: metadata?.title,
       totalBytes: metadata?.size_bytes,
@@ -253,40 +332,100 @@ export class ZimService {
 
     const allResources = CollectionManifestService.resolveTierResources(tier, category.tiers)
 
-    // Filter out already installed
-    const installed = await InstalledResource.query().where('resource_type', 'zim')
+    // Filter out already installed. Includes 'dataset' rows (the FDA drug labels)
+    // alongside 'zim' so an installed dataset is filtered out here — without it,
+    // a re-select of an installed Medicine tier would re-dispatch the ~1.7 GB drug
+    // download every time (the dataset branch's own getIngestStatus guard is a
+    // second line of defence, but this keeps the filter symmetric with the row-
+    // driven tier-status math).
+    const installed = await InstalledResource.query().whereIn('resource_type', ['zim', 'dataset'])
     const installedIds = new Set(installed.map((r) => r.resource_id))
     const toDownload = allResources.filter((r) => !installedIds.has(r.id))
 
     if (toDownload.length === 0) return null
 
+    const latestByResource = await new KiwixCatalogService().getLatestForResources(
+      toDownload.map((resource) => ({ resource_id: resource.id, resource_type: 'zim' }))
+    )
     const downloadFilenames: string[] = []
 
     for (const resource of toDownload) {
-      const existingJob = await RunDownloadJob.getActiveByUrl(resource.url)
-      if (existingJob) {
-        logger.warn(`[ZimService] Download already in progress for ${resource.url}, skipping.`)
+      // A `dataset` resource (e.g. the FDA drug labels) is DB-ingested, not a
+      // ZIM file — route it to the drug download+ingest pipeline instead of
+      // RunDownloadJob. The install-state row written on ingest 'ready' (below,
+      // via resourceMeta) is what the installed-filter above and the tier-status
+      // math key off; until that row exists the getIngestStatus guard prevents
+      // re-dispatching the ~1.7 GB download on every tier select.
+      if (resource.type === 'dataset') {
+        const drugReferenceService = new DrugReferenceService()
+        const status = await drugReferenceService.getIngestStatus()
+        if (status.phase === 'ready' || status.rowCount > 0) {
+          logger.info('[ZimService] Drug dataset already ingested, skipping dispatch.')
+          // Reaching here means no 'dataset' row exists (the installed filter
+          // above would have dropped the resource). A finished ingest that lost
+          // its row write (1.34.0's narrow enum, or a manual ingest) gets one now,
+          // so re-selecting the tier resolves it without waiting for a reboot.
+          if (status.phase === 'ready' && status.lastUpdated) {
+            try {
+              await drugReferenceService.recordInstalledRow({
+                version: status.lastUpdated,
+                collectionRef: categorySlug,
+                fileSizeBytes: null,
+              })
+              logger.info('[ZimService] Backfilled installed_resources row for the drug dataset.')
+            } catch (err) {
+              logger.error(
+                `[ZimService] Failed to backfill drug dataset row: ${
+                  err instanceof Error ? err.message : String(err)
+                }`
+              )
+            }
+          }
+          continue
+        }
+        // DownloadDrugDataJob.dispatch() is idempotent on its deterministic
+        // jobId — a concurrent in-flight download returns "already running"
+        // without re-adding, so this is safe to call repeatedly. The resourceMeta
+        // is threaded through download → ingest so the final ingest pass writes
+        // the `installed_resources` 'dataset' row, making the tier read installed.
+        await DownloadDrugDataJob.dispatch(true, {
+          resourceId: resource.id,
+          version: resource.version,
+          collectionRef: categorySlug,
+        })
+        logger.info('[ZimService] Dispatched drug data download for dataset resource.')
         continue
       }
 
-      const filename = resource.url.split('/').pop()
+      const resolved = resolveZimDownload(
+        resource,
+        latestByResource.get(`zim:${resource.id}`) ?? null
+      )
+      const existingJob = await RunDownloadJob.getActiveByUrl(resolved.url)
+      if (existingJob) {
+        logger.warn(`[ZimService] Download already in progress for ${resolved.url}, skipping.`)
+        continue
+      }
+
+      const filename = resolved.url.split('/').pop()
       if (!filename) continue
 
       downloadFilenames.push(filename)
       const filepath = join(process.cwd(), ZIM_STORAGE_PATH, filename)
 
       await RunDownloadJob.dispatch({
-        url: resource.url,
+        url: resolved.url,
         filepath,
         timeout: 30000,
         allowedMimeTypes: ZIM_MIME_TYPES,
-        forceNew: true,
         filetype: 'zim',
         title: (resource as any).title || undefined,
-        totalBytes: (resource as any).size_mb ? (resource as any).size_mb * 1024 * 1024 : undefined,
+        totalBytes: resolved.sizeBytes,
+        // Undefined for every ungated resource, so the existing flow is untouched.
+        requestHeaders: getHostedContentHeaders(resource),
         resourceMetadata: {
           resource_id: resource.id,
-          version: resource.version,
+          version: resolved.version,
           collection_ref: categorySlug,
         },
       })
@@ -547,14 +686,40 @@ export class ZimService {
 
     const ollamaUrl = await this.dockerService.getServiceURL('nomad_ollama')
     if (ollamaUrl) {
+      // Respect the global ingest policy, same as the post-download path (PR #919).
+      // This used to dispatch unconditionally, so a user who deliberately chose
+      // Manual still got sideloaded ZIMs embedded behind their back.
+      //
+      // Reuses decideScanAction rather than re-inlining the Always/Manual check,
+      // so an existing browse_only or pending_decision row is honored too instead
+      // of being overridden by the act of re-uploading the file.
+      const filePath = join(process.cwd(), ZIM_STORAGE_PATH, filename)
       try {
-        const { EmbedFileJob } = await import('#jobs/embed_file_job')
-        await EmbedFileJob.dispatch({
-          fileName: filename,
-          filePath: join(process.cwd(), ZIM_STORAGE_PATH, filename),
-        })
+        const { default: KVStore } = await import('#models/kv_store')
+        const { default: KbIngestState } = await import('#models/kb_ingest_state')
+        const { decideScanAction } = await import('../utils/kb_ingest_decision.js')
+
+        // Unset is treated as Always, preserving legacy behavior — mirrors
+        // rag_service.ts and run_download_job.ts.
+        const policyRaw = await KVStore.getValue('rag.defaultIngestPolicy')
+        const policy = policyRaw === 'Manual' ? 'Manual' : 'Always'
+
+        const existing = await KbIngestState.findBy('file_path', filePath)
+        const action = decideScanAction(existing, false, policy)
+
+        if (action.kind === 'dispatch') {
+          const { EmbedFileJob } = await import('#jobs/embed_file_job')
+          await EmbedFileJob.dispatch({ fileName: filename, filePath })
+        } else if (action.kind === 'create_pending') {
+          // firstOrCreate so the KB panel surfaces the per-file Index affordance
+          // without demoting a row that already exists.
+          await KbIngestState.getOrCreate(filePath)
+        }
+        // 'skip' and 'backfill_indexed' need no action here: the file was just
+        // written to disk, so there is nothing to backfill and a settled state
+        // row means the user has already decided about this file.
       } catch (error) {
-        logger.error(`[ZimService] EmbedFileJob dispatch failed after local upload:`, error)
+        logger.error(`[ZimService] KB ingest decision failed after local upload:`, error)
       }
     }
 
@@ -581,6 +746,25 @@ export class ZimService {
     }
 
     await deleteFileIfExists(fullPath)
+
+    // Purge this file's Qdrant points and KbIngestState row directly so a
+    // deleted ZIM stops surfacing as a stale search citation immediately,
+    // rather than waiting for the next scanAndSyncStorage reverse sweep to
+    // catch it (#1170). Never touched Qdrant here before — the file's points
+    // and state row would otherwise linger indefinitely.
+    //
+    // Guarded on the AI Assistant being installed at all — otherwise every
+    // delete on an install without it hits _initializeQdrantClient()'s
+    // "offline" throw and logs a misleading error for the common no-AI case.
+    const qdrantInstalled = !!(await this.dockerService.getServiceURL(SERVICE_NAMES.QDRANT))
+    if (qdrantInstalled) {
+      try {
+        const ragService = new RagService(this.dockerService, new OllamaService())
+        await ragService.purgeIndexedSource(fullPath)
+      } catch (err) {
+        logger.error(`[ZimService] Failed to purge knowledge-base entries for ${fullPath}:`, err)
+      }
+    }
 
     // Remove from kiwix library XML so --monitorLibrary stops serving the deleted file
     const kiwixLibraryService = new KiwixLibraryService()
@@ -751,7 +935,6 @@ export class ZimService {
       filepath,
       timeout: 30000,
       allowedMimeTypes: ZIM_MIME_TYPES,
-      forceNew: true,
       filetype: 'zim',
       title: selectedOption.name,
       totalBytes: selectedOption.size_mb ? selectedOption.size_mb * 1024 * 1024 : undefined,

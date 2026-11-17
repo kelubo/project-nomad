@@ -4,6 +4,7 @@ import logger from '@adonisjs/core/services/logger'
 import { inject } from '@adonisjs/core'
 import transmit from '@adonisjs/transmit/services/main'
 import { doResumableDownloadWithRetry } from '../utils/downloads.js'
+import { pickAmdHsaOverride } from '../utils/amd_hsa_override.js'
 import { join } from 'path'
 import os from 'node:os'
 import env from '#start/env'
@@ -21,9 +22,14 @@ import { SERVICE_NAMES } from '../../constants/service_names.js'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { readFile, mkdir, copyFile, chown, chmod, access, writeFile } from 'node:fs/promises'
+import { randomBytes } from 'node:crypto'
 import KVStore from '#models/kv_store'
 import { BROADCAST_CHANNELS } from '../../constants/broadcast.js'
 import { KIWIX_LIBRARY_CMD } from '../../constants/kiwix.js'
+import { DEFAULT_OLLAMA_CONTEXT_LENGTH } from '../../constants/ollama.js'
+
+// Written by install_nomad.sh with the host AMD GPU's gfx target.
+const AMD_GFX_MARKER_PATH = '/app/storage/.nomad-amd-gfx'
 
 @inject()
 export class DockerService {
@@ -385,6 +391,17 @@ export class DockerService {
         if (container) {
           const dockerContainer = this.docker.getContainer(container.Id)
 
+          if (serviceName === SERVICE_NAMES.OLLAMA) {
+            // The recreate builds env from scratch, so capture a working HSA override
+            // before this container, the only place it lives, is removed (#1377).
+            try {
+              const inspect = await dockerContainer.inspect()
+              await this._adoptContainerHsaOverride(inspect.Config?.Env)
+            } catch (error: any) {
+              logger.warn(`[DockerService] Could not preserve the Ollama HSA override: ${error.message}`)
+            }
+          }
+
           // Only try to stop if it's running
           if (container.State === 'running') {
             this._broadcast(serviceName, 'stopping', `Stopping container...`)
@@ -512,6 +529,15 @@ export class DockerService {
    * Falls back to NOMAD_STORAGE_PATH / the production default if the admin
    * container or its storage mount can't be inspected.
    */
+  /**
+   * Public accessor for the resolved host path backing `/app/storage`. Used by the
+   * Debug Info bundle so support can see where content actually lives on the host
+   * (the #1050 class of "moved my data, admin doesn't see it" reports).
+   */
+  async getHostStorageRoot(): Promise<string> {
+    return this._resolveHostStorageRoot()
+  }
+
   private async _resolveHostStorageRoot(): Promise<string> {
     if (this._hostStorageRoot) return this._hostStorageRoot
     const fallback = env.get('NOMAD_STORAGE_PATH', DockerService.DEFAULT_HOST_STORAGE_ROOT)
@@ -799,7 +825,18 @@ export class DockerService {
         const flashAttentionEnabled = await KVStore.getValue('ai.ollamaFlashAttention')
         if (flashAttentionEnabled !== false) {
           ollamaEnv.push('OLLAMA_FLASH_ATTENTION=1')
+          // KV cache quantization requires flash attention. q8_0 roughly halves the
+          // memory a context window costs for a perplexity delta in the noise, which is
+          // what makes an 8-16k window affordable on modest hardware. Ollama silently
+          // falls back to f16 on architectures that don't support it, so this is treated
+          // as headroom — the context-window resolver still budgets against f16.
+          ollamaEnv.push('OLLAMA_KV_CACHE_TYPE=q8_0')
         }
+        // Floor for any request that doesn't carry its own num_ctx (the OpenAI-compatible
+        // path can't set one at all). Ollama's own default is 4096 on machines under 24GB
+        // VRAM, and anything past the window is silently truncated with no error — so a
+        // conversation that outgrows it just quietly loses its early turns.
+        ollamaEnv.push(`OLLAMA_CONTEXT_LENGTH=${DEFAULT_OLLAMA_CONTEXT_LENGTH}`)
         if (amdGpuConfigured) {
           // gfx-aware HSA override — only set for cards that actually need it. See
           // _resolveAmdHsaOverride() for the resolution order and gfx → version mapping.
@@ -807,7 +844,19 @@ export class DockerService {
           if (hsaOverride) {
             ollamaEnv.push(`HSA_OVERRIDE_GFX_VERSION=${hsaOverride}`)
           }
+          // Ollama's scheduler drops integrated GPUs unless this is set (issue #1056), so
+          // AMD APUs (780M/890M/8060S) fall back to CPU-only despite correct device
+          // passthrough. It's a no-op on discrete AMD cards, so it's safe to set whenever
+          // AMD acceleration is configured.
+          ollamaEnv.push('OLLAMA_IGPU_ENABLE=1')
         }
+      }
+
+      const appEnv: string[] = []
+      if (service.service_name === SERVICE_NAMES.HOMEBOX) {
+        // Homebox >= 0.26 panics at boot without a >= 32-byte pepper (#1043). Generate once,
+        // persist, and reuse so updates/reinstalls don't invalidate issued API keys.
+        appEnv.push(`HBOX_AUTH_API_KEY_PEPPER=${await this._resolveHomeboxPepper()}`)
       }
 
       this._broadcast(
@@ -815,8 +864,10 @@ export class DockerService {
         'creating',
         `Creating Docker container for service ${service.service_name}...`
       )
-      const container = await this.docker.createContainer({
-        Image: finalImage,
+      // Built once and reused, so the AMD fallback below cannot drift from the
+      // real payload as this config grows.
+      const buildCreateOptions = (image: string, hostConfig: any, env: string[]) => ({
+        Image: image,
         name: service.service_name,
         Labels: {
           ...(containerConfig?.Labels ?? {}),
@@ -824,10 +875,10 @@ export class DockerService {
           'io.project-nomad.managed': 'true',
         },
         ...(containerConfig?.User && { User: containerConfig.User }),
-        HostConfig: gpuHostConfig,
+        HostConfig: hostConfig,
         ...(containerConfig?.WorkingDir && { WorkingDir: containerConfig.WorkingDir }),
         ...(containerConfig?.ExposedPorts && { ExposedPorts: containerConfig.ExposedPorts }),
-        Env: [...(containerConfig?.Env ?? []), ...ollamaEnv],
+        Env: env,
         ...(service.container_command ? { Cmd: service.container_command.split(' ') } : {}),
         // Ensure container is attached to the Nomad docker network in production
         ...(process.env.NODE_ENV === 'production' && {
@@ -839,12 +890,76 @@ export class DockerService {
         }),
       })
 
+      let container = await this.docker.createContainer(
+        buildCreateOptions(finalImage, gpuHostConfig, [
+          ...(containerConfig?.Env ?? []),
+          ...ollamaEnv,
+          ...appEnv,
+        ])
+      )
+
       this._broadcast(
         service.service_name,
         'starting',
         `Starting Docker container for service ${service.service_name}...`
       )
-      await container.start()
+      try {
+        await container.start()
+      } catch (error: any) {
+        // An AMD GPU whose ROCm device nodes are absent must not block the install
+        // outright (#1232). GPU detection reads PCI data, so "an AMD GPU is present"
+        // and "ROCm is usable" are different questions, and only the daemon can
+        // answer the second. CPU-only Ollama works fine on these machines.
+        //
+        // This has to sit on start(), not createContainer(): the daemon accepts a
+        // container whose --device path does not exist (create returns 201) and only
+        // resolves devices when the container starts. Measured on Docker 29.6.2.
+        //
+        // Retrying rather than pre-checking is also deliberate. The admin runs in its
+        // own container, so stat()ing /dev/kfd here describes the admin's namespace,
+        // not the host's. Verified on NOMAD6, a working ROCm box: /dev/kfd is present
+        // on the host and absent inside the admin container, so a pre-check would
+        // strip GPU passthrough from a machine where it works.
+        if (!amdGpuConfigured || !this._isMissingDeviceError(error)) throw error
+
+        logger.warn(
+          `[DockerService] AMD device passthrough rejected by the daemon (${error?.message}); ` +
+            `recreating ${service.service_name} CPU-only on ${service.container_image}`
+        )
+        this._broadcast(
+          service.service_name,
+          'gpu-config',
+          `AMD GPU detected, but this system has no usable ROCm device (/dev/kfd is missing, ` +
+            `which means the amdgpu/ROCm kernel driver is not loaded or does not support this GPU). ` +
+            `Installing CPU-only instead so the AI Assistant still works.`
+        )
+
+        // The created container carries the rejected device config, so it cannot be
+        // started as-is and has to go before the name can be reused.
+        await container.remove({ force: true }).catch((removeError: any) => {
+          logger.warn(`[DockerService] Could not remove the failed container: ${removeError?.message}`)
+        })
+
+        const { Devices, ...cpuHostConfig } = gpuHostConfig as any
+        // Drop the ROCm-only env along with the devices. HSA_OVERRIDE_GFX_VERSION and
+        // OLLAMA_IGPU_ENABLE mean nothing to the CPU build, and leaving them behind is
+        // misleading to anyone who later reads `docker inspect`.
+        const cpuOllamaEnv = ollamaEnv.filter(
+          (e) => !e.startsWith('HSA_OVERRIDE_GFX_VERSION=') && !e.startsWith('OLLAMA_IGPU_ENABLE=')
+        )
+        amdGpuConfigured = false
+        // service.container_image is the CPU tag, already pulled earlier in this
+        // function before the AMD branch overrode finalImage to :rocm.
+        finalImage = service.container_image
+        container = await this.docker.createContainer(
+          buildCreateOptions(finalImage, cpuHostConfig, [
+            ...(containerConfig?.Env ?? []),
+            ...cpuOllamaEnv,
+            ...appEnv,
+          ])
+        )
+        await container.start()
+      }
 
       this._broadcast(
         service.service_name,
@@ -1450,64 +1565,127 @@ export class DockerService {
   }
 
   /**
+   * The HSA_OVERRIDE_GFX_VERSION an AMD install or reinstall would apply right now.
+   * Exposed so GpuPassthroughRemediationProvider can tell whether a reinstall would
+   * change the running container.
+   */
+  async getAmdHsaOverride(
+    options: { quiet?: boolean; containerEnv?: string[] | null } = {}
+  ): Promise<string | null> {
+    return this._resolveAmdHsaOverride(options)
+  }
+
+  /**
    * Resolve the HSA_OVERRIDE_GFX_VERSION value for the host's AMD GPU.
    *
    * gfx1030 (RX 6800/6700/etc.), gfx1100/1101/1102 (RX 7900/7800/7600) are on AMD's
    * official ROCm allowlist — forcing an override on these breaks GPU discovery.
    * gfx1035 / gfx1036 (RDNA 2 iGPUs like 680M) need 10.3.0 to coerce to gfx1030.
-   * gfx1103 / gfx1150 / gfx1151 (RDNA 3/3.5 iGPUs like 780M / 890M / Strix Halo) need 11.0.0.
+   * gfx1150 / gfx1151 (RDNA 3.5 iGPUs like 890M / Strix Halo) ARE on the bundled rocblas
+   * allowlist, so they need NO override. gfx1103 (Phoenix 780M/760M) is NOT — it must be
+   * coerced to 11.0.0 (gfx1100 kernels) or ollama drops it to CPU. See ../utils/amd_hsa_override.ts.
    *
    * Resolution order:
    *   1. KV `ai.amdHsaOverride` — manual user override; accepts 'none' (disable) or a semver-style value.
    *   2. Marker file `/app/storage/.nomad-amd-gfx` written by install_nomad.sh.
-   *   3. Default: '11.0.0' — preserves prior behavior so existing iGPU users don't regress on
-   *      upgrade. Discrete-card users on existing installs can opt out via the KV.
+   *   3. The override the existing container runs with, when the caller passes its env (#1377).
+   *   4. Default: none — let ROCm discover the GPU natively. Users on hardware that still
+   *      needs coercion can force a value via the KV. A hardcoded default gets more wrong
+   *      as ROCm adds native targets, so null is the safer forward-looking default.
+   * The pure ordering lives in pickAmdHsaOverride (../utils/amd_hsa_override.ts).
    *
    * Returns null when no override should be applied.
    */
-  private async _resolveAmdHsaOverride(): Promise<string | null> {
-    const manualRaw = await KVStore.getValue('ai.amdHsaOverride')
-    if (manualRaw !== null && manualRaw !== undefined && String(manualRaw).trim() !== '') {
-      const manual = String(manualRaw).trim().toLowerCase()
-      if (manual === 'none' || manual === 'off' || manual === 'false') {
-        logger.info('[DockerService] HSA override disabled via ai.amdHsaOverride')
-        return null
-      }
-      if (/^\d+\.\d+\.\d+$/.test(manual)) {
-        logger.info(`[DockerService] HSA override forced to ${manual} via ai.amdHsaOverride`)
-        return manual
-      }
-      logger.warn(`[DockerService] Ignoring invalid ai.amdHsaOverride value: ${manualRaw}`)
+  /**
+   * Resolve the Homebox API-key pepper, generating and persisting one on first use.
+   *
+   * Homebox >= 0.26 panics at boot unless HBOX_AUTH_API_KEY_PEPPER is set to a value of at
+   * least 32 bytes (#1043). The pepper must be STABLE across updates and reinstalls:
+   * rotating it invalidates every API key a user has issued from Homebox. So we generate it
+   * once and persist it in the KV store, then reuse it for the life of the install.
+   */
+  private async _resolveHomeboxPepper(): Promise<string> {
+    const existing = await KVStore.getValue('apps.homebox.apiKeyPepper')
+    if (typeof existing === 'string' && existing.length >= 32) {
+      return existing
     }
-
-    try {
-      const gfx = (await readFile('/app/storage/.nomad-amd-gfx', 'utf8')).trim()
-      const mapped = this._mapGfxToHsaOverride(gfx)
-      logger.info(`[DockerService] AMD gfx marker '${gfx}' → HSA override ${mapped ?? 'none'}`)
-      return mapped
-    } catch {
-      // Marker absent — most likely an existing install upgraded without re-running
-      // install_nomad.sh. Fall through to the default.
-    }
-
-    logger.info('[DockerService] No AMD gfx marker; defaulting HSA override to 11.0.0 for backward compatibility')
-    return '11.0.0'
+    // 48 raw bytes -> 64 base64 chars, comfortably over Homebox's 32-byte floor.
+    const pepper = randomBytes(48).toString('base64')
+    await KVStore.setValue('apps.homebox.apiKeyPepper', pepper)
+    logger.info('[DockerService] Generated and persisted Homebox API key pepper')
+    return pepper
   }
 
-  private _mapGfxToHsaOverride(gfx: string): string | null {
-    // Officially supported by ROCm — no override needed
-    if (gfx === 'gfx1030' || gfx === 'gfx1100' || gfx === 'gfx1101' || gfx === 'gfx1102') {
+  private async _resolveAmdHsaOverride({
+    quiet = false,
+    containerEnv,
+  }: { quiet?: boolean; containerEnv?: string[] | null } = {}): Promise<string | null> {
+    const manual = await KVStore.getValue('ai.amdHsaOverride')
+    const markerGfx = await this._readAmdGfxMarker()
+    const resolved = pickAmdHsaOverride({ manual, markerGfx, containerEnv })
+    if (quiet) return resolved.value
+
+    if (resolved.invalidManual !== undefined) {
+      logger.warn(`[DockerService] Ignoring invalid ai.amdHsaOverride value: ${resolved.invalidManual}`)
+    }
+    switch (resolved.source) {
+      case 'kv-disabled':
+        logger.info('[DockerService] HSA override disabled via ai.amdHsaOverride')
+        break
+      case 'kv':
+        logger.info(`[DockerService] HSA override forced to ${resolved.value} via ai.amdHsaOverride`)
+        break
+      case 'marker':
+        logger.info(
+          `[DockerService] AMD gfx marker '${markerGfx}' → HSA override ${resolved.value ?? 'none'}`
+        )
+        break
+      case 'container':
+        logger.info(
+          `[DockerService] Keeping HSA override ${resolved.value} from the existing container`
+        )
+        break
+      case 'default':
+        logger.warn(
+          `[DockerService] AMD GPU configured but no gfx marker (${AMD_GFX_MARKER_PATH}) and no ` +
+            'ai.amdHsaOverride KV; relying on native ROCm discovery. iGPUs not on the bundled rocblas ' +
+            'allowlist (e.g. 780M/gfx1103, 680M/gfx1035) will silently fall back to CPU. Set the ' +
+            'ai.amdHsaOverride KV (e.g. 11.0.0 for a 780M) and force-reinstall the AI service if so.'
+        )
+        break
+    }
+    return resolved.value
+  }
+
+  /**
+   * Before a force reinstall removes nomad_ollama, persist the HSA override it runs with
+   * when nothing else would supply one (#1377). The recreate builds env from scratch, so
+   * without this an upgraded box with a hand-set override loses it. Persisting rather than
+   * passing it along in memory keeps it through a reinstall that fails after removal, and
+   * shows it in the Set GFX Override modal.
+   */
+  private async _adoptContainerHsaOverride(containerEnv: string[] | null | undefined): Promise<void> {
+    const resolved = pickAmdHsaOverride({
+      manual: await KVStore.getValue('ai.amdHsaOverride'),
+      markerGfx: await this._readAmdGfxMarker(),
+      containerEnv,
+    })
+    if (resolved.source !== 'container' || !resolved.value) return
+
+    await KVStore.setValue('ai.amdHsaOverride', resolved.value)
+    logger.info(
+      `[DockerService] Persisted HSA override ${resolved.value} from the existing container to ai.amdHsaOverride`
+    )
+  }
+
+  private async _readAmdGfxMarker(): Promise<string | null> {
+    try {
+      return (await readFile(AMD_GFX_MARKER_PATH, 'utf8')).trim()
+    } catch {
+      // Marker absent: most likely an existing install upgraded without re-running
+      // install_nomad.sh.
       return null
     }
-    // RDNA 2 variants + iGPUs (gfx1031..gfx1036, e.g. Rembrandt 680M)
-    if (/^gfx103[1-6]$/.test(gfx)) {
-      return '10.3.0'
-    }
-    // RDNA 3 / 3.5 mobile parts (Phoenix 780M = gfx1103, Strix 890M = gfx1150, Strix Halo = gfx1151)
-    if (gfx === 'gfx1103' || gfx === 'gfx1150' || gfx === 'gfx1151') {
-      return '11.0.0'
-    }
-    return '11.0.0'
   }
 
   /**
@@ -1527,6 +1705,28 @@ export class DockerService {
       { PathOnHost: '/dev/kfd', PathInContainer: '/dev/kfd', CgroupPermissions: 'rwm' },
       { PathOnHost: '/dev/dri', PathInContainer: '/dev/dri', CgroupPermissions: 'rwm' },
     ]
+  }
+
+  /**
+   * Whether a container-create failure was the daemon refusing a `--device` path
+   * that does not exist on the host, e.g.
+   *
+   *   (HTTP code 500) server error - error gathering device information while
+   *   adding custom device "/dev/kfd": no such file or directory
+   *
+   * GPU *detection* reads PCI data, which says nothing about whether the ROCm
+   * kernel interface was ever loaded. An AMD card with no `/dev/kfd` is a
+   * perfectly normal machine — old pre-ROCm silicon, or amdgpu not loaded — and
+   * on those the create fails outright and the whole install dies (#1232).
+   *
+   * Deliberately keyed on the device-gathering phrase rather than a bare "no
+   * such file or directory", which Docker also emits for missing bind-mount
+   * sources and image layers. Falling back to CPU on one of those would hide a
+   * real failure behind a degraded install.
+   */
+  private _isMissingDeviceError(error: any): boolean {
+    const raw: string = error?.message ?? String(error)
+    return /error gathering device information while adding custom device/i.test(raw)
   }
 
   /**
@@ -1687,11 +1887,26 @@ export class DockerService {
       const baseEnv = inspectData.Config?.Env || []
       let finalEnv = baseEnv
       if (updatedAmdGpuConfigured) {
-        const hsaOverride = await this._resolveAmdHsaOverride()
-        finalEnv = baseEnv.filter((e: string) => !e.startsWith('HSA_OVERRIDE_GFX_VERSION='))
+        const hsaOverride = await this._resolveAmdHsaOverride({ containerEnv: baseEnv })
+        finalEnv = baseEnv.filter(
+          (e: string) =>
+            !e.startsWith('HSA_OVERRIDE_GFX_VERSION=') && !e.startsWith('OLLAMA_IGPU_ENABLE=')
+        )
         if (hsaOverride) {
           finalEnv.push(`HSA_OVERRIDE_GFX_VERSION=${hsaOverride}`)
         }
+        // Re-assert the iGPU flag so updates from a container provisioned before the
+        // issue #1056 fix (which wouldn't have it in the captured env) pick it up.
+        finalEnv.push('OLLAMA_IGPU_ENABLE=1')
+      }
+
+      // Heal a Homebox container that predates the #1043 fix: inject the persisted pepper on
+      // update if it's missing, so an update (not just a force-reinstall) fixes the crash loop.
+      if (
+        serviceName === SERVICE_NAMES.HOMEBOX &&
+        !finalEnv.some((e: string) => e.startsWith('HBOX_AUTH_API_KEY_PEPPER='))
+      ) {
+        finalEnv = [...finalEnv, `HBOX_AUTH_API_KEY_PEPPER=${await this._resolveHomeboxPepper()}`]
       }
 
       const newContainerConfig: any = {
@@ -2141,6 +2356,17 @@ export class DockerService {
         await this.pullImage(service.container_image)
       }
 
+      // Runtime-injected secrets (e.g. Homebox's API-key pepper, #1043) live in the KV store, not
+      // in container_config. This path rebuilds Env from container_config alone, so re-inject them
+      // here — otherwise an Edit or in-place recreate drops the pepper and Homebox crash-loops again.
+      let recreateEnv: string[] = containerConfig?.Env ?? []
+      if (
+        serviceName === SERVICE_NAMES.HOMEBOX &&
+        !recreateEnv.some((e: string) => e.startsWith('HBOX_AUTH_API_KEY_PEPPER='))
+      ) {
+        recreateEnv = [...recreateEnv, `HBOX_AUTH_API_KEY_PEPPER=${await this._resolveHomeboxPepper()}`]
+      }
+
       const newContainer = await this.docker.createContainer({
         Image: service.container_image,
         name: serviceName,
@@ -2152,7 +2378,7 @@ export class DockerService {
         ...(containerConfig?.User && { User: containerConfig.User }),
         HostConfig: containerConfig?.HostConfig ?? {},
         ...(containerConfig?.ExposedPorts && { ExposedPorts: containerConfig.ExposedPorts }),
-        ...(containerConfig?.Env && { Env: containerConfig.Env }),
+        ...(recreateEnv.length ? { Env: recreateEnv } : {}),
         ...(service.container_command ? { Cmd: service.container_command.split(' ') } : {}),
         ...(process.env.NODE_ENV === 'production' && {
           NetworkingConfig: { EndpointsConfig: { [DockerService.NOMAD_NETWORK]: {} } },

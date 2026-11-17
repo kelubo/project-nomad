@@ -1,16 +1,43 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
-import { ListRemoteZimFilesResponse, ListZimFilesResponse } from '../../types/zim'
+import {
+  ListCatalogLanguagesResponse,
+  ListRemoteZimFilesResponse,
+  ListZimFilesResponse,
+} from '../../types/zim'
 import { ServiceSlim } from '../../types/services'
 import { FileEntry } from '../../types/files'
 import { AppAutoUpdateStatus, AutoUpdateStatus, CheckLatestVersionResult, ContentAutoUpdateStatus, SystemInformationResponse, SystemUpdateStatus } from '../../types/system'
 import { DownloadJobWithProgress, WikipediaState } from '../../types/downloads'
 import type { Country, CountryCode, CountryGroup, MapExtractPreflight } from '../../types/maps'
 import { EmbedJobWithProgress, FileWarningsResult, StoredFileInfo } from '../../types/rag'
-import type { CategoryWithStatus, CollectionWithStatus, ContentUpdateCheckResult, ResourceUpdateInfo } from '../../types/collections'
+import type { CategoryWithStatus, CollectionWithStatus, ContentUpdateCheckResult, CreatorPackWithStatus, ResourceUpdateInfo } from '../../types/collections'
 import { catchInternal } from './util'
 import { NomadChatResponse, NomadInstalledModel, NomadOllamaModel, OllamaChatRequest } from '../../types/ollama'
 import BenchmarkResult from '#models/benchmark_result'
 import { BenchmarkType, RunBenchmarkResponse, SubmitBenchmarkResponse, UpdateBuilderTagResponse } from '../../types/benchmark'
+import type { CreateMapMarkerPayload, MapMarkerResponse, UpdateMapMarkerPayload } from '../../types/maps'
+import type { ChatSource } from '../../types/chat'
+import { chatStreamErrorMessage } from './chat_stream.js'
+
+type OllamaChatRequestWithImages = OllamaChatRequest & { images?: File[] }
+
+function serializeChatRequest(chatRequest: OllamaChatRequestWithImages): {
+  body: BodyInit
+  headers?: Record<string, string>
+} {
+  const { images = [], ...payload } = chatRequest
+  if (images.length === 0) {
+    return {
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
+    }
+  }
+
+  const formData = new FormData()
+  formData.append('payload', JSON.stringify(payload))
+  images.forEach((image) => formData.append('images', image, image.name))
+  return { body: formData }
+}
 
 class API {
   private client: AxiosInstance
@@ -82,6 +109,13 @@ class API {
     })()
   }
 
+  async setupWorldBasemap() {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ success: boolean }>('/maps/setup-world-basemap')
+      return response.data
+    })()
+  }
+
   async downloadMapCollection(slug: string): Promise<{
     message: string
     slug: string
@@ -124,9 +158,10 @@ class API {
 
   async downloadRemoteMapRegionPreflight(url: string) {
     return catchInternal(async () => {
-      const response = await this.client.post<
-        { filename: string; size: number } | { message: string }
-      >('/maps/download-remote-preflight', { url })
+      const response = await this.client.post<{ filename: string; size: number } | { message: string }>(
+        '/maps/download-remote-preflight',
+        { url }
+      )
       return response.data
     })()
   }
@@ -275,7 +310,7 @@ class API {
   /**
    * Ask the backend to send Ollama `keep_alive: 0` to every currently-loaded
    * chat model except `targetModel` (and the embedding model, which is always
-   * exempt server-side). Fire-and-forget — the chat UI doesn't await this
+   * exempt server-side). Fire-and-forget -- the chat UI doesn't await this
    * before creating a new session, since unload is housekeeping.
    *
    * Pass `null` to unload every chat model.
@@ -302,28 +337,46 @@ class API {
     })()
   }
 
-  async sendChatMessage(chatRequest: OllamaChatRequest) {
+  async sendChatMessage(chatRequest: OllamaChatRequestWithImages) {
     return catchInternal(async () => {
+      if (chatRequest.images?.length) {
+        const serialized = serializeChatRequest({ ...chatRequest, stream: false })
+        const response = await fetch('/api/ollama/chat', {
+          method: 'POST',
+          headers: serialized.headers,
+          body: serialized.body,
+        })
+        const responseBody = await response.json().catch(() => null)
+        if (!response.ok) {
+          throw new Error(responseBody?.message ?? `HTTP error: ${response.status}`)
+        }
+        return responseBody as NomadChatResponse
+      }
+
       const response = await this.client.post<NomadChatResponse>('/ollama/chat', chatRequest)
       return response.data
     })()
   }
 
   async streamChatMessage(
-    chatRequest: OllamaChatRequest,
+    chatRequest: OllamaChatRequestWithImages,
     onChunk: (content: string, thinking: string, done: boolean) => void,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    onSources?: (sources: ChatSource[]) => void,
+    onDoneReason?: (reason: string) => void
   ): Promise<void> {
     // Axios doesn't support ReadableStream in browser, so need to use fetch
+    const serialized = serializeChatRequest({ ...chatRequest, stream: true })
     const response = await fetch('/api/ollama/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...chatRequest, stream: true }),
+      headers: serialized.headers,
+      body: serialized.body,
       signal,
     })
 
     if (!response.ok || !response.body) {
-      throw new Error(`HTTP error: ${response.status}`)
+      const errorBody = await response.json().catch(() => null)
+      throw new Error(errorBody?.message ?? `HTTP error: ${response.status}`)
     }
 
     const reader = response.body.getReader()
@@ -346,7 +399,21 @@ class API {
             data = JSON.parse(line.slice(6))
           } catch { continue /* skip malformed chunks */ }
 
-          if (data.error) throw new Error('The model encountered an error. Please try again.')
+          const streamError = chatStreamErrorMessage(data)
+          if (streamError) throw new Error(streamError)
+
+          // Citation metadata (#1179) arrives as a distinct trailing event with no
+          // `message` key -- route it separately rather than through onChunk.
+          if (data.sources) {
+            onSources?.(data.sources)
+            continue
+          }
+
+          // Only the chunk that ends generation carries it; 'length' means the
+          // answer was cut off rather than finished (#1342).
+          if (data.done_reason) {
+            onDoneReason?.(data.done_reason)
+          }
 
           onChunk(
             data.message?.content ?? '',
@@ -374,17 +441,22 @@ class API {
     })()
   }
 
+  async checkBenchmarkRerunBanner() {
+    return catchInternal(async () => {
+      const response = await this.client.get<{ show: boolean }>('/benchmark/rerun-banner')
+      return response.data
+    })()
+  }
+
   async getChatSessions() {
     return catchInternal(async () => {
-      const response = await this.client.get<
-        Array<{
-          id: string
-          title: string
-          model: string | null
-          timestamp: string
-          lastMessage: string | null
-        }>
-      >('/chat/sessions')
+      const response = await this.client.get<Array<{
+        id: string
+        title: string
+        model: string | null
+        timestamp: string
+        lastMessage: string | null
+      }>>('/chat/sessions')
       return response.data
     })()
   }
@@ -697,6 +769,35 @@ class API {
     })()
   }
 
+  async getCreatorPacks() {
+    return catchInternal(async () => {
+      const response = await this.client.get<{
+        configured: boolean
+        packs: CreatorPackWithStatus[]
+        downloads: DownloadJobWithProgress[]
+      }>('/creator-packs')
+      return response.data
+    })()
+  }
+
+  async installCreatorPack(id: string) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string; filename?: string }>(
+        `/creator-packs/${id}/install`
+      )
+      return response.data
+    })()
+  }
+
+  async uninstallCreatorPack(id: string) {
+    return catchInternal(async () => {
+      const response = await this.client.delete<{ message: string; filename?: string }>(
+        `/creator-packs/${id}`
+      )
+      return response.data
+    })()
+  }
+
   async listDocs() {
     return catchInternal(async () => {
       const response = await this.client.get<Array<{ title: string; slug: string }>>('/docs/list')
@@ -713,27 +814,21 @@ class API {
 
   async listMapMarkers() {
     return catchInternal(async () => {
-      const response = await this.client.get<
-        Array<{ id: number; name: string; longitude: number; latitude: number; color: string; notes: string | null; created_at: string }>
-      >('/maps/markers')
+      const response = await this.client.get<MapMarkerResponse[]>('/maps/markers')
       return response.data
     })()
   }
 
-  async createMapMarker(data: { name: string; longitude: number; latitude: number; color?: string }) {
+  async createMapMarker(data: CreateMapMarkerPayload) {
     return catchInternal(async () => {
-      const response = await this.client.post<
-        { id: number; name: string; longitude: number; latitude: number; color: string; notes: string | null; created_at: string }
-      >('/maps/markers', data)
+      const response = await this.client.post<MapMarkerResponse>('/maps/markers', data)
       return response.data
     })()
   }
 
-  async updateMapMarker(id: number, data: { name?: string; color?: string }) {
+  async updateMapMarker(id: number, data: UpdateMapMarkerPayload) {
     return catchInternal(async () => {
-      const response = await this.client.patch<
-        { id: number; name: string; longitude: number; latitude: number; color: string }
-      >(`/maps/markers/${id}`, data)
+      const response = await this.client.patch<MapMarkerResponse>(`/maps/markers/${id}`, data)
       return response.data
     })()
   }
@@ -748,10 +843,12 @@ class API {
     start = 0,
     count = 12,
     query,
+    language,
   }: {
     start?: number
     count?: number
     query?: string
+    language?: string
   }) {
     return catchInternal(async () => {
       return await this.client.get<ListRemoteZimFilesResponse>('/zim/list-remote', {
@@ -759,8 +856,17 @@ class API {
           start,
           count,
           query,
+          language,
         },
       })
+    })()
+  }
+
+  async listCatalogLanguages() {
+    return catchInternal(async () => {
+      const response =
+        await this.client.get<ListCatalogLanguagesResponse>('/zim/catalog-languages')
+      return response.data.languages
     })()
   }
 
@@ -843,6 +949,15 @@ class API {
     return catchInternal(async () => {
       const response = await this.client.post<{ success: boolean; message: string }>(
         `/downloads/jobs/${jobId}/cancel`
+      )
+      return response.data
+    })()
+  }
+
+  async retryDownloadJob(jobId: string): Promise<{ success: boolean; message: string } | undefined> {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ success: boolean; message: string }>(
+        `/downloads/jobs/${jobId}/retry`
       )
       return response.data
     })()
@@ -984,10 +1099,11 @@ class API {
     })()
   }
 
-  async uploadDocument(file: File) {
+  async uploadDocument(file: File, collection?: string) {
     return catchInternal(async () => {
       const formData = new FormData()
       formData.append('file', file)
+      if (collection) formData.append('collection', collection)
       const response = await this.client.post<{ message: string; file_path: string }>(
         '/rag/upload',
         formData,
@@ -997,6 +1113,103 @@ class API {
           },
         }
       )
+      return response.data
+    })()
+  }
+
+  async getKnowledgeCollections() {
+    return catchInternal(async () => {
+      const response = await this.client.get<{ collections: string[] }>('/rag/collections')
+      return response.data
+    })()
+  }
+
+  async updateFileCollection(source: string, collection: string | null) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string }>('/rag/update-collection', {
+        source,
+        collection,
+      })
+      return response.data
+    })()
+  }
+
+  async setFileActive(source: string, active: boolean) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string }>('/rag/files/active', {
+        source,
+        active,
+      })
+      return response.data
+    })()
+  }
+
+  async renameCollection(oldName: string, newName: string) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string }>('/rag/rename-collection', {
+        oldName,
+        newName,
+      })
+      return response.data
+    })()
+  }
+
+  async deleteCollection(name: string) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string }>('/rag/delete-collection', {
+        name,
+      })
+      return response.data
+    })()
+  }
+
+  async setKnowledgeCollectionActive(collection: string | null, active: boolean) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ message: string; affectedCount: number }>(
+        '/rag/collection-active',
+        { collection, active }
+      )
+      return response.data
+    })()
+  }
+
+  async createLinkTile(data: {
+    friendly_name: string
+    url: string
+    description?: string | null
+    icon?: string | null
+    display_order?: number
+    link_color?: string
+  }) {
+    return catchInternal(async () => {
+      const response = await this.client.post<{ success: boolean; service_name: string }>(
+        '/system/services/links',
+        data
+      )
+      return response.data
+    })()
+  }
+
+  async updateLinkTile(data: {
+    service_name: string
+    friendly_name: string
+    url: string
+    description?: string | null
+    icon?: string | null
+    display_order?: number
+    link_color?: string
+  }) {
+    return catchInternal(async () => {
+      const response = await this.client.put<{ success: boolean }>('/system/services/links', data)
+      return response.data
+    })()
+  }
+
+  async deleteLinkTile(service_name: string) {
+    return catchInternal(async () => {
+      const response = await this.client.delete<{ success: boolean }>('/system/services/links', {
+        data: { service_name },
+      })
       return response.data
     })()
   }
@@ -1016,6 +1229,23 @@ class API {
       const response = await this.client.patch<{ success: boolean; message: string }>(
         '/system/settings',
         { key, value }
+      )
+      return response.data
+    })()
+  }
+
+  async getNomadMd() {
+    return catchInternal(async () => {
+      const response = await this.client.get<{ content: string }>('/ai/nomad-md')
+      return response.data
+    })()
+  }
+
+  async saveNomadMd(content: string) {
+    return catchInternal(async () => {
+      const response = await this.client.put<{ success: boolean; message: string }>(
+        '/ai/nomad-md',
+        { content }
       )
       return response.data
     })()
