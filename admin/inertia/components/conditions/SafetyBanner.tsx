@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { IconAlertTriangle } from '@tabler/icons-react'
 
 /**
@@ -22,15 +23,15 @@ export default function SafetyBanner() {
           <ul className="list-disc pl-5 space-y-0.5 text-amber-800">
             <li>
               These results match FDA drug-label indications to a situation. They are{' '}
-              <strong>not a recommendation</strong> and <strong>not an FDA endorsement</strong>.
+              <strong>{t('not a recommendation')}</strong> and <strong>{t('not an FDA endorsement')}</strong>.
             </li>
             <li>
-              This is <strong>not a drug-interaction checker</strong>. Read each label&rsquo;s full
+              This is <strong>{t('not a drug-interaction checker')}</strong>. Read each label&rsquo;s full
               warnings, and check with a pharmacist or clinician before combining medicines.
             </li>
             <li>
               In an emergency, or if symptoms are severe or worsening,{' '}
-              <strong>contact a medical professional or call emergency services</strong>.
+              <strong>{t('contact a medical professional or call emergency services')}</strong>.
             </li>
           </ul>
         </div>

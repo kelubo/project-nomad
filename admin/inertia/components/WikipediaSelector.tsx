@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { formatBytes } from '~/lib/util'
 import { WikipediaOption, WikipediaCurrentSelection } from '../../types/downloads'
 import classNames from 'classnames'
@@ -41,8 +42,8 @@ const WikipediaSelector: React.FC<WikipediaSelectorProps> = ({
           <IconWorld className="w-6 h-6 text-text-primary" />
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-text-primary">Wikipedia</h3>
-          <p className="text-sm text-text-muted">Select your preferred Wikipedia package</p>
+          <h3 className="text-xl font-semibold text-text-primary">{t('Wikipedia')}</h3>
+          <p className="text-sm text-text-muted">{t('Select your preferred Wikipedia package')}</p>
         </div>
       </div>
 

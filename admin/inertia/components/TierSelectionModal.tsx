@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Fragment, useState, useEffect, useMemo } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { IconX, IconCheck, IconInfoCircle } from '@tabler/icons-react'
@@ -322,11 +323,11 @@ const TierSelectionModal: React.FC<TierSelectionModalProps> = ({
                           <p className="text-text-muted text-xs mt-1">
                             {ingestPolicy === 'Always' ? (
                               <>
-                                Your <strong>Auto-index</strong> setting is <strong>Always</strong>, so these files will be indexed automatically once downloaded. You can change this in the Knowledge Base settings.
+                                Your <strong>{t('Auto-index')}</strong> setting is <strong>{t('Always')}</strong>, so these files will be indexed automatically once downloaded. You can change this in the Knowledge Base settings.
                               </>
                             ) : (
                               <>
-                                Your <strong>Auto-index</strong> setting is <strong>Manual</strong>, so these files will sit unindexed until you opt in from the Knowledge Base settings.
+                                Your <strong>{t('Auto-index')}</strong> setting is <strong>{t('Manual')}</strong>, so these files will sit unindexed until you opt in from the Knowledge Base settings.
                               </>
                             )}
                           </p>

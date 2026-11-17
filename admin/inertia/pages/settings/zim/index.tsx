@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
@@ -84,7 +85,7 @@ export default function ZimPage() {
   async function confirmDeleteFile(file: ZimFileWithMetadata) {
     openModal(
       <StyledModal
-        title="Confirm Delete?"
+        title={t('Confirm Delete?')}
         onConfirm={() => {
           deleteFileMutation.mutateAsync(file)
           closeAllModals()
@@ -133,7 +134,7 @@ export default function ZimPage() {
         <main className="px-12 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex flex-col">
-              <h1 className="text-4xl font-semibold mb-2">Content Manager</h1>
+              <h1 className="text-4xl font-semibold mb-2">{t('Content Manager')}</h1>
               <p className="text-text-muted">
                 Manage your stored content files.
               </p>
@@ -151,7 +152,7 @@ export default function ZimPage() {
                   variant="secondary"
                   icon={'IconRefresh'}
                   loading={rescanMutation.isPending}
-                  title="Rebuild the Kiwix library index from the files on disk. Use this after manually adding ZIM files outside of NOMAD."
+                  title={t('Rebuild the Kiwix library index from the files on disk. Use this after manually adding ZIM files outside of NOMAD.')}
                   onClick={() => rescanMutation.mutate()}
                 >
                   Rescan Library
@@ -184,7 +185,7 @@ export default function ZimPage() {
           )}
           {!isInstalled && (
             <Alert
-              title="The Kiwix application is not installed. Please install it to view downloaded ZIM files"
+              title={t('The Kiwix application is not installed. Please install it to view downloaded ZIM files')}
               type="warning"
               variant='solid'
               className="!mt-6"

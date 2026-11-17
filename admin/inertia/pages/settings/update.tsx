@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import SettingsLayout from '~/layouts/SettingsLayout'
 import StyledButton from '~/components/StyledButton'
@@ -233,11 +234,11 @@ export default function SystemUpdatePage(props: { system: Props }) {
 
   return (
     <SettingsLayout>
-      <Head title="System Update" />
+      <Head title={t('System Update')} />
       <div className="xl:pl-72 w-full">
         <main className="px-6 lg:px-12 py-6 lg:py-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-desert-green mb-2">System Update</h1>
+            <h1 className="text-4xl font-bold text-desert-green mb-2">{t('System Update')}</h1>
             <p className="text-desert-stone-dark">
               Keep your Project NOMAD instance up to date with the latest features and
               improvements.
@@ -248,7 +249,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
             <div className="mb-6">
               <Alert
                 type="error"
-                title="Update Failed"
+                title={t('Update Failed')}
                 message={error}
                 variant="bordered"
                 dismissible
@@ -260,7 +261,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
             <div className="mb-6">
               <Alert
                 type="info"
-                title="Container Restarting"
+                title={t('Container Restarting')}
                 message="The admin container is restarting. This page will reload automatically when the update is complete."
                 variant="solid"
               />
@@ -270,7 +271,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
             <div className="mb-6">
               <Alert
                 type="info"
-                title="Connection Temporarily Lost (Expected)"
+                title={t('Connection Temporarily Lost (Expected)')}
                 message="You may see error notifications while the backend restarts during the update. This is completely normal and expected. Connection should be restored momentarily."
                 variant="solid"
               />
@@ -304,7 +305,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
 
               <div className="flex justify-center gap-8 mb-6">
                 <div className="text-center">
-                  <p className="text-sm text-desert-stone mb-1">Current Version</p>
+                  <p className="text-sm text-desert-stone mb-1">{t('Current Version')}</p>
                   <p className="text-xl font-bold text-desert-green">
                     {versionInfo.currentVersion}
                   </p>
@@ -327,7 +328,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                       </svg>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-desert-stone mb-1">Latest Version</p>
+                      <p className="text-sm text-desert-stone mb-1">{t('Latest Version')}</p>
                       <p className="text-xl font-bold text-desert-olive">
                         {versionInfo.latestVersion}
                       </p>
@@ -381,7 +382,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                     1
                   </div>
                   <div>
-                    <p className="font-medium text-desert-stone-dark">Pull Latest Images</p>
+                    <p className="font-medium text-desert-stone-dark">{t('Pull Latest Images')}</p>
                     <p className="text-sm text-desert-stone">
                       Downloads the newest Docker images for all core containers
                     </p>
@@ -392,7 +393,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                     2
                   </div>
                   <div>
-                    <p className="font-medium text-desert-stone-dark">Recreate Containers</p>
+                    <p className="font-medium text-desert-stone-dark">{t('Recreate Containers')}</p>
                     <p className="text-sm text-desert-stone">
                       Safely stops and recreates all core containers with the new images
                     </p>
@@ -403,7 +404,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                     3
                   </div>
                   <div>
-                    <p className="font-medium text-desert-stone-dark">Automatic Reload</p>
+                    <p className="font-medium text-desert-stone-dark">{t('Automatic Reload')}</p>
                     <p className="text-sm text-desert-stone">
                       This page will automatically reload when the update is complete
                     </p>
@@ -429,18 +430,18 @@ export default function SystemUpdatePage(props: { system: Props }) {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Alert
               type="info"
-              title="Backup Reminder"
+              title={t('Backup Reminder')}
               message="While updates are designed to be safe, it's always recommended to backup any critical data before proceeding."
               variant="solid"
             />
             <Alert
               type="warning"
-              title="Temporary Downtime"
+              title={t('Temporary Downtime')}
               message="Services will be briefly unavailable during the update process. This typically takes 2-5 minutes depending on your internet connection."
               variant="solid"
             />
           </div>
-          <StyledSectionHeader title="Early Access" className="mt-8" />
+          <StyledSectionHeader title={t('Early Access')} className="mt-8" />
           <div className="bg-surface-primary rounded-lg border shadow-md overflow-hidden mt-6 p-6">
             <Switch
               checked={earlyAccessSetting.data?.value || false}
@@ -448,7 +449,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                 updateSettingMutation.mutate({ key: 'system.earlyAccess', value: newVal })
               }}
               disabled={updateSettingMutation.isPending}
-              label="Enable Early Access"
+              label={t('Enable Early Access')}
               description="Receive release candidate (RC) versions before they are officially released. Note: RC versions may contain bugs and are not recommended for environments where stability and data integrity are critical."
             />
           </div>
@@ -470,7 +471,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
                     name="email"
                     label=""
                     type="email"
-                    placeholder="Your email address"
+                    placeholder={t('Your email address')}
                     disabled={false}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -498,7 +499,7 @@ export default function SystemUpdatePage(props: { system: Props }) {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
               <div className="bg-surface-primary rounded-lg shadow-2xl max-w-4xl w-full max-h-[80vh] flex flex-col">
                 <div className="p-6 border-b border-desert-stone-light flex justify-between items-center">
-                  <h3 className="text-xl font-bold text-desert-green">Update Logs</h3>
+                  <h3 className="text-xl font-bold text-desert-green">{t('Update Logs')}</h3>
                   <button
                     onClick={() => setShowLogs(false)}
                     className="text-desert-stone hover:text-desert-green transition-colors"

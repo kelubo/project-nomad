@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import StyledModal from './StyledModal'
 import StyledButton from './StyledButton'
@@ -54,7 +55,7 @@ export default function AppUrlModal({ open, service, onClose, onSaved, showError
 
   return (
     <StyledModal
-      title="Set Custom URL"
+      title={t('Set Custom URL')}
       open={open}
       onCancel={onClose}
       onClose={onClose}
@@ -77,7 +78,7 @@ export default function AppUrlModal({ open, service, onClose, onSaved, showError
           <div className="flex items-end gap-2">
             <Input
               name="customUrl"
-              label="Custom URL"
+              label={t('Custom URL')}
               placeholder="http://jellyfin.myhomelab.net"
               maxLength={255}
               value={value}

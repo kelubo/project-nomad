@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, router, usePage } from '@inertiajs/react'
 import { useRef, useState } from 'react'
 import StyledTable from '~/components/StyledTable'
@@ -178,7 +179,7 @@ export default function ModelsPage(props: {
   async function confirmDeleteModel(model: string) {
     openModal(
       <StyledModal
-        title="Delete Model?"
+        title={t('Delete Model?')}
         onConfirm={() => {
           handleDeleteModel(model)
         }}
@@ -298,7 +299,7 @@ export default function ModelsPage(props: {
             />
           )}
 
-          <StyledSectionHeader title="Settings" className="mt-8 mb-4" />
+          <StyledSectionHeader title={t('Settings')} className="mt-8 mb-4" />
           <div className="bg-surface-primary rounded-lg border-2 border-border-subtle p-6">
             <div className="space-y-4">
               <Switch
@@ -307,8 +308,8 @@ export default function ModelsPage(props: {
                   setChatSuggestionsEnabled(newVal)
                   updateSettingMutation.mutate({ key: 'chat.suggestionsEnabled', value: newVal })
                 }}
-                label="Chat Suggestions"
-                description="Display AI-generated conversation starters in the chat interface"
+                label={t('Chat Suggestions')}
+                description={t('Display AI-generated conversation starters in the chat interface')}
               />
               <Switch
                 checked={ollamaFlashAttention}
@@ -316,7 +317,7 @@ export default function ModelsPage(props: {
                   setOllamaFlashAttention(newVal)
                   updateSettingMutation.mutate({ key: 'ai.ollamaFlashAttention', value: newVal })
                 }}
-                label="Flash Attention"
+                label={t('Flash Attention')}
                 description="Enables OLLAMA_FLASH_ATTENTION=1 for improved memory efficiency. Disable if you experience instability. Takes effect after reinstalling the AI Assistant."
               />
               <Switch
@@ -325,7 +326,7 @@ export default function ModelsPage(props: {
                   setAutoThinking(newVal)
                   updateSettingMutation.mutate({ key: 'ai.autoThinking', value: newVal })
                 }}
-                label="Use thinking automatically when a model supports it"
+                label={t('Use thinking automatically when a model supports it')}
                 description="Sets the default for models that can think. You can still turn thinking on or off for an individual model in the chat window."
               />
               <Switch
@@ -334,14 +335,14 @@ export default function ModelsPage(props: {
                   setRagEnabled(newVal)
                   updateSettingMutation.mutate({ key: 'rag.enabled', value: newVal })
                 }}
-                label="Knowledge Base Retrieval"
+                label={t('Knowledge Base Retrieval')}
                 description="Search your knowledge base for relevant documents before answering. Turn this off to save memory and speed up replies when your knowledge base is small or empty. This is the same switch as the one in the chat window."
               />
               <Input
                 name="aiAssistantCustomName"
-                label="Assistant Name"
+                label={t('Assistant Name')}
                 helpText='Give your AI assistant a custom name that will be used in the chat interface and other areas of the application.'
-                placeholder="AI Assistant"
+                placeholder={t('AI Assistant')}
                 value={aiAssistantCustomName}
                 onChange={(e) => setAiAssistantCustomName(e.target.value)}
                 onBlur={() =>
@@ -353,7 +354,7 @@ export default function ModelsPage(props: {
               />
               <Select
                 name="tasksModel"
-                label="Tasks Model"
+                label={t('Tasks Model')}
                 helpText="Small, fast model used for background work like chat titles and suggestions. Leave this set to the chat model to use whichever model the chat is using. Avoid reasoning models here — they are slow at short, aesthetic tasks."
                 value={tasksModel}
                 options={tasksModelOptions}
@@ -364,7 +365,7 @@ export default function ModelsPage(props: {
               />
               <Select
                 name="minRelevance"
-                label="Knowledge Base Relevance"
+                label={t('Knowledge Base Relevance')}
                 helpText="How closely a knowledge-base passage has to match your question before it is used in an answer. Stricter settings keep unrelated passages out; too strict and genuinely useful ones get dropped too. When nothing clears the bar, the assistant answers from its own knowledge instead."
                 value={minRelevance}
                 options={minRelevanceOptions}
@@ -381,12 +382,12 @@ export default function ModelsPage(props: {
                   setRelevanceCheck(newVal)
                   updateSettingMutation.mutate({ key: 'rag.relevanceCheck', value: newVal })
                 }}
-                label="Double-check knowledge base matches"
+                label={t('Double-check knowledge base matches')}
                 description="Before answering, ask the Tasks Model whether the passages found are actually about your question, and leave them out (and uncited) when they are not. Helps most with large libraries like Wikipedia or Project Gutenberg, where something always looks similar. Needs a capable Tasks Model (about 8B parameters or larger); smaller models reject too many good matches. Adds a short delay to every reply."
               />
               <Select
                 name="responseStyle"
-                label="Response Style"
+                label={t('Response Style')}
                 helpText="How adventurous the assistant is when picking its next word. Auto follows whatever the model's author recommended and fills in the rest, and suits most people. Focused gives shorter, steadier, more repeatable answers and is the better choice for looking things up. Creative varies its wording more, at some cost to accuracy."
                 value={responseStyle}
                 options={responseStyleOptions}
@@ -397,7 +398,7 @@ export default function ModelsPage(props: {
               />
               <Select
                 name="contextWindow"
-                label="Context Window"
+                label={t('Context Window')}
                 helpText="How much conversation and knowledge-base context each reply can consider. Auto sizes this per model from its trained limit and your available memory. Choosing a value sets an upper limit — it can lower the window to save memory, but never raises it beyond what a model supports."
                 value={contextWindow}
                 options={contextWindowOptions}
@@ -418,7 +419,7 @@ export default function ModelsPage(props: {
             </div>
           </div>
 
-          <StyledSectionHeader title="Installed Models" className="mt-12 mb-4" />
+          <StyledSectionHeader title={t('Installed Models')} className="mt-12 mb-4" />
           <div className="bg-surface-primary rounded-lg border-2 border-border-subtle p-6">
             {props.models.installedModels.length === 0 ? (
               <p className="text-text-muted">
@@ -475,7 +476,7 @@ export default function ModelsPage(props: {
             )}
           </div>
 
-          <StyledSectionHeader title="Remote Connection" className="mt-8 mb-4" />
+          <StyledSectionHeader title={t('Remote Connection')} className="mt-8 mb-4" />
           <div className="bg-surface-primary rounded-lg border-2 border-border-subtle p-6">
             <p className="text-sm text-text-secondary mb-4">
               Connect to any OpenAI-compatible API server — Ollama, LM Studio, llama.cpp, and others are all supported.
@@ -485,7 +486,7 @@ export default function ModelsPage(props: {
               <div className="flex-1">
                 <Input
                   name="remoteOllamaUrl"
-                  label="Remote Ollama/OpenAI API URL"
+                  label={t('Remote Ollama/OpenAI API URL')}
                   placeholder="http://192.168.1.100:11434  (or :1234 for OpenAI API Compatible Apps)"
                   value={remoteOllamaUrl}
                   onChange={(e) => {
@@ -522,11 +523,11 @@ export default function ModelsPage(props: {
 
           <ActiveModelDownloads withHeader />
 
-          <StyledSectionHeader title="Models" className="mt-12 mb-4" />
+          <StyledSectionHeader title={t('Models')} className="mt-12 mb-4" />
           <Alert
             type="info"
             variant="bordered"
-            title="Model downloading is only supported when using a Ollama backend."
+            title={t('Model downloading is only supported when using a Ollama backend.')}
             message="If you are connected to an OpenAI API host (e.g. LM Studio), please download models directly in that application."
             className="mb-4"
           />
@@ -534,7 +535,7 @@ export default function ModelsPage(props: {
             <Input
               name="search"
               label=""
-              placeholder="Search language models.."
+              placeholder={t('Search language models..')}
               value={queryUI}
               onChange={(e) => {
                 setQueryUI(e.target.value)

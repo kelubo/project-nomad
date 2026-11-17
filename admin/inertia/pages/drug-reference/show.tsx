@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, Link } from '@inertiajs/react'
 import AppLayout from '~/layouts/AppLayout'
 import { IconArrowLeft, IconAlertTriangle, IconFirstAidKit } from '@tabler/icons-react'
@@ -113,7 +114,7 @@ export default function DrugReferenceShow({ label, situations = [] }: PageProps)
 
         {/* 2. Indications & Usage */}
         {label.indications && (
-          <LabelSection title="Indications & Usage" body={label.indications} />
+          <LabelSection title={t('Indications & Usage')} body={label.indications} />
         )}
 
         {/* Reverse link — curated situations this label treats. The other half of
@@ -143,18 +144,18 @@ export default function DrugReferenceShow({ label, situations = [] }: PageProps)
 
         {/* 3. Dosage & Administration */}
         {label.dosage && (
-          <LabelSection title="Dosage & Administration" body={label.dosage} />
+          <LabelSection title={t('Dosage & Administration')} body={label.dosage} />
         )}
 
         {/* 4. Warnings */}
         {label.warnings && (
-          <LabelSection title="Warnings" body={label.warnings} />
+          <LabelSection title={t('Warnings')} body={label.warnings} />
         )}
 
         {/* 5. Drug Interactions — single-drug label text, not a pairwise checker */}
         {label.drug_interactions && (
           <LabelSection
-            title="Drug Interactions"
+            title={t('Drug Interactions')}
             body={label.drug_interactions}
             footnote="Single-drug label information — not a cross-drug interaction checker"
           />
@@ -162,23 +163,23 @@ export default function DrugReferenceShow({ label, situations = [] }: PageProps)
 
         {/* 6. Contraindications */}
         {label.contraindications && (
-          <LabelSection title="Contraindications" body={label.contraindications} />
+          <LabelSection title={t('Contraindications')} body={label.contraindications} />
         )}
 
         {/* 7. When Using (OTC) */}
         {label.when_using && (
-          <LabelSection title="When Using" body={label.when_using} />
+          <LabelSection title={t('When Using')} body={label.when_using} />
         )}
 
         {/* 8. Stop Use (OTC) */}
         {label.stop_use && (
-          <LabelSection title="Stop Use" body={label.stop_use} />
+          <LabelSection title={t('Stop Use')} body={label.stop_use} />
         )}
 
         {/* ── Footer citation ───────────────────────────────────────────────── */}
         <footer className="mt-8 pt-4 border-t border-border-subtle text-xs text-text-secondary space-y-1">
           <p>
-            <strong>Source:</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
+            <strong>{t('Source:')}</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
             <strong>openFDA</strong> — public domain (CC0 1.0). NOMAD is not affiliated with or
             endorsed by the FDA.
           </p>

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import StyledButton from '~/components/StyledButton'
 import StyledTable from '~/components/StyledTable'
@@ -99,7 +100,7 @@ export default function ContentUpdatesSection() {
 
   return (
     <div className="mt-8">
-      <StyledSectionHeader title="Manual Content Updates" />
+      <StyledSectionHeader title={t('Manual Content Updates')} />
 
       <div className="bg-surface-primary rounded-lg border shadow-md overflow-hidden p-6">
         <div className="flex items-center justify-between">
@@ -119,7 +120,7 @@ export default function ContentUpdatesSection() {
         {checkResult?.error && (
           <Alert
             type="warning"
-            title="Update Check Issue"
+            title={t('Update Check Issue')}
             message={checkResult.error}
             variant="bordered"
             className="my-4"
@@ -129,7 +130,7 @@ export default function ContentUpdatesSection() {
         {checkResult && !checkResult.error && checkResult.updates.length === 0 && (
           <Alert
             type="success"
-            title="All Content Up to Date"
+            title={t('All Content Up to Date')}
             message="All your installed content is running the latest available version."
             variant="bordered"
             className="my-4"

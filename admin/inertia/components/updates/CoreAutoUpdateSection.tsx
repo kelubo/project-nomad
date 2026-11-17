@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import StyledButton from '~/components/StyledButton'
 import StyledSectionHeader from '~/components/StyledSectionHeader'
@@ -76,12 +77,12 @@ export default function CoreAutoUpdateSection() {
 
   return (
     <>
-      <StyledSectionHeader title="Automatic Core Updates" className="mt-8" />
+      <StyledSectionHeader title={t('Automatic Core Updates')} className="mt-8" />
       <div className="bg-surface-primary rounded-lg border shadow-md overflow-hidden mt-6 p-6">
         {autoDisabled && (
           <Alert
             type="warning"
-            title="Automatic Core Updates Disabled"
+            title={t('Automatic Core Updates Disabled')}
             message={status?.autoDisabledReason || 'Automatic core updates were disabled after repeated failures.'}
             variant="bordered"
             className="mb-4"
@@ -92,14 +93,14 @@ export default function CoreAutoUpdateSection() {
           checked={enabled}
           onChange={handleToggle}
           disabled={saveMutation.isPending || isLoading}
-          label="Enable Automatic Core Updates"
+          label={t('Enable Automatic Core Updates')}
           description="Automatically install minor and patch updates during your chosen window. Major versions always require a manual update due to their potentially breaking nature."
         />
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           <Input
             name="autoUpdateWindowStart"
-            label="Window Start"
+            label={t('Window Start')}
             type="time"
             value={windowStart}
             onChange={(e) => setWindowStart(e.target.value)}
@@ -108,7 +109,7 @@ export default function CoreAutoUpdateSection() {
           />
           <Input
             name="autoUpdateWindowEnd"
-            label="Window End"
+            label={t('Window End')}
             type="time"
             value={windowEnd}
             onChange={(e) => setWindowEnd(e.target.value)}
@@ -122,7 +123,7 @@ export default function CoreAutoUpdateSection() {
             >
               Cool-off Period
             </label>
-            <p className="mt-1 text-sm text-text-muted">Delay after a release is published</p>
+            <p className="mt-1 text-sm text-text-muted">{t('Delay after a release is published')}</p>
             <select
               id="autoUpdateCooloff"
               value={cooloff}

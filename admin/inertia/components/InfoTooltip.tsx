@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { IconInfoCircle } from '@tabler/icons-react'
 import { useState } from 'react'
 
@@ -29,7 +30,7 @@ export default function InfoTooltip({
         onMouseLeave={() => setIsVisible(false)}
         onFocus={() => setIsVisible(true)}
         onBlur={() => setIsVisible(false)}
-        aria-label="More information"
+        aria-label={t('More information')}
       >
         <IconInfoCircle className="w-4 h-4" />
       </button>

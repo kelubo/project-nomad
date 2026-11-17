@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import Footer from '~/components/Footer'
 import ChatButton from '~/components/chat/ChatButton'
@@ -35,7 +36,7 @@ export default function AppLayout({
             )}
           >
             <IconArrowLeft className="mr-2" size={24} />
-            <p className="text-lg text-text-secondary">Back to Home</p>
+            <p className="text-lg text-text-secondary">{t('Back to Home')}</p>
           </Link>
         )}
       <div
@@ -47,7 +48,7 @@ export default function AppLayout({
       >
         <img
           src="/nomad-primary.svg"
-          alt="Project NOMAD Logo"
+          alt={t('Project NOMAD Logo')}
           className={compact ? 'h-12 w-12 object-contain' : 'h-40 w-40 object-contain'}
         />
         <h1

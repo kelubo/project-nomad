@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { IconX } from '@tabler/icons-react'
@@ -74,7 +75,7 @@ export default function NomadMdModal({ aiAssistantName, onClose }: NomadMdModalP
       <div className="bg-surface-primary rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex items-center justify-between p-6 border-b border-border-subtle shrink-0">
           <div>
-            <h2 className="text-2xl font-semibold text-text-primary">NOMAD.md</h2>
+            <h2 className="text-2xl font-semibold text-text-primary">{t('NOMAD.md')}</h2>
             <p className="text-sm text-text-muted mt-1">
               Custom instructions passed to {assistantName} as a system prompt on every chat.
             </p>

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useCallback, useRef, useState } from 'react'
 import useOllamaModelDownloads from '~/hooks/useOllamaModelDownloads'
 import StyledSectionHeader from './StyledSectionHeader'
@@ -87,7 +88,7 @@ const ActiveModelDownloads = ({ withHeader = false }: ActiveModelDownloadsProps)
 
         openModal(
             <StyledModal
-                title="Cancel Download?"
+                title={t('Cancel Download?')}
                 onConfirm={() => {
                     closeAllModals()
                     runCancel(download)
@@ -114,7 +115,7 @@ const ActiveModelDownloads = ({ withHeader = false }: ActiveModelDownloadsProps)
 
     return (
         <>
-            {withHeader && <StyledSectionHeader title="Active Model Downloads" className="mt-12 mb-4" />}
+            {withHeader && <StyledSectionHeader title={t('Active Model Downloads')} className="mt-12 mb-4" />}
             <div className="space-y-4">
                 {downloads && downloads.length > 0 ? (
                     downloads.map((download) => {
@@ -161,7 +162,7 @@ const ActiveModelDownloads = ({ withHeader = false }: ActiveModelDownloadsProps)
                                                     <button
                                                         onClick={() => confirmCancel(download)}
                                                         className="flex-shrink-0 p-1 rounded hover:bg-red-100 transition-colors"
-                                                        title="Cancel download"
+                                                        title={t('Cancel download')}
                                                     >
                                                         <IconX className="w-4 h-4 text-text-muted hover:text-red-500" />
                                                     </button>
@@ -210,7 +211,7 @@ const ActiveModelDownloads = ({ withHeader = false }: ActiveModelDownloadsProps)
                         )
                     })
                 ) : (
-                    <p className="text-text-muted">No active model downloads</p>
+                    <p className="text-text-muted">{t('No active model downloads')}</p>
                 )}
             </div>
         </>

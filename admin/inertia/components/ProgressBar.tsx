@@ -1,8 +1,10 @@
+import { tGlobal as t } from '~/lib/i18n'
+
 const ProgressBar = ({ progress, speed }: { progress: number; speed?: string }) => {
   if (progress >= 100) {
     return (
       <div className="flex items-center justify-between">
-        <span className="text-sm text-desert-green">Download complete</span>
+        <span className="text-sm text-desert-green">{t('Download complete')}</span>
       </div>
     )
   }
@@ -25,3 +27,4 @@ const ProgressBar = ({ progress, speed }: { progress: number; speed?: string }) 
 }
 
 export default ProgressBar
+

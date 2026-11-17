@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import FileUploader from '~/components/file-uploader'
@@ -510,7 +511,7 @@ export default function KnowledgeBaseModal({
   const handleConfirmCancelAll = () => {
     openModal(
       <StyledModal
-        title="Cancel All Embedding Jobs?"
+        title={t('Cancel All Embedding Jobs?')}
         onConfirm={() => {
           cancelAllMutation.mutate()
           closeModal('confirm-cancel-all-modal')
@@ -535,7 +536,7 @@ export default function KnowledgeBaseModal({
   const handleConfirmSync = () => {
     openModal(
       <StyledModal
-        title="Confirm Sync?"
+        title={t('Confirm Sync?')}
         onConfirm={() => {
           syncMutation.mutate()
           closeModal('confirm-sync-modal')
@@ -565,7 +566,7 @@ export default function KnowledgeBaseModal({
           against 961px of usable width at 5xl. */}
       <div className="bg-surface-primary rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex items-center justify-between p-6 border-b border-border-subtle shrink-0">
-          <h2 className="text-2xl font-semibold text-text-primary">Knowledge Base</h2>
+          <h2 className="text-2xl font-semibold text-text-primary">{t('Knowledge Base')}</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-surface-secondary rounded-lg transition-colors"
@@ -577,7 +578,7 @@ export default function KnowledgeBaseModal({
           {qdrantOffline && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm dark:bg-red-950 dark:border-red-800 dark:text-red-300 flex items-center justify-between gap-4">
               <span>
-                <strong>Knowledge Base unavailable:</strong> The Qdrant vector database is offline.
+                <strong>{t('Knowledge Base unavailable:')}</strong> The Qdrant vector database is offline.
               </span>
               <StyledButton
                 variant="danger"
@@ -691,7 +692,7 @@ export default function KnowledgeBaseModal({
               </div>
               <div
                 role="radiogroup"
-                aria-label="Ingest policy"
+                aria-label={t('Ingest policy')}
                 className="inline-flex rounded-md overflow-hidden border border-border-subtle"
               >
                 {(['Always', 'Manual'] as const).map((option) => {
@@ -720,7 +721,7 @@ export default function KnowledgeBaseModal({
 
           <div className="my-8">
             <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
-              <StyledSectionHeader title="Processing Queue" className="!mb-0" />
+              <StyledSectionHeader title={t('Processing Queue')} className="!mb-0" />
               <div className="flex items-center gap-2 flex-wrap">
                 <StyledButton
                   variant="danger"
@@ -750,7 +751,7 @@ export default function KnowledgeBaseModal({
 
           <div className="my-12">
             <div className="flex items-center justify-between mb-6 gap-2 flex-wrap">
-              <StyledSectionHeader title="Stored Knowledge Base Files" className="!mb-0" />
+              <StyledSectionHeader title={t('Stored Knowledge Base Files')} className="!mb-0" />
               <div className="flex items-center gap-2 flex-wrap">
                 <label className="flex items-center gap-2 text-sm text-text-secondary">
                   Search in:
@@ -759,13 +760,13 @@ export default function KnowledgeBaseModal({
                     onChange={(e) => setCollectionFilter(e.target.value)}
                     className="rounded border border-border-subtle bg-surface-primary px-3 py-2 text-text-primary"
                   >
-                    <option value="All">All</option>
+                    <option value="All">{t('All')}</option>
                     {knownCollections.map((c) => (
                       <option key={c} value={c}>
                         {c}
                       </option>
                     ))}
-                    <option value={UNCATEGORIZED_COLLECTION_KEY}>Uncategorized</option>
+                    <option value={UNCATEGORIZED_COLLECTION_KEY}>{t('Uncategorized')}</option>
                   </select>
                 </label>
                 <StyledButton
@@ -991,7 +992,7 @@ export default function KnowledgeBaseModal({
                     if (record.bucket === 'admin_docs') {
                       return (
                         <div className="flex justify-end">
-                          <span className="text-sm text-text-muted italic">Managed by NOMAD</span>
+                          <span className="text-sm text-text-muted italic">{t('Managed by NOMAD')}</span>
                         </div>
                       )
                     }
@@ -1122,7 +1123,7 @@ export default function KnowledgeBaseModal({
 
       {bulkMode === 'reembed' && (
         <StyledModal
-          title="Re-embed All Documents?"
+          title={t('Re-embed All Documents?')}
           open={true}
           confirmText={reembedMutation.isPending ? 'Re-embedding…' : 'Re-embed All'}
           cancelText="Cancel"
@@ -1142,7 +1143,7 @@ export default function KnowledgeBaseModal({
               fresh embedding job using the current chunking and embedding model.
             </p>
             <div className="rounded border border-border-subtle bg-surface-secondary p-3">
-              <p className="font-semibold mb-1">What this is for</p>
+              <p className="font-semibold mb-1">{t('What this is for')}</p>
               <p className="text-text-secondary">
                 Use this when the embedding model or chunking logic has changed, or when you suspect
                 stored vectors are stale. Files on disk are <em>not</em> deleted, and any orphan
@@ -1151,7 +1152,7 @@ export default function KnowledgeBaseModal({
               </p>
             </div>
             <div className="rounded border border-amber-300 bg-amber-50 dark:bg-amber-950 dark:border-amber-800 p-3 text-amber-900 dark:text-amber-200">
-              <p className="font-semibold mb-1">Heads up</p>
+              <p className="font-semibold mb-1">{t('Heads up')}</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   Embedding {storedFiles.length} file{storedFiles.length === 1 ? '' : 's'} may take
@@ -1177,7 +1178,7 @@ export default function KnowledgeBaseModal({
 
       {bulkMode === 'reset' && (
         <StyledModal
-          title="Reset & Rebuild Knowledge Base?"
+          title={t('Reset & Rebuild Knowledge Base?')}
           open={true}
           confirmText={resetMutation.isPending ? 'Resetting…' : 'Wipe & Rebuild'}
           cancelText="Cancel"
@@ -1193,7 +1194,7 @@ export default function KnowledgeBaseModal({
         >
           <div className="text-text-primary text-sm space-y-3 text-left">
             <p>
-              This will <strong>permanently delete every point</strong> in the
+              This will <strong>{t('permanently delete every point')}</strong> in the
               <code> nomad_knowledge_base </code>Qdrant collection and rebuild from the
               <strong>
                 {' '}
@@ -1203,21 +1204,21 @@ export default function KnowledgeBaseModal({
               for embedding.
             </p>
             <div className="rounded border border-border-subtle bg-surface-secondary p-3">
-              <p className="font-semibold mb-1">How this differs from Re-embed All</p>
+              <p className="font-semibold mb-1">{t('How this differs from Re-embed All')}</p>
               <ul className="list-disc pl-5 space-y-1 text-text-secondary">
                 <li>
-                  <strong>Re-embed All</strong> replaces vectors file-by-file. Any orphan points
+                  <strong>{t('Re-embed All')}</strong> replaces vectors file-by-file. Any orphan points
                   (vectors whose source file was deleted from disk at some point) are preserved.
                 </li>
                 <li>
                   <strong>Reset &amp; Rebuild</strong> drops the entire collection. Orphan points
-                  are <strong>gone forever</strong>. Only files currently on disk will exist in
+                  are <strong>{t('gone forever')}</strong>. Only files currently on disk will exist in
                   Qdrant afterwards.
                 </li>
               </ul>
             </div>
             <div className="rounded border border-red-300 bg-red-50 dark:bg-red-950 dark:border-red-800 p-3 text-red-900 dark:text-red-200">
-              <p className="font-semibold mb-1">This action is destructive and cannot be undone</p>
+              <p className="font-semibold mb-1">{t('This action is destructive and cannot be undone')}</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   Knowledge Base search will be empty until embedding finishes (potentially hours on
@@ -1236,13 +1237,13 @@ export default function KnowledgeBaseModal({
             </div>
             <div>
               <label className="block text-sm font-semibold mb-1">
-                Type <code>RESET</code> to confirm:
+                Type <code>{t('RESET')}</code> to confirm:
               </label>
               <input
                 type="text"
                 value={resetTyped}
                 onChange={(e) => setResetTyped(e.target.value)}
-                placeholder="RESET"
+                placeholder={t('RESET')}
                 autoFocus
                 className="w-full rounded border border-border-subtle bg-surface-primary px-3 py-2 text-text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
               />
@@ -1258,7 +1259,7 @@ export default function KnowledgeBaseModal({
 
       {confirmReembed && (
         <StyledModal
-          title="Re-embed this file?"
+          title={t('Re-embed this file?')}
           open={true}
           confirmText={embedMutation.isPending ? 'Queuing…' : 'Re-embed'}
           cancelText="Cancel"
@@ -1274,7 +1275,7 @@ export default function KnowledgeBaseModal({
               file on disk is not touched.
             </p>
             <div className="rounded border border-amber-300 bg-amber-50 dark:bg-amber-950 dark:border-amber-800 p-3 text-amber-900 dark:text-amber-200">
-              <p className="font-semibold mb-1">Heads up</p>
+              <p className="font-semibold mb-1">{t('Heads up')}</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   For large ZIM archives this can take a long time, especially on CPU-only systems.

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import { IconExternalLink } from '@tabler/icons-react'
 import SettingsLayout from '~/layouts/SettingsLayout'
@@ -8,7 +9,7 @@ export default function SupportPage() {
       <Head title="Support the Project | Project NOMAD" />
       <div className="xl:pl-72 w-full">
         <main className="px-12 py-6 max-w-4xl">
-          <h1 className="text-4xl font-semibold mb-4">Support the Project</h1>
+          <h1 className="text-4xl font-semibold mb-4">{t('Support the Project')}</h1>
           <p className="text-text-muted mb-10 text-lg">
             Project NOMAD is 100% free and open source — no subscriptions, no paywalls, no catch.
             If you'd like to help keep the project going, here are a few ways to show your support.
@@ -16,7 +17,7 @@ export default function SupportPage() {
 
           {/* Ko-fi */}
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-3">Buy Us a Coffee</h2>
+            <h2 className="text-2xl font-semibold mb-3">{t('Buy Us a Coffee')}</h2>
             <p className="text-text-muted mb-4">
               Every contribution helps fund development, server costs, and new content packs for NOMAD.
               Even a small donation goes a long way.
@@ -34,7 +35,7 @@ export default function SupportPage() {
 
           {/* Rogue Support */}
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-3">Need Help With Your Home Network?</h2>
+            <h2 className="text-2xl font-semibold mb-3">{t('Need Help With Your Home Network?')}</h2>
             <a
               href="https://rogue.support"
               target="_blank"
@@ -64,7 +65,7 @@ export default function SupportPage() {
 
           {/* Other Ways to Help */}
           <section className="mb-10">
-            <h2 className="text-2xl font-semibold mb-3">Other Ways to Help</h2>
+            <h2 className="text-2xl font-semibold mb-3">{t('Other Ways to Help')}</h2>
             <ul className="space-y-2 text-text-muted">
               <li>
                 <a

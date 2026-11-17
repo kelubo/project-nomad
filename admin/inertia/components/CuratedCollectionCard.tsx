@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { formatBytes } from '~/lib/util'
 import DynamicIcon, { DynamicIconName } from './DynamicIcon'
 import type { CollectionWithStatus } from '../../types/collections'
@@ -41,9 +42,9 @@ const CuratedCollectionCard: React.FC<CuratedCollectionCardProps> = ({ collectio
             <div className="flex items-center">
               <IconCircleCheck
                 className="w-5 h-5 text-lime-400 ml-2"
-                title="All items downloaded"
+                title={t('All items downloaded')}
               />
-              <p className="text-lime-400 text-sm ml-1">All items downloaded</p>
+              <p className="text-lime-400 text-sm ml-1">{t('All items downloaded')}</p>
             </div>
           )}
         </div>

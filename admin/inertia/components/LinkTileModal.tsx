@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import StyledModal from './StyledModal'
 import Input from './inputs/Input'
@@ -107,8 +108,8 @@ export default function LinkTileModal({
 
         <Input
           name="linkName"
-          label="Name"
-          placeholder="Living room NAS"
+          label={t('Name')}
+          placeholder={t('Living room NAS')}
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={60}
@@ -117,7 +118,7 @@ export default function LinkTileModal({
         <div>
           <Input
             name="linkUrl"
-            label="URL"
+            label={t('URL')}
             placeholder="192.168.1.50:8080"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -139,8 +140,8 @@ export default function LinkTileModal({
 
         <Input
           name="linkDescription"
-          label="Description (optional)"
-          placeholder="Photos and backups"
+          label={t('Description (optional)')}
+          placeholder={t('Photos and backups')}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           maxLength={200}
@@ -157,7 +158,7 @@ export default function LinkTileModal({
         </div>
 
         <div>
-          <p className="mb-1.5 font-medium text-text-primary">Color</p>
+          <p className="mb-1.5 font-medium text-text-primary">{t('Color')}</p>
           <div className="flex items-center gap-2">
             {LINK_TILE_COLORS.map((option) => (
               <button

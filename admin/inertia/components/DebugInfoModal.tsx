@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import { IconBug, IconCopy, IconCheck } from '@tabler/icons-react'
 import StyledModal from './StyledModal'
@@ -52,7 +53,7 @@ export default function DebugInfoModal({ open, onClose }: DebugInfoModalProps) {
     <StyledModal
       open={open}
       onClose={onClose}
-      title="Debug Info"
+      title={t('Debug Info')}
       icon={<IconBug className="size-8 text-desert-green" />}
       cancelText="Close"
       onCancel={onClose}

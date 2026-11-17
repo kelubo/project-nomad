@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import classNames from '~/lib/classNames'
 import { formatBytes } from '~/lib/util'
 import { IconAlertTriangle, IconServer } from '@tabler/icons-react'
@@ -40,7 +41,7 @@ export default function StorageProjectionBar({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <IconServer size={20} className="text-desert-green" />
-          <span className="font-semibold text-desert-green">Storage</span>
+          <span className="font-semibold text-desert-green">{t('Storage')}</span>
         </div>
         <div className="text-sm text-desert-stone-dark font-mono">
           {formatBytes(projectedTotal, 1)} / {formatBytes(totalSize, 1)}

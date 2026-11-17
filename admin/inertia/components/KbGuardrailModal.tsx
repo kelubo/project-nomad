@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { IconAlertTriangle, IconX } from '@tabler/icons-react'
@@ -68,7 +69,7 @@ export default function KbGuardrailModal({
                   <button
                     onClick={onCancel}
                     className="text-text-muted hover:text-text-primary transition-colors flex-shrink-0"
-                    aria-label="Cancel"
+                    aria-label={t('Cancel')}
                   >
                     <IconX size={20} />
                   </button>
@@ -87,7 +88,7 @@ export default function KbGuardrailModal({
                   )}
 
                   <p className="text-text-secondary text-sm">
-                    If you'd rather review per-item before indexing, cancel here and switch your Auto-index setting to <strong>Manual</strong> from the Knowledge Base panel.
+                    If you'd rather review per-item before indexing, cancel here and switch your Auto-index setting to <strong>{t('Manual')}</strong> from the Knowledge Base panel.
                   </p>
                 </div>
 

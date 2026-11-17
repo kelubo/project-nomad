@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import { Head, Link, router } from '@inertiajs/react'
 
@@ -64,7 +65,7 @@ export default function Maps(props: {
 
   return (
     <MapsLayout>
-      <Head title="Maps" />
+      <Head title={t('Maps')} />
 
       <div className="relative w-full h-screen overflow-hidden">
         {/* Navbar */}
@@ -75,7 +76,7 @@ export default function Maps(props: {
         >
           <Link href="/home" className="flex items-center">
             <IconArrowLeft className="mr-2" size={24} />
-            <p className="text-lg text-text-secondary">Back to Home</p>
+            <p className="text-lg text-text-secondary">{t('Back to Home')}</p>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -94,7 +95,7 @@ export default function Maps(props: {
               type="button"
               onClick={() => handleCoordinateAction('fly')}
               className="rounded border border-border-default bg-surface-primary p-2 text-text-secondary hover:bg-surface-secondary"
-              title="Fly to coordinates"
+              title={t('Fly to coordinates')}
             >
               <IconPlaneTilt size={18}/>
             </button>
@@ -103,7 +104,7 @@ export default function Maps(props: {
               type="button"
               onClick={() => handleCoordinateAction('marker')}
               className="rounded border border-border-default bg-surface-primary p-2 text-text-secondary hover:bg-surface-secondary"
-              title="Add marker at coordinates"
+              title={t('Add marker at coordinates')}
             >
               <IconMapPin size={18}/>
             </button>

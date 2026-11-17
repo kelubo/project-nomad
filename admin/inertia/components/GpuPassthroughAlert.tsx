@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import Alert from '~/components/Alert'
 import StyledModal from '~/components/StyledModal'
@@ -176,7 +177,7 @@ function HsaOverrideModal({
 
   return (
     <StyledModal
-      title="Set AMD GFX Override"
+      title={t('Set AMD GFX Override')}
       onConfirm={save}
       onCancel={onCancel}
       open={true}
@@ -204,7 +205,7 @@ function HsaOverrideModal({
         </p>
         <Input
           name="amdHsaOverride"
-          label="GFX version override"
+          label={t('GFX version override')}
           placeholder="11.0.0"
           value={value}
           onChange={(e) => setValue(e.target.value)}

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { IconPhoto, IconSend, IconWand, IconX } from '@tabler/icons-react'
 import { useState, useRef, useEffect } from 'react'
 import classNames from '~/lib/classNames'
@@ -160,7 +161,7 @@ export default function ChatInterface({
           <div className="h-full flex items-center justify-center">
             <div className="text-center max-w-md">
               <IconWand className="h-16 w-16 text-desert-green mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-medium text-text-primary mb-2">Start a conversation</h3>
+              <h3 className="text-lg font-medium text-text-primary mb-2">{t('Start a conversation')}</h3>
               <p className="text-text-muted text-sm">
                 Interact with your installed language models directly in the Command Center.
               </p>
@@ -169,7 +170,7 @@ export default function ChatInterface({
                 chatSuggestions.length > 0 &&
                 !chatSuggestionsLoading && (
                   <div className="mt-8">
-                    <h4 className="text-sm font-medium text-text-secondary mb-2">Suggestions:</h4>
+                    <h4 className="text-sm font-medium text-text-secondary mb-2">{t('Suggestions:')}</h4>
                     <div className="flex flex-col gap-2">
                       {chatSuggestions.map((suggestion, index) => (
                         <button
@@ -238,7 +239,7 @@ export default function ChatInterface({
       </div>
       <div className="border-t border-border-subtle bg-surface-primary px-6 py-4 flex-shrink-0 min-h-[90px]">
         {images.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-3" aria-label="Attached images">
+          <div className="mb-3 flex flex-wrap gap-3" aria-label={t('Attached images')}>
             {images.map((image) => (
               <div
                 key={image.id}
@@ -284,7 +285,7 @@ export default function ChatInterface({
                   ? 'bg-border-default text-text-muted cursor-not-allowed'
                   : 'border border-border-default text-text-secondary hover:bg-surface-secondary'
               )}
-              aria-label="Attach images"
+              aria-label={t('Attach images')}
             >
               <IconPhoto className="h-6 w-6" aria-hidden="true" />
             </button>

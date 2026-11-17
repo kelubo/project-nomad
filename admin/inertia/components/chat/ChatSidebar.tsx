@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import classNames from '~/lib/classNames'
 import StyledButton from '../StyledButton'
 import { router, usePage } from '@inertiajs/react'
@@ -52,7 +53,7 @@ export default function ChatSidebar({
         'fixed inset-y-0 left-0 z-50 md:static md:z-auto md:flex',
         isMobileOpen ? 'flex' : 'hidden'
       )}
-      aria-label="Chat conversations"
+      aria-label={t('Chat conversations')}
     >
       <div className="p-4 border-b border-border-subtle h-[75px] flex items-center justify-center">
         <StyledButton
@@ -70,7 +71,7 @@ export default function ChatSidebar({
 
       <div className="flex-1 overflow-y-auto">
         {sessions.length === 0 ? (
-          <div className="p-4 text-center text-text-muted text-sm">No previous chats</div>
+          <div className="p-4 text-center text-text-muted text-sm">{t('No previous chats')}</div>
         ) : (
           <div className="p-2 space-y-1">
             {sessions.map((session) => (
@@ -114,7 +115,7 @@ export default function ChatSidebar({
         )}
       </div>
       <div className="p-4 flex flex-col items-center justify-center gap-y-2">
-        <img src="/nomad-primary.svg" alt="Project NOMAD Logo" className="h-28 w-28 mb-6 object-contain" />
+        <img src="/nomad-primary.svg" alt={t('Project NOMAD Logo')} className="h-28 w-28 mb-6 object-contain" />
         <StyledButton
           onClick={() => {
             // /chat is served by the admin app itself, so navigate in place rather than

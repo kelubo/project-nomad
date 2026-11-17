@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import {
   IconBolt,
   IconBox,
@@ -225,12 +226,12 @@ export default function Home(props: {
 
   return (
     <AppLayout>
-      <Head title="Command Center" />
+      <Head title={t('Command Center')} />
       {
         updateInfo?.updateAvailable && (
           <div className='flex justify-center items-center p-4 w-full'>
             <Alert
-              title="An update is available for Project NOMAD!"
+              title={t('An update is available for Project NOMAD!')}
               type="info-inverted"
               variant="solid"
               className="w-full"
@@ -249,7 +250,7 @@ export default function Home(props: {
         rerunBanner?.show && (
           <div className='flex justify-center items-center px-4 pt-4 w-full'>
             <Alert
-              title="Your benchmark can be re-scored with Score v2"
+              title={t('Your benchmark can be re-scored with Score v2')}
               message="We've upgraded the benchmark scoring system. Re-run your benchmark to get an updated Score v2 result on the community leaderboard."
               type="info-inverted"
               variant="solid"
@@ -291,7 +292,7 @@ export default function Home(props: {
               {isLinkTile && (
                 <span
                   className={`absolute top-2 left-2 ${tileColor.marker}`}
-                  title="A shortcut you added. NOMAD does not manage this."
+                  title={t('A shortcut you added. NOMAD does not manage this.')}
                 >
                   <IconExternalLink size={16} />
                 </span>
@@ -349,8 +350,8 @@ export default function Home(props: {
                         setEditingTile(tile)
                         setLinkModalOpen(true)
                       }}
-                      title="Edit this link"
-                      aria-label="Edit this link"
+                      title={t('Edit this link')}
+                      aria-label={t('Edit this link')}
                       className="rounded p-1 text-text-muted hover:bg-surface-secondary hover:text-text-primary"
                     >
                       <IconPencil size={16} />
@@ -358,8 +359,8 @@ export default function Home(props: {
                     <button
                       type="button"
                       onClick={() => setPendingDelete(tile.service_name)}
-                      title="Remove this link"
-                      aria-label="Remove this link"
+                      title={t('Remove this link')}
+                      aria-label={t('Remove this link')}
                       className="rounded p-1 text-text-muted hover:bg-surface-secondary hover:text-desert-red"
                     >
                       <IconTrash size={16} />
@@ -391,8 +392,8 @@ export default function Home(props: {
           className="rounded border-2 border-dashed border-border-default bg-transparent text-text-muted hover:border-desert-green hover:text-text-primary transition-colors h-48 flex flex-col items-center justify-center cursor-pointer text-center px-4"
         >
           <IconPlus size={40} />
-          <h3 className="font-bold text-xl mt-2">Add a Link</h3>
-          <p className="text-sm mt-1">A shortcut to something else on your network</p>
+          <h3 className="font-bold text-xl mt-2">{t('Add a Link')}</h3>
+          <p className="text-sm mt-1">{t('A shortcut to something else on your network')}</p>
         </button>
       </div>
 

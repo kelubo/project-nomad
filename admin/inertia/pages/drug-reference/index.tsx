@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react'
 import { Head, Link, router } from '@inertiajs/react'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react'
@@ -456,12 +457,12 @@ export default function DrugReferenceIndex({
   if (isEmpty) {
     return (
       <AppLayout compact>
-        <Head title="Drug Reference" />
+        <Head title={t('Drug Reference')} />
         <div className="p-4 max-w-4xl mx-auto">
           <PageHeader rowCount={rowCount} />
           <DrugDisclaimerModal open={showDisclaimer} onAcknowledge={() => setShowDisclaimer(false)} />
           <div className="border-2 border-dashed border-desert-stone-lighter rounded-2xl p-8 text-center bg-desert-white">
-            <p className="text-lg font-semibold mb-2 text-desert-green-darker">No FDA drug data yet</p>
+            <p className="text-lg font-semibold mb-2 text-desert-green-darker">{t('No FDA drug data yet')}</p>
             <p className="mb-6 opacity-70">
               Download the openFDA drug-label dataset to enable offline search. Requires ~1.7 GB
               compressed download (~8–10 GB after ingestion).
@@ -508,7 +509,7 @@ export default function DrugReferenceIndex({
 
   return (
     <AppLayout compact>
-      <Head title="Drug Reference" />
+      <Head title={t('Drug Reference')} />
       <div className="p-4 max-w-4xl mx-auto">
         <PageHeader rowCount={rowCount} />
         <DrugDisclaimerModal open={showDisclaimer} onAcknowledge={() => setShowDisclaimer(false)} />
@@ -590,7 +591,7 @@ export default function DrugReferenceIndex({
                         onChange={(e) => handleRouteChange(e.target.value || null)}
                         className="rounded-lg border border-desert-stone-lighter bg-surface-primary px-2 py-1 text-xs text-desert-green-darker focus:border-desert-green focus:outline-none"
                       >
-                        <option value="">Any form</option>
+                        <option value="">{t('Any form')}</option>
                         {ROUTE_OPTIONS.map((r) => (
                           <option key={r} value={r}>
                             {ROUTE_FRIENDLY[r]}
@@ -605,7 +606,7 @@ export default function DrugReferenceIndex({
                         onChange={(e) => handleSortChange(e.target.value as 'relevance' | 'name')}
                         className="rounded-lg border border-desert-stone-lighter bg-surface-primary px-2 py-1 text-xs text-desert-green-darker focus:border-desert-green focus:outline-none"
                       >
-                        <option value="relevance">Best match</option>
+                        <option value="relevance">{t('Best match')}</option>
                         <option value="name">A–Z</option>
                       </select>
                     </label>
@@ -672,7 +673,7 @@ export default function DrugReferenceIndex({
               <div className="my-4">
                 {anySituationSelected && (
                   <div className="mb-3 flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-semibold text-desert-stone">Selected:</span>
+                    <span className="text-xs font-semibold text-desert-stone">{t('Selected:')}</span>
                     {selectedSlugs.map((slug) => {
                       const c = conditions.find((x) => x.slug === slug)
                       if (!c) return null
@@ -844,7 +845,7 @@ export default function DrugReferenceIndex({
             <TabPanel>
               <div className={`${CARD_SURFACE} p-5`}>
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                  <h2 className="text-sm font-bold text-desert-green-darker">FDA drug data</h2>
+                  <h2 className="text-sm font-bold text-desert-green-darker">{t('FDA drug data')}</h2>
                   <div className="flex flex-wrap items-center gap-2">
                     {canIngestFromDisk && (
                       <StyledButton variant="outline" size="sm" onClick={handleIngestFromDisk} disabled={ingesting || busy}>
@@ -882,7 +883,7 @@ function PageHeader({ rowCount }: { rowCount: number }) {
   return (
     <div className="mb-4">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
-        <h1 className="text-2xl font-bold text-desert-green-darker">Drug Reference</h1>
+        <h1 className="text-2xl font-bold text-desert-green-darker">{t('Drug Reference')}</h1>
         {rowCount > 0 && (
           <Link href="/drug-reference/interactions">
             <StyledButton variant="outline" size="sm" onClick={() => {}}>
@@ -904,7 +905,7 @@ function PageHeader({ rowCount }: { rowCount: number }) {
 function SourceFooter() {
   return (
     <footer className="mt-8 pt-4 border-t border-desert-stone-lighter/40 text-xs text-desert-stone">
-      <strong>Source:</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
+      <strong>{t('Source:')}</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
       <strong>openFDA</strong> — public domain (CC0 1.0). NOMAD is not affiliated with or endorsed by the
       FDA. Label data and situation matches are label-text only; do not rely on them for medical decisions.
     </footer>
@@ -935,12 +936,12 @@ function SituationRemedyRow({ remedy }: { remedy: NaturalRemedy }) {
       <p className="mt-1.5 text-xs text-desert-green-darker">{remedy.uses}</p>
       {remedy.how && (
         <p className="mt-1 text-xs text-desert-green-darker">
-          <strong>How:</strong> {remedy.how}
+          <strong>{t('How:')}</strong> {remedy.how}
         </p>
       )}
       {remedy.cautions && (
         <p className="mt-1 text-xs text-desert-red-dark">
-          <strong>Cautions:</strong> {remedy.cautions}
+          <strong>{t('Cautions:')}</strong> {remedy.cautions}
         </p>
       )}
     </div>

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import { useState } from 'react'
 import SettingsLayout from '~/layouts/SettingsLayout'
@@ -71,13 +72,13 @@ export default function AdvancedPage(props: {
       <Head title="Advanced Settings | Project NOMAD" />
       <div className="xl:pl-72 w-full">
         <main className="px-12 py-6">
-          <h1 className="text-4xl font-semibold mb-4">Advanced</h1>
+          <h1 className="text-4xl font-semibold mb-4">{t('Advanced')}</h1>
           <p className="text-text-muted mb-4">
             Advanced configuration for operators. These settings are optional — the defaults work
             for most deployments.
           </p>
 
-          <StyledSectionHeader title="Connectivity" className="mt-8 mb-4" />
+          <StyledSectionHeader title={t('Connectivity')} className="mt-8 mb-4" />
           <div className="bg-surface-primary rounded-lg border-2 border-border-subtle p-6">
             <p className="text-sm text-text-secondary mb-4">
               NOMAD periodically checks whether it can reach the internet. By default it probes
@@ -89,7 +90,7 @@ export default function AdvancedPage(props: {
               <Alert
                 type="info"
                 variant="bordered"
-                title="Managed by environment variable"
+                title={t('Managed by environment variable')}
                 message="The INTERNET_STATUS_TEST_URL environment variable is set and takes precedence over this setting. Remove it to manage the test URL here."
                 className="!mb-4"
               />
@@ -99,7 +100,7 @@ export default function AdvancedPage(props: {
               <div className="flex-1">
                 <Input
                   name="internetStatusTestUrl"
-                  label="Internet Status Test URL"
+                  label={t('Internet Status Test URL')}
                   helpText="A single http(s) URL used to check connectivity. Any HTTP response counts as online."
                   placeholder="https://1.1.1.1/cdn-cgi/trace"
                   value={internetStatusTestUrl}

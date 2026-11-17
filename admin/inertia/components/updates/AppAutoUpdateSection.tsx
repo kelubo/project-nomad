@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import StyledSectionHeader from '~/components/StyledSectionHeader'
 import Switch from '~/components/inputs/Switch'
 import api from '~/lib/api'
@@ -28,13 +29,13 @@ export default function AppAutoUpdateSection() {
 
   return (
     <>
-      <StyledSectionHeader title="Automatic App Updates" className="mt-8" />
+      <StyledSectionHeader title={t('Automatic App Updates')} className="mt-8" />
       <div className="bg-surface-primary rounded-lg border shadow-md overflow-hidden mt-6 p-6">
         <Switch
           checked={enabled}
           onChange={(value) => toggleMutation.mutate(value)}
           disabled={toggleMutation.isPending || isLoading}
-          label="Enable Automatic App Updates"
+          label={t('Enable Automatic App Updates')}
           description="Automatically install minor and patch updates for apps you've opted in (toggle each app in Supply Depot). Major versions always require a manual update. Uses the same update window and cool-off period as the core schedule above."
         />
 

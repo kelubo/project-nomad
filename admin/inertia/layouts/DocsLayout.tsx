@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import StyledSidebar from '~/components/StyledSidebar'
@@ -23,7 +24,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="min-h-screen flex flex-row bg-desert-white">
-      <StyledSidebar title="Documentation" items={items} />
+      <StyledSidebar title={t('Documentation')} items={items} />
       {children}
     </div>
   )

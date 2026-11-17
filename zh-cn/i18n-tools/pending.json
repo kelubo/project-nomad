@@ -1,0 +1,4061 @@
+{
+  "A shortcut to something else on your network": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "A shortcut you added. NOMAD does not manage this.": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Assistant": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Inference": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Model Used": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Models": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Only": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Performance": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Time to First Token": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "AI Tokens/sec": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Action": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Active Downloads": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Active Model Downloads": {
+    "files": [
+      "admin/inertia/components/ActiveModelDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Add": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Custom App": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Kiwix mirrors or other ZIM file sources for faster downloads.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Library": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Port": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Variable": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Add Volume": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Add a Link": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Add marker at coordinates": {
+    "files": [
+      "admin/inertia/pages/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Add notes (optional)": {
+    "files": [
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx"
+    ],
+    "zh": ""
+  },
+  "Add to interaction comparison": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Added": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Additional Content": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Advanced": {
+    "files": [
+      "admin/inertia/pages/settings/advanced.tsx"
+    ],
+    "zh": ""
+  },
+  "All": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/components/chat/index.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "All Content Up to Date": {
+    "files": [
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "All available capabilities are already installed!": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "All data associated with Project NOMAD is stored locally on your device:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "All installed content is up to date. New versions will appear here when detected.": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "All items downloaded": {
+    "files": [
+      "admin/inertia/components/CuratedCollectionCard.tsx"
+    ],
+    "zh": ""
+  },
+  "All languages": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "All your data, downloaded content, AI conversations, and notes remain on your device.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Also remove the Docker image to reclaim disk space": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Always": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Always follow the directions on the": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Always seek the advice of qualified health providers with questions about medical conditions.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "An internet connection is only required to download content or updates. All installed features work fully offline.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "An update is available for Project NOMAD!": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Any form": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "App Installation Activity": {
+    "files": [
+      "admin/inertia/pages/easy-setup/complete.tsx"
+    ],
+    "zh": ""
+  },
+  "App Settings": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx"
+    ],
+    "zh": ""
+  },
+  "Application Data:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Apps": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx"
+    ],
+    "zh": ""
+  },
+  "Are you sure you want to download": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Articles:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Ask me first": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Assistant Name": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Attach images": {
+    "files": [
+      "admin/inertia/components/chat/ChatInterface.tsx"
+    ],
+    "zh": ""
+  },
+  "Attached images": {
+    "files": [
+      "admin/inertia/components/chat/ChatInterface.tsx"
+    ],
+    "zh": ""
+  },
+  "Author:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Auto-index": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Auto-index Setting": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Auto-index new content for AI?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic App Updates": {
+    "files": [
+      "admin/inertia/components/updates/AppAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic Content Updates": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic Content Updates Disabled": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic Core Updates": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic Core Updates Disabled": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Automatic Reload": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Available RAM": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Back": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Back to Home": {
+    "files": [
+      "admin/inertia/components/StyledSidebar.tsx",
+      "admin/inertia/components/layout/BackToHomeHeader.tsx",
+      "admin/inertia/layouts/AppLayout.tsx",
+      "admin/inertia/pages/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Backup Reminder": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Base URL": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Before you use the Drug Reference": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark Details": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark Failed": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark History": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark ID": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark Info": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Benchmark Type": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Best match": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Boxed Warning": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Branded video collections from creators, downloaded for offline viewing in Kiwix.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Branded video collections from creators, for offline viewing": {
+    "files": [
+      "admin/inertia/components/CreatorPacksSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Browse and download content for offline reading!": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Browse the Kiwix Library": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Builder Tag": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Buy Us a Coffee": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "By situation": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU": {
+    "files": [
+      "admin/inertia/components/ServiceStatsModal.tsx",
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU Cores": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU Load": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU Usage": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU package": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "CPU single-thread": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Calculating your NOMAD Score...": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx",
+      "admin/inertia/components/chat/CollectionsManager.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/components/chat/NomadMdModal.tsx",
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx",
+      "admin/inertia/components/maps/MarkerPanel.tsx",
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel & Go to Home": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel All Embedding Jobs?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel All Jobs": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel Download?": {
+    "files": [
+      "admin/inertia/components/ActiveModelDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Cancel download": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx",
+      "admin/inertia/components/ActiveModelDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Capabilities to Install": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Caps prevent a runaway container from starving the host. Leave blank to use the defaults (1024 MB / 1 CPU).": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Category:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Cautions:": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Chat Suggestions": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Chat conversations": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "Check Again": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Check for Content Updates": {
+    "files": [
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Check for Updates": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Check if newer versions of your installed ZIM files and maps are available.": {
+    "files": [
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Choose Content": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Choose Map Regions": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Choose custom marker color": {
+    "files": [
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx"
+    ],
+    "zh": ""
+  },
+  "Choose custom marker icon": {
+    "files": [
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx"
+    ],
+    "zh": ""
+  },
+  "Clean Up Failed": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Clear": {
+    "files": [
+      "admin/inertia/components/AppUrlModal.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx",
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Clear All Chat History?": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Clear History": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "Clear all": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Click anywhere on the map to drop a pin": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Close": {
+    "files": [
+      "admin/inertia/components/maps/IconSelectorPopover.tsx",
+      "admin/inertia/components/maps/ViewMapMarkerPopup.tsx",
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Close chat": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Close conversation sidebar": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Close panel": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Close sidebar": {
+    "files": [
+      "admin/inertia/components/StyledSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "Collection:": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Color": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Command Center": {
+    "files": [
+      "admin/inertia/layouts/AppLayout.tsx",
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Commonly used for": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Compare label warnings": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx",
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Compiling Report": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Compiling report...": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Complete Setup": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Confirm": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx",
+      "admin/inertia/components/chat/CollectionsManager.tsx"
+    ],
+    "zh": ""
+  },
+  "Confirm Delete?": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx",
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Confirm Download?": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Confirm Sync?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Confirm large AI indexing operation": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Connection Temporarily Lost (Expected)": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Connectivity": {
+    "files": [
+      "admin/inertia/pages/settings/advanced.tsx"
+    ],
+    "zh": ""
+  },
+  "Container Restarting": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Container path": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Container port": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Containers are created with": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Content Disclaimer": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Content Explorer": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Content Manager": {
+    "files": [
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Context Size": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Context Window": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Continue": {
+    "files": [
+      "admin/inertia/components/benchmark/ScoreReveal.tsx",
+      "admin/inertia/components/chat/ChatMessageBubble.tsx"
+    ],
+    "zh": ""
+  },
+  "Contraindications": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Cool-off Period": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Copied!": {
+    "files": [
+      "admin/inertia/components/DebugInfoModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Copy to Clipboard": {
+    "files": [
+      "admin/inertia/components/DebugInfoModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Copyright 2024-2026 Crosstalk Solutions, LLC": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Core Capabilities": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Could not fetch directory listing from this URL.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Couldn't load file. It may have been moved or its type isn't viewable.": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Creator Packs": {
+    "files": [
+      "admin/inertia/components/CreatorPacksSection.tsx",
+      "admin/inertia/pages/settings/creator-packs.tsx"
+    ],
+    "zh": ""
+  },
+  "Curated Content": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Curated Map Regions": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Curated collections for offline reference": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Current Version": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Custom URL": {
+    "files": [
+      "admin/inertia/components/AppUrlModal.tsx"
+    ],
+    "zh": ""
+  },
+  "CyberChef": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Data Cap (GB)": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Data Storage": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Data is from openFDA (U.S. FDA, public domain). NOMAD is not affiliated with or endorsed by the FDA.": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Date": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Debug Info": {
+    "files": [
+      "admin/inertia/components/DebugInfoModal.tsx",
+      "admin/inertia/components/Footer.tsx",
+      "admin/inertia/components/StyledSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "Default (Kiwix)": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Delay after a new version appears": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Delay after a release is published": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Delete": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/components/maps/MarkerPanel.tsx",
+      "admin/inertia/pages/settings/maps.tsx",
+      "admin/inertia/pages/settings/models.tsx",
+      "admin/inertia/pages/settings/zim/index.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Delete Model?": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Delete pin": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Description (optional)": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Detecting your system...": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk Read": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk Read Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk Size": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk Write": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Disk Write Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Dismiss alert": {
+    "files": [
+      "admin/inertia/components/Alert.tsx"
+    ],
+    "zh": ""
+  },
+  "Dismiss failed download": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Display AI-generated conversation starters in the chat interface": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Display Name": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Docker Image": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Docs": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Documentation": {
+    "files": [
+      "admin/inertia/layouts/DocsLayout.tsx"
+    ],
+    "zh": ""
+  },
+  "Dosage & Administration": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Double-check knowledge base matches": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Download": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Download FDA data": {
+    "files": [
+      "admin/inertia/components/drug-reference/IngestStatus.tsx"
+    ],
+    "zh": ""
+  },
+  "Download Global Map?": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Download Map File": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Download a Custom Map File": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Download by country or region": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Download complete": {
+    "files": [
+      "admin/inertia/components/ProgressBar.tsx"
+    ],
+    "zh": ""
+  },
+  "Download map by country or region": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Download page": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Download the openFDA drug-label dataset to enable offline search and comparison.": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Downloaded Content:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Downloading": {
+    "files": [
+      "admin/inertia/components/CreatorPackCard.tsx",
+      "admin/inertia/components/WikipediaSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Downloading Wikipedia... This may take a while for larger packages.": {
+    "files": [
+      "admin/inertia/components/WikipediaSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Downloads the newest Docker images for all core containers": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Drug Interactions": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Drug Reference": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx",
+      "admin/inertia/pages/drug-reference/interactions.tsx",
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Early Access": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Easy Setup Wizard": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Easy Setup Wizard Complete": {
+    "files": [
+      "admin/inertia/pages/easy-setup/complete.tsx"
+    ],
+    "zh": ""
+  },
+  "Edit": {
+    "files": [
+      "admin/inertia/components/maps/ViewMapMarkerPopup.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Edit this link": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Enable Automatic App Updates": {
+    "files": [
+      "admin/inertia/components/updates/AppAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Enable Automatic Content Updates": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Enable Automatic Core Updates": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Enable Early Access": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Enhanced Document Processing with OCR": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Environment": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Environment Variables": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Events per second": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Evidence:": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx"
+    ],
+    "zh": ""
+  },
+  "FDA data": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "FDA drug data": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "FDA drug labels": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Failed": {
+    "files": [
+      "admin/inertia/components/WikipediaSelector.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "File:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Flash Attention": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "FlatNotes": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Fly to coordinates": {
+    "files": [
+      "admin/inertia/pages/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "For": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "For large ZIM archives this can take a long time, especially on CPU-only systems.": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Force Refresh Collections": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Force Reinstall": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Form (how you take it)": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Full Benchmark ID": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "GFX version override": {
+    "files": [
+      "admin/inertia/components/GpuPassthroughAlert.tsx"
+    ],
+    "zh": ""
+  },
+  "GPU": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "GPU compute": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Global Map Coverage Available": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Global Map Installed": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Go to Drug Reference": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Go to Drug Reference to download data": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Go to Home": {
+    "files": [
+      "admin/inertia/pages/easy-setup/complete.tsx"
+    ],
+    "zh": ""
+  },
+  "Graphics": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Hardware Information": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Heads up": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Hello from About!": {
+    "files": [
+      "admin/inertia/pages/about.tsx"
+    ],
+    "zh": ""
+  },
+  "Host path (absolute)": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Host port (8600+)": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "How this differs from Re-embed All": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "How:": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Icon": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Icon preview": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Identifying Hardware": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "If you'd rather review per-item before indexing, cancel here and switch your Auto-index setting to": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Imperial": {
+    "files": [
+      "admin/inertia/components/maps/ScaleUnitSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "In a medical emergency, call emergency services immediately if available.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Index existing content": {
+    "files": [
+      "admin/inertia/components/chat/KbPolicyPromptBanner.tsx"
+    ],
+    "zh": ""
+  },
+  "Indexed": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Indications & Usage": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Information Library Integration": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Ingest into search": {
+    "files": [
+      "admin/inertia/components/drug-reference/IngestStatus.tsx"
+    ],
+    "zh": ""
+  },
+  "Ingest policy": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Input Type": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Install": {
+    "files": [
+      "admin/inertia/components/CreatorPackCard.tsx",
+      "admin/inertia/pages/settings/apps.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Install Service?": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx"
+    ],
+    "zh": ""
+  },
+  "Install it": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Installation Activity": {
+    "files": [
+      "admin/inertia/components/InstallActivityFeed.tsx"
+    ],
+    "zh": ""
+  },
+  "Installation Directory:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Installed": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx",
+      "admin/inertia/components/CreatorPackCard.tsx",
+      "admin/inertia/components/WikipediaSelector.tsx",
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Installed Models": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Installing": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Interact with your installed language models directly in the Command Center.": {
+    "files": [
+      "admin/inertia/components/chat/ChatInterface.tsx"
+    ],
+    "zh": ""
+  },
+  "Internet Status Test URL": {
+    "files": [
+      "admin/inertia/pages/settings/advanced.tsx"
+    ],
+    "zh": ""
+  },
+  "Issued:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "It is": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Join the Discord community": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Keep": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Kiwix": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Knowledge Base": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Knowledge Base Relevance": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Knowledge Base Retrieval": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Knowledge Base unavailable:": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Knowledge Base:": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Kolibri": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Label date:": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Language:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Last check:": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Last error:": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Last run:": {
+    "files": [
+      "admin/inertia/components/updates/AppAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Latest": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Latest Version": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Legal Notices": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Library Name": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "License Agreement": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Living room NAS": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Load More": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Loading models...": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Loading versions...": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Local-First:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Logs": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Looking for more apps?": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage Apps": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage Collections": {
+    "files": [
+      "admin/inertia/components/chat/CollectionsManager.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage Custom Libraries": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage Map Regions": {
+    "files": [
+      "admin/inertia/pages/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage your stored content files.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Manage your stored map files and explore new regions!": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Managed by NOMAD": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Managed by environment variable": {
+    "files": [
+      "admin/inertia/pages/settings/advanced.tsx"
+    ],
+    "zh": ""
+  },
+  "Manual": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx",
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Manual Content Updates": {
+    "files": [
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Manufacturer:": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Maps": {
+    "files": [
+      "admin/inertia/pages/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Maps Manager": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx",
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Max zoom level:": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Maybe later": {
+    "files": [
+      "admin/inertia/components/chat/KbPolicyPromptBanner.tsx"
+    ],
+    "zh": ""
+  },
+  "Measure your server's performance and compare with the NOMAD community": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Measured Performance (v2)": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Media:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Medical and Emergency Information Disclaimer": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Medical information may become outdated. Verify critical information with current professional sources when possible.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Memory": {
+    "files": [
+      "admin/inertia/components/ServiceStatsModal.tsx",
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Memory Allocation": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Memory Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Memory Usage": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Metric": {
+    "files": [
+      "admin/inertia/components/maps/ScaleUnitSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Model": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Model Size": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Model downloading is only supported when using a Ollama backend.": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Model:": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Models": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Models & Settings": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "More information": {
+    "files": [
+      "admin/inertia/components/InfoTooltip.tsx"
+    ],
+    "zh": ""
+  },
+  "My App": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "NDC:": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "NOMAD Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "NOMAD does not collect, transmit, or store any usage data, analytics, or telemetry.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "NOMAD operates without user accounts or authentication by default.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "NOMAD.md": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx",
+      "admin/inertia/components/chat/NomadMdModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Name": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Name this location": {
+    "files": [
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx"
+    ],
+    "zh": ""
+  },
+  "Natural remedies": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Nautical": {
+    "files": [
+      "admin/inertia/components/maps/ScaleUnitSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Need Help With Your Home Network?": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Network Optional:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Never disregard professional medical advice or delay seeking it because of something you read in offline content.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "New Chat": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "New content will": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "New content will be": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Next": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No AI Benchmark Data": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "No Accounts Required:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "No Benchmark Results": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "No FDA drug data yet": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx",
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "No Internet Connection": {
+    "files": [
+      "admin/inertia/pages/easy-setup/complete.tsx",
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No Selections Made": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No active downloads": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "No active model downloads": {
+    "files": [
+      "admin/inertia/components/ActiveModelDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "No additional OTC options found for": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No apps are opted in yet. Enable auto-update on individual apps from the Supply Depot.": {
+    "files": [
+      "admin/inertia/components/updates/AppAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "No apps match your filter.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "No collections yet. Assign a file to a collection from the Knowledge Base table to create one.": {
+    "files": [
+      "admin/inertia/components/chat/CollectionsManager.tsx"
+    ],
+    "zh": ""
+  },
+  "No creator packs available right now.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No creator packs available.": {
+    "files": [
+      "admin/inertia/components/CreatorPacksSection.tsx"
+    ],
+    "zh": ""
+  },
+  "No curated collections available.": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "No curated content categories available.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "No directories or ZIM files found at this location.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "No drug data yet": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx"
+    ],
+    "zh": ""
+  },
+  "No environment variables provided.": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "No files are currently being processed": {
+    "files": [
+      "admin/inertia/components/ActiveEmbedJobs.tsx"
+    ],
+    "zh": ""
+  },
+  "No internet connection. You may not be able to download files.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "No labeled interaction text on this label.": {
+    "files": [
+      "admin/inertia/components/drug-reference/InteractionColumn.tsx"
+    ],
+    "zh": ""
+  },
+  "No map collections available at this time.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No matches": {
+    "files": [
+      "admin/inertia/components/chat/CollectionCombobox.tsx"
+    ],
+    "zh": ""
+  },
+  "No models installed": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No models installed. Browse the model catalog below to get started.": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "No other versions available": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "No pins match your search.": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "No previous chats": {
+    "files": [
+      "admin/inertia/components/chat/ChatSidebar.tsx"
+    ],
+    "zh": ""
+  },
+  "No recommended AI models available at this time.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "No scheme? We'll default to": {
+    "files": [
+      "admin/inertia/components/AppUrlModal.tsx"
+    ],
+    "zh": ""
+  },
+  "No storage devices detected": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Not Indexed": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Not allowed": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Note:": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "OTC": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugResultRow.tsx",
+      "admin/inertia/components/drug-reference/IngredientGroup.tsx",
+      "admin/inertia/components/drug-reference/InteractionColumn.tsx",
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Ollama": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx",
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Open": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Open Supply Depot": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Open a GitHub Issue": {
+    "files": [
+      "admin/inertia/components/DebugInfoModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Open chat": {
+    "files": [
+      "admin/inertia/components/chat/ChatButton.tsx"
+    ],
+    "zh": ""
+  },
+  "Open conversation sidebar": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Open resource download page": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Operating System": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Other Ways to Help": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Over-the-counter": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Over-the-counter options": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Overall": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Page not found": {
+    "files": [
+      "admin/inertia/pages/errors/not_found.tsx"
+    ],
+    "zh": ""
+  },
+  "Parameters": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Partial": {
+    "files": [
+      "admin/inertia/components/benchmark/ScoreReveal.tsx",
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Partial Benchmark": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Photos and backups": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Pick a situation (or a few) above to see the over-the-counter drugs whose FDA labels list it.": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Pick at least one country to estimate size.": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Pins": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Port Mappings": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Prescription": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Privacy Statement": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Proceed anyway": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Processing Queue": {
+    "files": [
+      "admin/inertia/components/ActiveEmbedJobs.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Processor": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx",
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Progress": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Project NOMAD Logo": {
+    "files": [
+      "admin/inertia/components/StyledSidebar.tsx",
+      "admin/inertia/components/chat/ChatSidebar.tsx",
+      "admin/inertia/layouts/AppLayout.tsx"
+    ],
+    "zh": ""
+  },
+  "Project NOMAD is designed with privacy as a core principle:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Promise": {
+    "files": [
+      "admin/inertia/components/maps/MapMarkerFormPopup.tsx"
+    ],
+    "zh": ""
+  },
+  "Publisher:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Pull Latest Images": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Qdrant": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Qdrant collection and rebuild from the": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Quick picks": {
+    "files": [
+      "admin/inertia/components/CountryPickerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "RESET": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Radeon 680M / 660M and other RDNA 2 iGPUs (gfx1031 to gfx1036): 10.3.0": {
+    "files": [
+      "admin/inertia/components/GpuPassthroughAlert.tsx"
+    ],
+    "zh": ""
+  },
+  "Radeon 780M / 760M (gfx1103): 11.0.0": {
+    "files": [
+      "admin/inertia/components/GpuPassthroughAlert.tsx"
+    ],
+    "zh": ""
+  },
+  "Randomize": {
+    "files": [
+      "admin/inertia/components/BuilderTagSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Raw Scores": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Re-embed All": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Re-embed All Documents?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Re-embed this file?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Read": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Ready to Start": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Reasoning": {
+    "files": [
+      "admin/inertia/components/chat/ChatMessageBubble.tsx"
+    ],
+    "zh": ""
+  },
+  "Rebuild the Kiwix library index from the files on disk. Use this after manually adding ZIM files outside of NOMAD.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Recreate Containers": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Refresh Models": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Release notes": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Remote Connection": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Remote Ollama selected": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Remote Ollama/OpenAI API URL": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Remove": {
+    "files": [
+      "admin/inertia/components/chat/CollectionsManager.tsx",
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Remove from knowledge base?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Remove library": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Remove this link": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Rename": {
+    "files": [
+      "admin/inertia/components/chat/CollectionsManager.tsx"
+    ],
+    "zh": ""
+  },
+  "Report": {
+    "files": [
+      "admin/inertia/components/benchmark/ScoreReveal.tsx"
+    ],
+    "zh": ""
+  },
+  "Report bugs and suggest features": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Repository ID": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Rescan Library": {
+    "files": [
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Reset & Rebuild": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Reset & Rebuild Knowledge Base?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Resource Limits (optional)": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Resource Usage": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Resource warning": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Response Style": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Restart": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Results so far": {
+    "files": [
+      "admin/inertia/components/benchmark/ResultsSoFar.tsx"
+    ],
+    "zh": ""
+  },
+  "Retry download": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Review Your Selections": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Review your choices before starting the setup process.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Route:": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Run Benchmark": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Run Date": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Run Full Benchmark": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Run environment": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Running": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Running in the Background": {
+    "files": [
+      "admin/inertia/pages/easy-setup/complete.tsx"
+    ],
+    "zh": ""
+  },
+  "Safely stops and recreates all core containers with the new images": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Save": {
+    "files": [
+      "admin/inertia/components/chat/CollectionsManager.tsx",
+      "admin/inertia/components/chat/NomadMdModal.tsx",
+      "admin/inertia/pages/settings/advanced.tsx"
+    ],
+    "zh": ""
+  },
+  "Save Schedule": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Saved Locations": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Score": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Search apps...": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Search available ZIM files...": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Search by drug": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Search in:": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Search language models..": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Search pins...": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Select a tier based on your storage capacity and needs. Higher tiers include all content from lower tiers.": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Select drugs above to compare their labeled interaction warnings.": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Select drugs to compare": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "Select models to download for offline AI": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Select the capabilities you need. You can always add more later.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Select your preferred Wikipedia package": {
+    "files": [
+      "admin/inertia/components/WikipediaSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Selected": {
+    "files": [
+      "admin/inertia/components/CreatorPackCard.tsx",
+      "admin/inertia/components/WikipediaSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Selected:": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Server Error": {
+    "files": [
+      "admin/inertia/pages/errors/server_error.tsx"
+    ],
+    "zh": ""
+  },
+  "Set AMD GFX Override": {
+    "files": [
+      "admin/inertia/components/GpuPassthroughAlert.tsx"
+    ],
+    "zh": ""
+  },
+  "Set Custom URL": {
+    "files": [
+      "admin/inertia/components/AppUrlModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Set custom URL": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Set where": {
+    "files": [
+      "admin/inertia/components/AppUrlModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Settings": {
+    "files": [
+      "admin/inertia/layouts/SettingsLayout.tsx",
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Share anonymously (no Builder Tag shown on leaderboard)": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Share with Community": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Shared": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Shared with Community": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Show saved locations": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Size": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Size:": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Sort": {
+    "files": [
+      "admin/inertia/pages/drug-reference/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Sort by hue": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Sort by icon": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Sort by name": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Sort by visibility": {
+    "files": [
+      "admin/inertia/components/maps/MarkerPanel.tsx"
+    ],
+    "zh": ""
+  },
+  "Source:": {
+    "files": [
+      "admin/inertia/pages/conditions/show.tsx",
+      "admin/inertia/pages/drug-reference/index.tsx",
+      "admin/inertia/pages/drug-reference/interactions.tsx",
+      "admin/inertia/pages/drug-reference/show.tsx",
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "Sources": {
+    "files": [
+      "admin/inertia/components/chat/ChatMessageBubble.tsx"
+    ],
+    "zh": ""
+  },
+  "Stalled": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Star the project on GitHub": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Start": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Start a conversation": {
+    "files": [
+      "admin/inertia/components/chat/ChatInterface.tsx"
+    ],
+    "zh": ""
+  },
+  "Start here!": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Stats": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Status:": {
+    "files": [
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Stock Creator Packs": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Stop": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Stop Use": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Stop downloading": {
+    "files": [
+      "admin/inertia/components/ActiveModelDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Stopped": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Storage": {
+    "files": [
+      "admin/inertia/components/StorageProjectionBar.tsx"
+    ],
+    "zh": ""
+  },
+  "Storage Devices": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Storage backend": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Stored Knowledge Base Files": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Stored Map Files": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Stored in Docker volumes on your local system": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "Submission Failed": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Submit": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Submitted to Repository": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Subscribe": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Suggestions:": {
+    "files": [
+      "admin/inertia/components/chat/ChatInterface.tsx"
+    ],
+    "zh": ""
+  },
+  "Supply Depot": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Support on Ko-fi": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Support the Project": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Supports images": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Swap Usage": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Switching to": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Sync Storage": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "System": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "System Benchmark": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "System Details": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "System Information": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "System Only": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "System Performance": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "System Status": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "System Update": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "System Uptime": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Tag": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Tasks Model": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Temperature": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Temporary Downtime": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "The Kiwix application is not installed. Please install it to view downloaded ZIM files": {
+    "files": [
+      "admin/inertia/pages/settings/zim/index.tsx"
+    ],
+    "zh": ""
+  },
+  "The Kiwix application is not installed. Please install it to view downloaded content files.": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "The Qdrant vector database is offline.": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "The base map assets have not been installed. Please download them first to enable map functionality.": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "The container and its associated volumes will be removed, then a fresh installation will begin.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "The container will be briefly stopped and restarted.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "The container will be stopped and removed. Host volume data will remain on disk.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "The container will be stopped. Your data is preserved.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Thinking:": {
+    "files": [
+      "admin/inertia/components/chat/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Third-Party Software Attribution": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "This action is destructive and cannot be undone": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "This answer hit the length limit and was cut off.": {
+    "files": [
+      "admin/inertia/components/chat/ChatMessageBubble.tsx"
+    ],
+    "zh": ""
+  },
+  "This app is not running. Start it to see live resource usage.": {
+    "files": [
+      "admin/inertia/components/ServiceStatsModal.tsx"
+    ],
+    "zh": ""
+  },
+  "This information is NOT a substitute for professional medical advice, diagnosis, or treatment.": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "This is": {
+    "files": [
+      "admin/inertia/components/conditions/SafetyBanner.tsx"
+    ],
+    "zh": ""
+  },
+  "This page does not exist.": {
+    "files": [
+      "admin/inertia/pages/errors/not_found.tsx"
+    ],
+    "zh": ""
+  },
+  "This page will automatically reload when the update is complete": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "This shows each drug's own FDA-labeled interaction warnings, individually.": {
+    "files": [
+      "admin/inertia/pages/drug-reference/interactions.tsx"
+    ],
+    "zh": ""
+  },
+  "This stops": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "This tool shows general health information from official": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "This will": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "This will delete all app data and cannot be undone.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "This will download and start": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "This will permanently remove this custom app.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "This will remove the app from this device.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "This will start the container.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Time to First Token": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Tokens per Second": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx",
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Total RAM": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Type": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx",
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Type RESET exactly (uppercase, no spaces) to enable the confirm button.": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "URL": {
+    "files": [
+      "admin/inertia/components/LinkTileModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Uncategorized": {
+    "files": [
+      "admin/inertia/components/chat/CollectionCombobox.tsx",
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Uninstall": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Uninstall pack": {
+    "files": [
+      "admin/inertia/components/CreatorPackCard.tsx"
+    ],
+    "zh": ""
+  },
+  "Update": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx",
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Update (pull latest)": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Update Check Issue": {
+    "files": [
+      "admin/inertia/components/updates/ContentUpdatesSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Update Failed": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Update Logs": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Update Service": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Update available": {
+    "files": [
+      "admin/inertia/components/CreatorPackCard.tsx",
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Update window:": {
+    "files": [
+      "admin/inertia/components/updates/AppAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Updates every 2 seconds.": {
+    "files": [
+      "admin/inertia/components/ServiceStatsModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Upload": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Use remote Ollama instance": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Use thinking automatically when a model supports it": {
+    "files": [
+      "admin/inertia/pages/settings/models.tsx"
+    ],
+    "zh": ""
+  },
+  "Used RAM": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "Utilization": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Very High Memory Usage Detected": {
+    "files": [
+      "admin/inertia/pages/settings/system.tsx"
+    ],
+    "zh": ""
+  },
+  "View": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "View Update Logs": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "View license": {
+    "files": [
+      "admin/inertia/components/CreatorPacksSection.tsx"
+    ],
+    "zh": ""
+  },
+  "View release notes": {
+    "files": [
+      "admin/inertia/components/UpdateServiceModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Visit Rogue.Support": {
+    "files": [
+      "admin/inertia/pages/settings/support.tsx"
+    ],
+    "zh": ""
+  },
+  "Volume Mounts": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "WIPE ALL DATA": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx"
+    ],
+    "zh": ""
+  },
+  "Waiting...": {
+    "files": [
+      "admin/inertia/components/ActiveDownloads.tsx"
+    ],
+    "zh": ""
+  },
+  "Warnings": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "What do you want NOMAD to do?": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "What happens during an update?": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "What this is for": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "When Using": {
+    "files": [
+      "admin/inertia/pages/drug-reference/show.tsx"
+    ],
+    "zh": ""
+  },
+  "Why upload documents to your Knowledge Base?": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Wikipedia": {
+    "files": [
+      "admin/inertia/components/WikipediaSelector.tsx",
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "Wikipedia download failed. Select a package and try again.": {
+    "files": [
+      "admin/inertia/components/WikipediaSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Window End": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "Window Start": {
+    "files": [
+      "admin/inertia/components/updates/ContentAutoUpdateSection.tsx",
+      "admin/inertia/components/updates/CoreAutoUpdateSection.tsx"
+    ],
+    "zh": ""
+  },
+  "World base map not downloaded": {
+    "files": [
+      "admin/inertia/pages/settings/maps.tsx"
+    ],
+    "zh": ""
+  },
+  "Write": {
+    "files": [
+      "admin/inertia/components/benchmark/BenchmarkRunView.tsx"
+    ],
+    "zh": ""
+  },
+  "Yes, always": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "You can change this any time from the Knowledge Base panel inside AI Chat.": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "You can change your selection at any time. Click Submit to confirm your choice.": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "You've customized this app, so it won't be overwritten by catalog updates.": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "Your": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "Your Builder Tag": {
+    "files": [
+      "admin/inertia/pages/settings/benchmark.tsx"
+    ],
+    "zh": ""
+  },
+  "Your Builder Tag:": {
+    "files": [
+      "admin/inertia/components/BuilderTagSelector.tsx"
+    ],
+    "zh": ""
+  },
+  "Your benchmark can be re-scored with Score v2": {
+    "files": [
+      "admin/inertia/pages/home.tsx"
+    ],
+    "zh": ""
+  },
+  "Your email address": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "Zero Telemetry:": {
+    "files": [
+      "admin/inertia/pages/settings/legal.tsx"
+    ],
+    "zh": ""
+  },
+  "actual product you have": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "and can be edited directly.": {
+    "files": [
+      "admin/inertia/components/chat/NomadMdModal.tsx"
+    ],
+    "zh": ""
+  },
+  "and not a substitute for a doctor, pharmacist, or nurse.": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "api.browseLibrary(browseUrl!) as Promise": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "contact a medical professional or call emergency services": {
+    "files": [
+      "admin/inertia/components/conditions/SafetyBanner.tsx",
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "containerProps?: React.HTMLAttributes": {
+    "files": [
+      "admin/inertia/components/StyledTable.tsx"
+    ],
+    "zh": ""
+  },
+  "e.g. nginx:latest": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "e.g., Debian Mirror": {
+    "files": [
+      "admin/inertia/pages/settings/zim/remote-explorer.tsx"
+    ],
+    "zh": ""
+  },
+  "failed: Array": {
+    "files": [
+      "admin/inertia/components/ZimUploader/index.tsx"
+    ],
+    "zh": ""
+  },
+  "from the Knowledge Base panel.": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx"
+    ],
+    "zh": ""
+  },
+  "gone forever": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "if (isUpdating) return": {
+    "files": [
+      "admin/inertia/pages/settings/update.tsx"
+    ],
+    "zh": ""
+  },
+  "if you want a fully clean slate).": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "in the": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "indexed automatically": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "information only": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "not a drug-interaction checker": {
+    "files": [
+      "admin/inertia/components/conditions/SafetyBanner.tsx",
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "not a recommendation": {
+    "files": [
+      "admin/inertia/components/conditions/SafetyBanner.tsx"
+    ],
+    "zh": ""
+  },
+  "not an FDA endorsement": {
+    "files": [
+      "admin/inertia/components/conditions/SafetyBanner.tsx"
+    ],
+    "zh": ""
+  },
+  "not medical advice": {
+    "files": [
+      "admin/inertia/components/drug-reference/DrugDisclaimerModal.tsx"
+    ],
+    "zh": ""
+  },
+  "of disk space for embeddings, on top of the raw downloads.": {
+    "files": [
+      "admin/inertia/components/KbGuardrailModal.tsx"
+    ],
+    "zh": ""
+  },
+  "on port": {
+    "files": [
+      "admin/inertia/pages/supply-depot.tsx"
+    ],
+    "zh": ""
+  },
+  "permanently delete every point": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "record.installed ?": {
+    "files": [
+      "admin/inertia/pages/settings/apps.tsx"
+    ],
+    "zh": ""
+  },
+  "setting is": {
+    "files": [
+      "admin/inertia/components/TierSelectionModal.tsx"
+    ],
+    "zh": ""
+  },
+  "statuses?: Array": {
+    "files": [
+      "admin/inertia/components/HorizontalBarChart.tsx"
+    ],
+    "zh": ""
+  },
+  "step.step ? (": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  },
+  "to confirm:": {
+    "files": [
+      "admin/inertia/components/chat/KnowledgeBaseModal.tsx"
+    ],
+    "zh": ""
+  },
+  "volumes: Array": {
+    "files": [
+      "admin/inertia/components/CustomAppModal.tsx"
+    ],
+    "zh": ""
+  },
+  "wait for you to opt in": {
+    "files": [
+      "admin/inertia/pages/easy-setup/index.tsx"
+    ],
+    "zh": ""
+  }
+}

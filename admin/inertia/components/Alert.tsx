@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import classNames from '~/lib/classNames'
 import DynamicIcon, { DynamicIconName } from './DynamicIcon'
 import StyledButton, { StyledButtonProps } from './StyledButton'
@@ -201,7 +202,7 @@ export default function Alert({
               type === 'success' ? 'focus:ring-desert-olive' : '',
               type === 'info' ? 'focus:ring-desert-stone' : ''
             )}
-            aria-label="Dismiss alert"
+            aria-label={t('Dismiss alert')}
           >
             <DynamicIcon icon="IconX" className="size-4" />
           </button>

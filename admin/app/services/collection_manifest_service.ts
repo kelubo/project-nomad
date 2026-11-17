@@ -3,6 +3,7 @@ import vine from '@vinejs/vine'
 import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
 import { join } from 'path'
+import { readFile } from 'node:fs/promises' // [zh-cn patch] 本地中文地图清单加载
 import CollectionManifest from '#models/collection_manifest'
 import InstalledResource from '#models/installed_resource'
 import WikipediaSelection from '#models/wikipedia_selection'
@@ -49,11 +50,28 @@ export class CollectionManifestService {
 
   async fetchAndCacheSpec(type: ManifestType): Promise<boolean> {
     try {
-      const response = await axios.get(SPEC_URLS[type], { timeout: 15000 })
+      // [zh-cn patch] 中文增强版地图清单：本地文件优先，缺失/出错时回退上游远程清单。
+      // 本地清单放在 zh-cn/maps/maps.zh-cn.json，可用 MAPS_SPEC_LOCAL_PATH 环境变量覆盖。
+      // 这样中国地图分区无需改动上游任何逻辑，且同步上游时本段补丁冲突面最小。
+      let specData: unknown = null
+      if (type === 'maps') {
+        try {
+          const localPath = process.env.MAPS_SPEC_LOCAL_PATH
+            || join(process.cwd(), 'zh-cn', 'maps', 'maps.zh-cn.json')
+          specData = JSON.parse(await readFile(localPath, 'utf-8'))
+          logger.info(`[CollectionManifestService] Using local Chinese maps spec: ${localPath}`)
+        } catch {
+          specData = null // 回退到远程清单
+        }
+      }
+      if (!specData) {
+        const response = await axios.get(SPEC_URLS[type], { timeout: 15000 })
+        specData = response.data
+      }
 
       const validated = await vine.validate({
         schema: VALIDATORS[type],
-        data: response.data,
+        data: specData,
       })
 
       const existing = await CollectionManifest.find(type)

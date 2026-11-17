@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import { IconMovie } from '@tabler/icons-react'
 import api from '~/lib/api'
@@ -80,7 +81,7 @@ const CreatorPacksSection: React.FC<CreatorPacksSectionProps> = ({ allowUninstal
           <IconMovie className="w-6 h-6 text-text-primary" />
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-text-primary">Creator Packs</h3>
+          <h3 className="text-xl font-semibold text-text-primary">{t('Creator Packs')}</h3>
           <p className="text-sm text-text-muted">
             Branded video collections from creators, for offline viewing
           </p>
@@ -99,7 +100,7 @@ const CreatorPacksSection: React.FC<CreatorPacksSectionProps> = ({ allowUninstal
           ))}
         </div>
       ) : (
-        <p className="text-text-muted mt-4">No creator packs available.</p>
+        <p className="text-text-muted mt-4">{t('No creator packs available.')}</p>
       )}
 
       <StyledModal

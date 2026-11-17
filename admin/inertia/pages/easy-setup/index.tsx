@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, router, usePage } from '@inertiajs/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState, useMemo } from 'react'
@@ -506,7 +507,7 @@ export default function EasySetupWizard(props: {
     }))
 
     return (
-      <nav aria-label="Progress" className="px-6 pt-6">
+      <nav aria-label={t('Progress')} className="px-6 pt-6">
         <ol
           role="list"
           className="divide-y divide-border-default rounded-md md:flex md:divide-y-0 md:justify-between border border-desert-green"
@@ -747,7 +748,7 @@ export default function EasySetupWizard(props: {
     return (
       <div className="space-y-8">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-text-primary mb-2">What do you want NOMAD to do?</h2>
+          <h2 className="text-3xl font-bold text-text-primary mb-2">{t('What do you want NOMAD to do?')}</h2>
           <p className="text-text-secondary">
             Select the capabilities you need. You can always add more later.
           </p>
@@ -771,7 +772,7 @@ export default function EasySetupWizard(props: {
             {/* Core Capabilities */}
             {existingCoreCapabilities.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold text-text-primary mb-4">Core Capabilities</h3>
+                <h3 className="text-lg font-semibold text-text-primary mb-4">{t('Core Capabilities')}</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                   {existingCoreCapabilities.map((capability) => {
                     if (capability.id === 'ai') {
@@ -794,7 +795,7 @@ export default function EasySetupWizard(props: {
                                   }}
                                   className="w-4 h-4 accent-desert-green"
                                 />
-                                <span className="text-sm font-medium text-gray-700">Use remote Ollama instance</span>
+                                <span className="text-sm font-medium text-gray-700">{t('Use remote Ollama instance')}</span>
                               </label>
                               {remoteOllamaEnabled && (
                                 <div className="mt-3">
@@ -856,7 +857,7 @@ export default function EasySetupWizard(props: {
   const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-text-primary mb-2">Choose Map Regions</h2>
+        <h2 className="text-3xl font-bold text-text-primary mb-2">{t('Choose Map Regions')}</h2>
         <p className="text-text-secondary">
           Select map region collections to download for offline use. You can always download more
           regions later.
@@ -907,7 +908,7 @@ export default function EasySetupWizard(props: {
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-text-secondary text-lg">No map collections available at this time.</p>
+          <p className="text-text-secondary text-lg">{t('No map collections available at this time.')}</p>
         </div>
       )}
     </div>
@@ -924,7 +925,7 @@ export default function EasySetupWizard(props: {
     return (
       <div className="space-y-6">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-text-primary mb-2">Choose Content</h2>
+          <h2 className="text-3xl font-bold text-text-primary mb-2">{t('Choose Content')}</h2>
           <p className="text-text-secondary">
             {isInformationSelected
               ? 'Select content categories for offline knowledge.'
@@ -962,8 +963,8 @@ export default function EasySetupWizard(props: {
                 <IconBooks className="w-6 h-6 text-text-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-text-primary">Additional Content</h3>
-                <p className="text-sm text-text-muted">Curated collections for offline reference</p>
+                <h3 className="text-xl font-semibold text-text-primary">{t('Additional Content')}</h3>
+                <p className="text-sm text-text-muted">{t('Curated collections for offline reference')}</p>
               </div>
             </div>
 
@@ -1022,7 +1023,7 @@ export default function EasySetupWizard(props: {
     return (
       <div className="space-y-6">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-text-primary mb-2">Stock Creator Packs</h2>
+          <h2 className="text-3xl font-bold text-text-primary mb-2">{t('Stock Creator Packs')}</h2>
           <p className="text-text-secondary">
             Branded video collections from creators, downloaded for offline viewing in Kiwix.
           </p>
@@ -1045,7 +1046,7 @@ export default function EasySetupWizard(props: {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-text-secondary text-lg">No creator packs available right now.</p>
+            <p className="text-text-secondary text-lg">{t('No creator packs available right now.')}</p>
           </div>
         )}
       </div>
@@ -1069,13 +1070,13 @@ export default function EasySetupWizard(props: {
             <IconCpu className="w-6 h-6 text-text-primary" />
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-text-primary">AI Models</h3>
-            <p className="text-sm text-text-muted">Select models to download for offline AI</p>
+            <h3 className="text-xl font-semibold text-text-primary">{t('AI Models')}</h3>
+            <p className="text-sm text-text-muted">{t('Select models to download for offline AI')}</p>
           </div>
         </div>
         {remoteOllamaEnabled && remoteOllamaUrl ? (
           <Alert
-            title="Remote Ollama selected"
+            title={t('Remote Ollama selected')}
             message="Models are managed on the remote machine. You can add models from Settings > AI Assistant after setup, note this is only supported when using Ollama, not LM Studio and other OpenAI API software."
             type="info"
             variant="bordered"
@@ -1159,7 +1160,7 @@ export default function EasySetupWizard(props: {
           </div>
         ) : (
           <div className="text-center py-8 bg-surface-secondary rounded-lg">
-            <p className="text-text-secondary">No recommended AI models available at this time.</p>
+            <p className="text-text-secondary">{t('No recommended AI models available at this time.')}</p>
           </div>
         )}
 
@@ -1219,13 +1220,13 @@ export default function EasySetupWizard(props: {
     return (
       <div className="space-y-6">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-text-primary mb-2">Review Your Selections</h2>
-          <p className="text-text-secondary">Review your choices before starting the setup process.</p>
+          <h2 className="text-3xl font-bold text-text-primary mb-2">{t('Review Your Selections')}</h2>
+          <p className="text-text-secondary">{t('Review your choices before starting the setup process.')}</p>
         </div>
 
         {!hasSelections ? (
           <Alert
-            title="No Selections Made"
+            title={t('No Selections Made')}
             message="You haven't selected anything to install or download. You can go back to make selections or go back to the home page."
             type="info"
             variant="bordered"
@@ -1328,7 +1329,7 @@ export default function EasySetupWizard(props: {
 
             {selectedWikipedia && selectedWikipedia !== 'none' && (
               <div className="bg-surface-primary rounded-lg border-2 border-desert-stone-light p-6">
-                <h3 className="text-xl font-semibold text-text-primary mb-4">Wikipedia</h3>
+                <h3 className="text-xl font-semibold text-text-primary mb-4">{t('Wikipedia')}</h3>
                 {(() => {
                   const option = wikipediaState?.options.find((o) => o.id === selectedWikipedia)
                   return option ? (
@@ -1380,11 +1381,11 @@ export default function EasySetupWizard(props: {
                 <p className="text-text-secondary text-sm">
                   {ingestPolicy === 'Always' ? (
                     <>
-                      New content will be <strong>indexed automatically</strong> as it arrives so {aiAssistantName} can search it.
+                      New content will be <strong>{t('indexed automatically')}</strong> as it arrives so {aiAssistantName} can search it.
                     </>
                   ) : (
                     <>
-                      New content will <strong>wait for you to opt in</strong> from the Knowledge Base panel before {aiAssistantName} indexes it.
+                      New content will <strong>{t('wait for you to opt in')}</strong> from the Knowledge Base panel before {aiAssistantName} indexes it.
                     </>
                   )}
                 </p>
@@ -1392,7 +1393,7 @@ export default function EasySetupWizard(props: {
             )}
 
             <Alert
-              title="Ready to Start"
+              title={t('Ready to Start')}
               message="Click 'Complete Setup' to begin installing apps and downloading content. This may take some time depending on your internet connection and the size of the downloads."
               type="info"
               variant="solid"
@@ -1405,10 +1406,10 @@ export default function EasySetupWizard(props: {
 
   return (
     <AppLayout>
-      <Head title="Easy Setup Wizard" />
+      <Head title={t('Easy Setup Wizard')} />
       {!isOnline && (
         <Alert
-          title="No Internet Connection"
+          title={t('No Internet Connection')}
           message="You'll need an internet connection to proceed. Please connect to the internet and try again."
           type="warning"
           variant="solid"

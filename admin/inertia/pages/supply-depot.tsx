@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, router } from '@inertiajs/react'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -358,14 +359,14 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
 
   return (
     <AppLayout>
-      <Head title="Supply Depot" />
+      <Head title={t('Supply Depot')} />
 
       {loading && !modal && <LoadingSpinner fullscreen text="Working..." />}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {!isOnline && (
           <Alert
-            title="No internet connection. You may not be able to download files."
+            title={t('No internet connection. You may not be able to download files.')}
             message=""
             type="warning"
             variant="solid"
@@ -420,7 +421,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
                 <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted h-4 w-4" />
                 <input
                   type="text"
-                  placeholder="Search apps..."
+                  placeholder={t('Search apps...')}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full pl-9 pr-4 py-2 rounded-md bg-surface-secondary border border-desert-stone-lighter text-text-primary text-sm focus:outline-none focus:ring-1 focus:ring-desert-green placeholder:text-text-muted/50"
@@ -469,7 +470,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
         {filteredServices.length === 0 ? (
           <div className="text-center py-16">
             <IconPackage className="mx-auto mb-3 opacity-40 text-desert-stone-light" size={48} />
-            <p className="text-text-muted">No apps match your filter.</p>
+            <p className="text-text-muted">{t('No apps match your filter.')}</p>
           </div>
         ) : (
           <div className="space-y-10">
@@ -589,7 +590,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
                   />
                 ))}
                 {preflight.resourceWarnings.map((w, i) => (
-                  <Alert key={i} type="warning" title="Resource warning" message={w} />
+                  <Alert key={i} type="warning" title={t('Resource warning')} message={w} />
                 ))}
                 <label className="flex items-center gap-2 cursor-pointer select-none mt-2">
                   <input
@@ -621,7 +622,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           confirmVariant="primary"
           confirmLoading={loading}
         >
-          <p className="text-sm text-text-muted">This will start the container.</p>
+          <p className="text-sm text-text-muted">{t('This will start the container.')}</p>
         </StyledModal>
       )}
 
@@ -640,7 +641,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           confirmVariant="action"
           confirmLoading={loading}
         >
-          <p className="text-sm text-text-muted">The container will be stopped. Your data is preserved.</p>
+          <p className="text-sm text-text-muted">{t('The container will be stopped. Your data is preserved.')}</p>
         </StyledModal>
       )}
 
@@ -659,7 +660,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           confirmVariant="action"
           confirmLoading={loading}
         >
-          <p className="text-sm text-text-muted">The container will be briefly stopped and restarted.</p>
+          <p className="text-sm text-text-muted">{t('The container will be briefly stopped and restarted.')}</p>
         </StyledModal>
       )}
 
@@ -680,8 +681,8 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           icon={<IconAlertTriangle className="text-desert-red" size={40} />}
         >
           <div className="space-y-2 text-sm text-text-muted">
-            <p className="font-semibold text-desert-red">This will delete all app data and cannot be undone.</p>
-            <p>The container and its associated volumes will be removed, then a fresh installation will begin.</p>
+            <p className="font-semibold text-desert-red">{t('This will delete all app data and cannot be undone.')}</p>
+            <p>{t('The container and its associated volumes will be removed, then a fresh installation will begin.')}</p>
           </div>
         </StyledModal>
       )}
@@ -704,8 +705,8 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           icon={<IconAlertTriangle className="text-desert-red" size={40} />}
         >
           <div className="space-y-3 text-sm text-text-muted">
-            <p className="font-semibold text-desert-red">This will permanently remove this custom app.</p>
-            <p>The container will be stopped and removed. Host volume data will remain on disk.</p>
+            <p className="font-semibold text-desert-red">{t('This will permanently remove this custom app.')}</p>
+            <p>{t('The container will be stopped and removed. Host volume data will remain on disk.')}</p>
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -713,7 +714,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
                 onChange={(e) => setRemoveImage(e.target.checked)}
                 className="accent-desert-red h-4 w-4 rounded"
               />
-              <span className="text-text-muted text-xs">Also remove the Docker image to reclaim disk space</span>
+              <span className="text-text-muted text-xs">{t('Also remove the Docker image to reclaim disk space')}</span>
             </label>
           </div>
         </StyledModal>
@@ -737,7 +738,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
           icon={<IconAlertTriangle className="text-desert-red" size={40} />}
         >
           <div className="space-y-3 text-sm text-text-muted">
-            <p className="font-semibold text-desert-red">This will remove the app from this device.</p>
+            <p className="font-semibold text-desert-red">{t('This will remove the app from this device.')}</p>
             <p>The container will be stopped and removed, and the app returns to the catalog below. App data under the storage folder stays on disk, so reinstalling brings it back as it was.</p>
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
@@ -746,7 +747,7 @@ export default function SupplyDepotPage(props: { system: { services: ServiceSlim
                 onChange={(e) => setRemoveImage(e.target.checked)}
                 className="accent-desert-red h-4 w-4 rounded"
               />
-              <span className="text-text-muted text-xs">Also remove the Docker image to reclaim disk space</span>
+              <span className="text-text-muted text-xs">{t('Also remove the Docker image to reclaim disk space')}</span>
             </label>
           </div>
         </StyledModal>
@@ -979,7 +980,7 @@ function AppCard({
         {service.is_user_modified && !service.is_custom ? (
           <span
             className="text-xs px-2 py-0.5 rounded-full font-medium bg-desert-tan-lighter text-desert-tan-dark border border-desert-tan-light"
-            title="You've customized this app, so it won't be overwritten by catalog updates."
+            title={t('You\'ve customized this app, so it won\'t be overwritten by catalog updates.')}
           >
             modified
           </span>
@@ -1061,16 +1062,16 @@ function AppCard({
                     </a>
                   )}
                   {isStopped && (
-                    <DropdownItem icon={<IconPlayerPlay className="h-4 w-4" />} label="Start" onClick={onStart} />
+                    <DropdownItem icon={<IconPlayerPlay className="h-4 w-4" />} label={t('Start')} onClick={onStart} />
                   )}
                   {isRunning && (
-                    <DropdownItem icon={<IconPlayerStop className="h-4 w-4" />} label="Stop" onClick={onStop} />
+                    <DropdownItem icon={<IconPlayerStop className="h-4 w-4" />} label={t('Stop')} onClick={onStop} />
                   )}
-                  <DropdownItem icon={<IconRefresh className="h-4 w-4" />} label="Restart" onClick={onRestart} />
-                  <DropdownItem icon={<IconFileText className="h-4 w-4" />} label="Logs" onClick={onLogs} />
-                  <DropdownItem icon={<IconChartBar className="h-4 w-4" />} label="Stats" onClick={onStats} />
-                  <DropdownItem icon={<IconPencil className="h-4 w-4" />} label="Edit" onClick={onEdit} />
-                  <DropdownItem icon={<IconWorld className="h-4 w-4" />} label="Set custom URL" onClick={onSetUrl} />
+                  <DropdownItem icon={<IconRefresh className="h-4 w-4" />} label={t('Restart')} onClick={onRestart} />
+                  <DropdownItem icon={<IconFileText className="h-4 w-4" />} label={t('Logs')} onClick={onLogs} />
+                  <DropdownItem icon={<IconChartBar className="h-4 w-4" />} label={t('Stats')} onClick={onStats} />
+                  <DropdownItem icon={<IconPencil className="h-4 w-4" />} label={t('Edit')} onClick={onEdit} />
+                  <DropdownItem icon={<IconWorld className="h-4 w-4" />} label={t('Set custom URL')} onClick={onSetUrl} />
                   {
                     migrationInstructionsHref ? (
                       <a
@@ -1112,13 +1113,13 @@ function AppCard({
                     />
                   ) : null}
                   {service.is_custom ? (
-                    <DropdownItem icon={<IconCloudDownload className="h-4 w-4" />} label="Update (pull latest)" onClick={onUpdate} />
+                    <DropdownItem icon={<IconCloudDownload className="h-4 w-4" />} label={t('Update (pull latest)')} onClick={onUpdate} />
                   ) : null}
-                  <DropdownItem icon={<IconRefresh className="h-4 w-4 text-desert-orange" />} label="Force Reinstall" onClick={onReinstall} danger />
+                  <DropdownItem icon={<IconRefresh className="h-4 w-4 text-desert-orange" />} label={t('Force Reinstall')} onClick={onReinstall} danger />
                   {service.is_custom ? (
-                    <DropdownItem icon={<IconTrash className="h-4 w-4 text-desert-red" />} label="Delete" onClick={onDelete} danger />
+                    <DropdownItem icon={<IconTrash className="h-4 w-4 text-desert-red" />} label={t('Delete')} onClick={onDelete} danger />
                   ) : (
-                    <DropdownItem icon={<IconTrash className="h-4 w-4 text-desert-red" />} label="Uninstall" onClick={onUninstall} danger />
+                    <DropdownItem icon={<IconTrash className="h-4 w-4 text-desert-red" />} label={t('Uninstall')} onClick={onUninstall} danger />
                   )}
                 </div>
               )}

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { resolveMarkerIcon } from './marker_icons'
 import { useEffect, useMemo, useState } from 'react'
 import {
@@ -246,7 +247,7 @@ export default function MarkerPanel({
               onFlyTo(marker.longitude, marker.latitude)
             }}
             className="shrink-0 rounded p-1 text-text-muted opacity-0 transition-all hover:bg-surface-secondary hover:text-desert-red group-hover:opacity-100"
-            title="Delete pin"
+            title={t('Delete pin')}
           >
             <IconTrash size={14} />
           </button>
@@ -261,10 +262,10 @@ export default function MarkerPanel({
         type="button"
         onClick={() => setOpen(true)}
         className="absolute left-4 top-[72px] z-40 flex items-center gap-1.5 rounded-lg border border-border-subtle bg-surface-primary/95 px-3 py-2 shadow-lg backdrop-blur-sm transition-colors hover:bg-surface-secondary"
-        title="Show saved locations"
+        title={t('Show saved locations')}
       >
         <IconMapPin size={18} className="text-desert-orange" />
-        <span className="text-sm font-medium text-text-primary">Pins</span>
+        <span className="text-sm font-medium text-text-primary">{t('Pins')}</span>
 
         {markers.length > 0 && (
           <span className="ml-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-desert-orange px-1 text-[11px] font-bold text-white">
@@ -291,13 +292,13 @@ export default function MarkerPanel({
             setOpen(false)
           }
         }}
-        title="Close panel"
+        title={t('Close panel')}
         className="flex cursor-pointer items-center justify-between border-b border-border-subtle px-3 py-2.5 transition-colors hover:bg-surface-secondary"
       >
         <div className="flex items-center gap-2">
           <IconMapPin size={18} className="text-desert-orange" />
 
-          <span className="text-sm font-semibold text-text-primary">Saved Locations</span>
+          <span className="text-sm font-semibold text-text-primary">{t('Saved Locations')}</span>
 
           {markers.length > 0 && (
             <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-desert-orange px-1 text-[11px] font-bold text-white">
@@ -317,7 +318,7 @@ export default function MarkerPanel({
       <div className="space-y-2 border-b border-border-subtle px-3 py-2">
         <input
           type="search"
-          placeholder="Search pins..."
+          placeholder={t('Search pins...')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="block w-full rounded border border-border-default bg-surface-primary px-2 py-1 text-sm text-text-primary placeholder:text-text-muted focus:border-desert-green focus:outline-none"
@@ -329,10 +330,10 @@ export default function MarkerPanel({
             onChange={(e) => setSortField(e.target.value as SortField)}
             className="flex-1 rounded border border-border-default bg-surface-primary px-2 py-1 text-xs text-text-primary focus:border-desert-green focus:outline-none"
           >
-            <option value="name">Sort by name</option>
-            <option value="color">Sort by hue</option>
-            <option value="icon">Sort by icon</option>
-            <option value="visibility">Sort by visibility</option>
+            <option value="name">{t('Sort by name')}</option>
+            <option value="color">{t('Sort by hue')}</option>
+            <option value="icon">{t('Sort by icon')}</option>
+            <option value="visibility">{t('Sort by visibility')}</option>
           </select>
 
           <button
@@ -362,11 +363,11 @@ export default function MarkerPanel({
         {markers.length === 0 ? (
           <div className="px-3 py-6 text-center">
             <IconMapPinFilled size={24} className="mx-auto mb-2 text-text-muted" />
-            <p className="text-sm text-text-muted">Click anywhere on the map to drop a pin</p>
+            <p className="text-sm text-text-muted">{t('Click anywhere on the map to drop a pin')}</p>
           </div>
         ) : filteredAndSortedMarkers.length === 0 ? (
           <div className="px-3 py-6 text-center">
-            <p className="text-sm text-text-muted">No pins match your search.</p>
+            <p className="text-sm text-text-muted">{t('No pins match your search.')}</p>
           </div>
         ) : (
           <ul>{filteredAndSortedMarkers.map(renderMarkerRow)}</ul>

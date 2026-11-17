@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import SettingsLayout from '~/layouts/SettingsLayout'
 import { SystemInformationResponse } from '../../../types/system'
@@ -47,11 +48,11 @@ export default function SettingsPage(props: {
 
   return (
     <SettingsLayout>
-      <Head title="System Information" />
+      <Head title={t('System Information')} />
       <div className="xl:pl-72 w-full">
         <main className="px-6 lg:px-12 py-6 lg:py-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-desert-green mb-2">System Information</h1>
+            <h1 className="text-4xl font-bold text-desert-green mb-2">{t('System Information')}</h1>
             <p className="text-desert-stone-dark">
               Real-time monitoring and diagnostics • Last updated: {new Date().toLocaleString()} •
               Refreshing data every 30 seconds
@@ -61,7 +62,7 @@ export default function SettingsPage(props: {
             <div className="mb-6">
               <Alert
                 type="error"
-                title="Very High Memory Usage Detected"
+                title={t('Very High Memory Usage Detected')}
                 message="System memory usage exceeds 90%. Performance degradation may occur."
                 variant="bordered"
               />
@@ -77,7 +78,7 @@ export default function SettingsPage(props: {
               <div className="bg-desert-white rounded-lg p-6 border border-desert-stone-light shadow-sm hover:shadow-lg transition-shadow">
                 <CircularGauge
                   value={info?.currentLoad.currentLoad || 0}
-                  label="CPU Usage"
+                  label={t('CPU Usage')}
                   size="lg"
                   variant="cpu"
                   subtext={`${info?.cpu.cores || 0} cores`}
@@ -87,7 +88,7 @@ export default function SettingsPage(props: {
               <div className="bg-desert-white rounded-lg p-6 border border-desert-stone-light shadow-sm hover:shadow-lg transition-shadow">
                 <CircularGauge
                   value={Number(memoryUsagePercent)}
-                  label="Memory Usage"
+                  label={t('Memory Usage')}
                   size="lg"
                   variant="memory"
                   subtext={`${formatBytes(memoryUsed)} / ${formatBytes(info?.mem.total || 0)}`}
@@ -97,7 +98,7 @@ export default function SettingsPage(props: {
               <div className="bg-desert-white rounded-lg p-6 border border-desert-stone-light shadow-sm hover:shadow-lg transition-shadow">
                 <CircularGauge
                   value={Number(swapUsagePercent)}
-                  label="Swap Usage"
+                  label={t('Swap Usage')}
                   size="lg"
                   variant="disk"
                   subtext={`${formatBytes(info?.mem.swapused || 0)} / ${formatBytes(info?.mem.swaptotal || 0)}`}
@@ -114,7 +115,7 @@ export default function SettingsPage(props: {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <InfoCard
-                title="Operating System"
+                title={t('Operating System')}
                 icon={<IconDeviceDesktop className="w-6 h-6" />}
                 variant="elevated"
                 data={[
@@ -126,7 +127,7 @@ export default function SettingsPage(props: {
                 ]}
               />
               <InfoCard
-                title="Processor"
+                title={t('Processor')}
                 icon={<IconCpu className="w-6 h-6" />}
                 variant="elevated"
                 data={[
@@ -147,7 +148,7 @@ export default function SettingsPage(props: {
               )}
               {info?.graphics?.controllers && info.graphics.controllers.length > 0 && (
                 <InfoCard
-                  title="Graphics"
+                  title={t('Graphics')}
                   icon={<IconComponents className="w-6 h-6" />}
                   variant="elevated"
                   data={info.graphics.controllers.map((gpu, i) => {
@@ -249,9 +250,9 @@ export default function SettingsPage(props: {
               System Status
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <StatusCard title="System Uptime" value={uptimeDisplay} />
-              <StatusCard title="CPU Cores" value={info?.cpu.cores || 0} />
-              <StatusCard title="Storage Devices" value={storageItems.length} />
+              <StatusCard title={t('System Uptime')} value={uptimeDisplay} />
+              <StatusCard title={t('CPU Cores')} value={info?.cpu.cores || 0} />
+              <StatusCard title={t('Storage Devices')} value={storageItems.length} />
             </div>
           </section>
         </main>

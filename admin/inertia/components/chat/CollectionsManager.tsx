@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import StyledModal from '../StyledModal'
@@ -55,7 +56,7 @@ export default function CollectionsManager({ onClose }: CollectionsManagerProps)
   return (
     <StyledModal
       open={true}
-      title="Manage Collections"
+      title={t('Manage Collections')}
       onClose={onClose}
       cancelText="Close"
       onCancel={onClose}

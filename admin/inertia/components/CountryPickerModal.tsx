@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { IconCheck, IconSearch, IconX } from '@tabler/icons-react'
@@ -190,7 +191,7 @@ const CountryPickerModal: React.FC<CountryPickerModalProps> = ({
   return (
     <StyledModal
       {...modalProps}
-      title="Download map by country or region"
+      title={t('Download map by country or region')}
       open={true}
       confirmText="Start Download"
       confirmIcon="IconDownload"
@@ -406,7 +407,7 @@ function PreflightStatus({ errorMessage, loading, preflight, hasSelection }: Pre
     )
   }
   if (!hasSelection) {
-    return <p className="text-text-muted">Pick at least one country to estimate size.</p>
+    return <p className="text-text-muted">{t('Pick at least one country to estimate size.')}</p>
   }
   return <p className="text-text-muted">Estimating size…</p>
 }

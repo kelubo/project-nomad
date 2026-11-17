@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import {
   IconAdjustments,
   IconArrowBigUpLines,
@@ -58,7 +59,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
 
   return (
     <div className="min-h-screen flex flex-row bg-surface-secondary/90">
-      <StyledSidebar title="Settings" items={navigation} />
+      <StyledSidebar title={t('Settings')} items={navigation} />
       {children}
     </div>
   )

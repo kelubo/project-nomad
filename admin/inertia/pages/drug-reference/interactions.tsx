@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { Head, Link } from '@inertiajs/react'
 import AppLayout from '~/layouts/AppLayout'
@@ -122,7 +123,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
 
   return (
     <AppLayout compact>
-      <Head title="Compare label warnings" />
+      <Head title={t('Compare label warnings')} />
 
       <div className="p-4 max-w-7xl mx-auto">
         {/* Back nav */}
@@ -135,7 +136,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
         </Link>
 
         <div className="mb-5">
-          <h1 className="text-2xl font-bold mb-1">Compare label warnings</h1>
+          <h1 className="text-2xl font-bold mb-1">{t('Compare label warnings')}</h1>
           <p className="text-sm opacity-70">
             View each drug's FDA-labeled interaction warnings side by side. Select up to {MAX_COMPARE} drugs.
           </p>
@@ -145,7 +146,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
         <div className="flex gap-3 items-start bg-amber-50 border border-amber-300 rounded-lg px-4 py-3 mb-6">
           <IconAlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-amber-900 leading-relaxed">
-            <strong>This shows each drug's own FDA-labeled interaction warnings, individually.</strong>{' '}
+            <strong>{t('This shows each drug\'s own FDA-labeled interaction warnings, individually.')}</strong>{' '}
             It is <strong>not</strong> a cross-drug interaction checker and is{' '}
             <strong>not</strong> a substitute for professional medical review. Absence of text
             here does not mean a drug is safe to combine.
@@ -155,7 +156,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
         {isEmpty ? (
           // ── Empty state (no data ingested) ─────────────────────────────────
           <div className="border-2 border-dashed border-border-default rounded-lg p-8 text-center">
-            <p className="text-lg font-semibold mb-2">No FDA drug data yet</p>
+            <p className="text-lg font-semibold mb-2">{t('No FDA drug data yet')}</p>
             <p className="mb-6 opacity-70">
               Download the openFDA drug-label dataset to enable offline search and comparison.
             </p>
@@ -175,7 +176,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
             {/* ── Drug picker ───────────────────────────────────────────────── */}
             <div className="mb-6 border border-border-subtle rounded-lg p-4 bg-surface-secondary">
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-semibold text-text-primary">Select drugs to compare</h2>
+                <h2 className="text-sm font-semibold text-text-primary">{t('Select drugs to compare')}</h2>
                 {atMax && (
                   <span className="text-xs text-amber-700 bg-amber-100 border border-amber-200 rounded px-2 py-0.5">
                     Maximum {MAX_COMPARE} drugs reached
@@ -261,7 +262,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
             {/* ── Comparison columns ────────────────────────────────────────── */}
             {selectedIds.length === 0 ? (
               <div className="text-center py-12 text-text-muted border-2 border-dashed border-border-subtle rounded-lg">
-                <p className="text-sm">Select drugs above to compare their labeled interaction warnings.</p>
+                <p className="text-sm">{t('Select drugs above to compare their labeled interaction warnings.')}</p>
               </div>
             ) : loadingEntries ? (
               <div className="text-center py-12 text-text-muted">
@@ -288,7 +289,7 @@ export default function DrugReferenceInteractions({ ingestStatus, rowCount }: Pa
 
         {/* ── Source citation (CC0, no-endorsement) ───────────────────────── */}
         <footer className="mt-8 pt-4 border-t border-border-subtle text-xs text-text-secondary">
-          <strong>Source:</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
+          <strong>{t('Source:')}</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
           <strong>openFDA</strong> — public domain (CC0 1.0). NOMAD is not affiliated with or
           endorsed by the FDA. Label data is provided as-is; do not rely on it for medical
           decisions.
@@ -321,7 +322,7 @@ function PickerRow({ result, selected, onAdd }: PickerRowProps) {
         )}
       </div>
       {selected ? (
-        <span className="text-xs text-desert-green font-semibold flex-shrink-0">Added</span>
+        <span className="text-xs text-desert-green font-semibold flex-shrink-0">{t('Added')}</span>
       ) : (
         <button
           type="button"

@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import classNames from '~/lib/classNames'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -32,7 +33,7 @@ export default function ChatMessageBubble({ message, onContinue }: ChatMessageBu
       {message.isThinking && message.thinking && (
         <div className="mb-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs">
           <div className="mb-1 flex items-center gap-1.5 font-medium text-amber-700">
-            <span>Reasoning</span>
+            <span>{t('Reasoning')}</span>
             <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse inline-block" />
           </div>
           <div className="prose prose-xs max-w-none text-amber-900/80 max-h-32 overflow-y-auto">
@@ -118,7 +119,7 @@ export default function ChatMessageBubble({ message, onContinue }: ChatMessageBu
       </div>
       {message.role === 'assistant' && message.truncated && !message.isStreaming && (
         <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border-subtle pt-2 text-xs text-text-secondary">
-          <span>This answer hit the length limit and was cut off.</span>
+          <span>{t('This answer hit the length limit and was cut off.')}</span>
           {onContinue && (
             <button
               type="button"
@@ -132,7 +133,7 @@ export default function ChatMessageBubble({ message, onContinue }: ChatMessageBu
       )}
       {message.role === 'assistant' && message.sources && message.sources.length > 0 && (
         <div className="mt-3 border-t border-border-subtle pt-2 text-xs text-text-primary">
-          <div className="mb-1 font-medium">Sources</div>
+          <div className="mb-1 font-medium">{t('Sources')}</div>
           <ul className="space-y-0.5">
             {message.sources.map((src, idx) => (
               <li key={idx}>

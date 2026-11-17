@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import StyledButton from '~/components/StyledButton'
@@ -51,15 +52,15 @@ export default function DrugDisclaimerModal({ open, onAcknowledge }: { open: boo
 
             <div className="mt-4 space-y-3 text-sm text-text-secondary">
               <p>
-                This tool shows general health information from official <strong>FDA drug labels</strong> and
-                matches symptoms to over-the-counter options. It is provided for <strong>information only</strong>.
+                This tool shows general health information from official <strong>{t('FDA drug labels')}</strong> and
+                matches symptoms to over-the-counter options. It is provided for <strong>{t('information only')}</strong>.
               </p>
               <ul className="list-disc space-y-1.5 pl-5">
                 <li>
-                  It is <strong>not medical advice</strong> and not a substitute for a doctor, pharmacist, or nurse.
+                  It is <strong>{t('not medical advice')}</strong> and not a substitute for a doctor, pharmacist, or nurse.
                 </li>
                 <li>
-                  It is <strong>not a drug-interaction checker</strong>. Always read each product&rsquo;s full label
+                  It is <strong>{t('not a drug-interaction checker')}</strong>. Always read each product&rsquo;s full label
                   and check with a professional before combining medicines.
                 </li>
                 <li>
@@ -67,12 +68,12 @@ export default function DrugDisclaimerModal({ open, onAcknowledge }: { open: boo
                   include products you wouldn&rsquo;t expect.
                 </li>
                 <li>
-                  Always follow the directions on the <strong>actual product you have</strong>; dosages and warnings
+                  Always follow the directions on the <strong>{t('actual product you have')}</strong>; dosages and warnings
                   differ between products.
                 </li>
                 <li>
                   In an emergency, or if symptoms are severe, worsening, or you&rsquo;re unsure,{' '}
-                  <strong>contact a medical professional or call emergency services</strong>.
+                  <strong>{t('contact a medical professional or call emergency services')}</strong>.
                 </li>
               </ul>
               <p className="text-xs text-text-muted">

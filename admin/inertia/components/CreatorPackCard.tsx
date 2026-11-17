@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from 'react'
 import { formatBytes } from '~/lib/util'
 import type { CreatorPackWithStatus } from '../../types/collections'
@@ -99,8 +100,8 @@ const CreatorPackCard: React.FC<CreatorPackCardProps> = ({ pack, selected, onCli
           {onUninstall && isInstalled && (
             <button
               type="button"
-              title="Uninstall pack"
-              aria-label="Uninstall pack"
+              title={t('Uninstall pack')}
+              aria-label={t('Uninstall pack')}
               className="p-1 rounded text-text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors"
               onClick={(e) => {
                 e.stopPropagation()

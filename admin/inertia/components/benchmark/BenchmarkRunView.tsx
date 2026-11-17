@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useRef, useState } from 'react'
 import { IconCpu, IconServer, IconRobot, IconTemperature, IconDatabase, IconChartBar } from '@tabler/icons-react'
 import StageRail from './StageRail'
@@ -26,7 +27,7 @@ function StageHero({ run }: { run: BenchmarkRunHook }) {
           <LiveReadout
             value={run.aiTokensPerSec}
             unit="tok/s"
-            label="Tokens per Second"
+            label={t('Tokens per Second')}
             size="lg"
             sub={run.aiTtftMs !== null ? `First token in ${Math.round(run.aiTtftMs)} ms` : 'Waiting for first token...'}
           />
@@ -39,7 +40,7 @@ function StageHero({ run }: { run: BenchmarkRunHook }) {
                 <IconChartBar className="w-4 h-4" /> GPU
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <LiveReadout value={run.gpuUtil} unit="%" label="Utilization" />
+                <LiveReadout value={run.gpuUtil} unit="%" label={t('Utilization')} />
                 <LiveReadout
                   value={run.gpuVramUsedMb !== null ? run.gpuVramUsedMb / 1024 : null}
                   unit="GB"
@@ -90,7 +91,7 @@ function StageHero({ run }: { run: BenchmarkRunHook }) {
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-3 text-desert-green">
             <div className="animate-spin h-6 w-6 border-2 border-desert-green border-t-transparent rounded-full" />
-            <span className="text-lg font-medium">Calculating your NOMAD Score...</span>
+            <span className="text-lg font-medium">{t('Calculating your NOMAD Score...')}</span>
           </div>
         </div>
       </div>
@@ -104,7 +105,7 @@ function StageHero({ run }: { run: BenchmarkRunHook }) {
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-3 text-desert-stone-dark">
             <div className="animate-spin h-6 w-6 border-2 border-desert-green border-t-transparent rounded-full" />
-            <span className="text-lg font-medium">Detecting your system...</span>
+            <span className="text-lg font-medium">{t('Detecting your system...')}</span>
           </div>
         </div>
       </div>
@@ -121,7 +122,7 @@ function StageHero({ run }: { run: BenchmarkRunHook }) {
         <CoreGrid loads={run.perCore} />
         {status === 'running_cpu' && run.cpuEventsPerSec !== null && (
           <div className="mt-4 space-y-2">
-            <LiveReadout value={run.cpuEventsPerSec} unit="ev/s" label="Events per second" />
+            <LiveReadout value={run.cpuEventsPerSec} unit="ev/s" label={t('Events per second')} />
             <div className="text-desert-olive">
               <Sparkline data={run.cpuEventsHistory} height={48} />
             </div>
@@ -141,7 +142,7 @@ function VitalsStrip({ run }: { run: BenchmarkRunHook }) {
         <div className="flex items-center gap-2 text-xs font-semibold text-desert-stone-dark uppercase tracking-wide mb-2">
           <IconCpu className="w-4 h-4" /> CPU Load
         </div>
-        <LiveReadout value={run.cpuOverall} unit="%" label="Overall" />
+        <LiveReadout value={run.cpuOverall} unit="%" label={t('Overall')} />
         <div className="text-desert-green mt-2">
           <Sparkline data={run.cpuHistory} height={36} max={100} />
         </div>
@@ -152,7 +153,7 @@ function VitalsStrip({ run }: { run: BenchmarkRunHook }) {
           <div className="flex items-center gap-2 text-xs font-semibold text-desert-stone-dark uppercase tracking-wide mb-2">
             <IconTemperature className="w-4 h-4" /> Temperature
           </div>
-          <LiveReadout value={run.tempC} unit="°C" label="CPU package" />
+          <LiveReadout value={run.tempC} unit="°C" label={t('CPU package')} />
         </div>
       )}
 
@@ -161,8 +162,8 @@ function VitalsStrip({ run }: { run: BenchmarkRunHook }) {
           <IconDatabase className="w-4 h-4" /> Disk
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <LiveReadout value={run.diskReadMbs} unit="MB/s" label="Read" />
-          <LiveReadout value={run.diskWriteMbs} unit="MB/s" label="Write" />
+          <LiveReadout value={run.diskReadMbs} unit="MB/s" label={t('Read')} />
+          <LiveReadout value={run.diskWriteMbs} unit="MB/s" label={t('Write')} />
         </div>
       </div>
     </div>

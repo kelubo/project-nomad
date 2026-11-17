@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useState } from "react"
 import { ServiceSlim } from "../../types/services"
 import StyledModal from "./StyledModal"
@@ -50,7 +51,7 @@ export default function UpdateServiceModal({
 
     return (
         <StyledModal
-            title="Update Service"
+            title={t('Update Service')}
             onConfirm={() => onUpdate(selectedVersion)}
             onCancel={onCancel}
             open={true}
@@ -95,9 +96,9 @@ export default function UpdateServiceModal({
                         <>
                             <div className="mt-3 max-h-48 overflow-y-auto border rounded-lg divide-y">
                                 {loadingVersions ? (
-                                    <div className="p-4 text-center text-text-muted text-sm">Loading versions...</div>
+                                    <div className="p-4 text-center text-text-muted text-sm">{t('Loading versions...')}</div>
                                 ) : versions.length === 0 ? (
-                                    <div className="p-4 text-center text-text-muted text-sm">No other versions available</div>
+                                    <div className="p-4 text-center text-text-muted text-sm">{t('No other versions available')}</div>
                                 ) : (
                                     versions.map((v) => (
                                         <label

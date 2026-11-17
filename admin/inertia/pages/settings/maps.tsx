@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, router } from '@inertiajs/react'
 import StyledTable from '~/components/StyledTable'
 import SettingsLayout from '~/layouts/SettingsLayout'
@@ -177,7 +178,7 @@ export default function MapsManager(props: {
   async function confirmDeleteFile(file: FileEntry) {
     openModal(
       <StyledModal
-        title="Confirm Delete?"
+        title={t('Confirm Delete?')}
         onConfirm={() => deleteFile(file)}
         onCancel={closeAllModals}
         open={true}
@@ -198,7 +199,7 @@ export default function MapsManager(props: {
     const isCollection = 'resources' in record
     openModal(
       <StyledModal
-        title="Confirm Download?"
+        title={t('Confirm Download?')}
         onConfirm={() => {
           if (isCollection) {
             if (record.all_installed) {
@@ -232,7 +233,7 @@ export default function MapsManager(props: {
     if (!globalMapInfo) return
     openModal(
       <StyledModal
-        title="Download Global Map?"
+        title={t('Download Global Map?')}
         onConfirm={() => downloadGlobalMap.mutate()}
         onCancel={closeAllModals}
         open={true}
@@ -272,7 +273,7 @@ export default function MapsManager(props: {
   async function openDownloadModal() {
     openModal(
       <DownloadURLModal
-        title="Download Map File"
+        title={t('Download Map File')}
         suggestedURL="e.g. https://github.com/Crosstalk-Solutions/project-nomad-maps/raw/refs/heads/master/pmtiles/california.pmtiles"
         onCancel={() => closeAllModals()}
         onPreflightSuccess={async (url) => {
@@ -297,13 +298,13 @@ export default function MapsManager(props: {
 
   return (
     <SettingsLayout>
-      <Head title="Maps Manager" />
+      <Head title={t('Maps Manager')} />
       <div className="xl:pl-72 w-full">
         <main className="px-12 py-6">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <h1 className="text-4xl font-semibold mb-2">Maps Manager</h1>
-              <p className="text-text-muted">Manage your stored map files and explore new regions!</p>
+              <h1 className="text-4xl font-semibold mb-2">{t('Maps Manager')}</h1>
+              <p className="text-text-muted">{t('Manage your stored map files and explore new regions!')}</p>
             </div>
             <div className="flex space-x-4">
 
@@ -311,7 +312,7 @@ export default function MapsManager(props: {
           </div>
           {!props.maps.baseAssetsExist && (
             <Alert
-              title="The base map assets have not been installed. Please download them first to enable map functionality."
+              title={t('The base map assets have not been installed. Please download them first to enable map functionality.')}
               type="warning"
               variant="solid"
               className="my-4"
@@ -326,7 +327,7 @@ export default function MapsManager(props: {
           )}
           {props.maps.baseAssetsExist && !props.maps.worldBasemapExists && (
             <Alert
-              title="World base map not downloaded"
+              title={t('World base map not downloaded')}
               message="The low-zoom world base map (~15 MB) hasn't been downloaded yet, so the map appears blank outside any regions you've downloaded. Connect this NOMAD to the internet and download it once for offline use."
               type="warning"
               variant="solid"
@@ -342,7 +343,7 @@ export default function MapsManager(props: {
           )}
           {globalMapInfo && globalMapAlreadyDownloaded && (
             <Alert
-              title="Global Map Installed"
+              title={t('Global Map Installed')}
               message={`Your global map build ${globalMapInfo.date} (${formatBytes(globalMapInfo.size, 1)}) is stored locally and ready for offline use.`}
               type="success"
               variant="bordered"
@@ -358,7 +359,7 @@ export default function MapsManager(props: {
           )}
           {globalMapInfo && !globalMapAlreadyDownloaded && (
             <Alert
-              title="Global Map Coverage Available"
+              title={t('Global Map Coverage Available')}
               message={`Download a complete worldwide map from Protomaps (${formatBytes(globalMapInfo.size, 1)}, build ${globalMapInfo.date}). This is a large file but covers the entire planet — no individual region downloads needed.`}
               type="info-inverted"
               variant="bordered"
@@ -374,7 +375,7 @@ export default function MapsManager(props: {
             />
           )}
           <Alert
-            title="Download by country or region"
+            title={t('Download by country or region')}
             message="Pick the countries you actually need — from a single country to a whole continent — and we'll pull just those tiles from the global Protomaps archive. Much smaller than the full 125 GB global map."
             type="info-inverted"
             variant="bordered"
@@ -389,7 +390,7 @@ export default function MapsManager(props: {
           />
 
           <div className="mt-8 mb-6 flex items-center justify-between">
-            <StyledSectionHeader title="Curated Map Regions" className="!mb-0" />
+            <StyledSectionHeader title={t('Curated Map Regions')} className="!mb-0" />
             <StyledButton
               onClick={() => refreshManifests.mutate()}
               disabled={refreshManifests.isPending}
@@ -407,11 +408,11 @@ export default function MapsManager(props: {
               />
             ))}
             {curatedCollections && curatedCollections.length === 0 && (
-              <p className="text-text-muted">No curated collections available.</p>
+              <p className="text-text-muted">{t('No curated collections available.')}</p>
             )}
           </div>
           <div className="mt-12 mb-6 flex items-center justify-between">
-            <StyledSectionHeader title="Stored Map Files" className="!mb-0" />
+            <StyledSectionHeader title={t('Stored Map Files')} className="!mb-0" />
             <StyledButton
               variant="primary"
               onClick={openDownloadModal}

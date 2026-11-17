@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -188,7 +189,7 @@ export default function CollectionCombobox({
             </button>
           )}
           {filtered.length === 0 && !showCreateOption && (
-            <div className="px-2 py-1.5 text-sm text-text-muted">No matches</div>
+            <div className="px-2 py-1.5 text-sm text-text-muted">{t('No matches')}</div>
           )}
         </div>,
         document.body

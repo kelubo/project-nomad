@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import NotificationsProvider from '~/providers/NotificationProvider'
 import { ThemeProvider } from '~/providers/ThemeProvider'
+import { I18nProvider } from '~/lib/i18n' // [zh-cn patch] 中文 i18n
 import { UsePageProps } from '../../types/system'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Project NOMAD'
@@ -40,14 +41,16 @@ createInertiaApp({
     createRoot(el).render(
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <TransmitProvider baseUrl={window.location.origin} enableLogging={environment === 'development'}>
-            <NotificationsProvider>
-              <ModalsProvider>
-                <App {...props} />
-                {showDevtools && <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' />}
-              </ModalsProvider>
-            </NotificationsProvider>
-          </TransmitProvider>
+          <I18nProvider>
+            <TransmitProvider baseUrl={window.location.origin} enableLogging={environment === 'development'}>
+              <NotificationsProvider>
+                <ModalsProvider>
+                  <App {...props} />
+                  {showDevtools && <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' />}
+                </ModalsProvider>
+              </NotificationsProvider>
+            </TransmitProvider>
+          </I18nProvider>
         </ThemeProvider>
       </QueryClientProvider>
     )

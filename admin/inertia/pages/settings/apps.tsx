@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head } from '@inertiajs/react'
 import StyledTable from '~/components/StyledTable'
 import SettingsLayout from '~/layouts/SettingsLayout'
@@ -82,7 +83,7 @@ export default function SettingsPage(props: { system: { services: ServiceSlim[] 
   const handleInstallService = (service: ServiceSlim) => {
     openModal(
       <StyledModal
-        title="Install Service?"
+        title={t('Install Service?')}
         onConfirm={() => {
           installService(service.service_name)
           closeAllModals()
@@ -229,7 +230,7 @@ export default function SettingsPage(props: { system: { services: ServiceSlim[] 
             >
               <p className="text-text-primary">
                 Are you sure you want to force reinstall {record.service_name}? This will{' '}
-                <strong>WIPE ALL DATA</strong> for this service and cannot be undone. You should
+                <strong>{t('WIPE ALL DATA')}</strong> for this service and cannot be undone. You should
                 only do this if the service is malfunctioning and other troubleshooting steps have
                 failed.
               </p>
@@ -350,12 +351,12 @@ export default function SettingsPage(props: { system: { services: ServiceSlim[] 
 
   return (
     <SettingsLayout>
-      <Head title="App Settings" />
+      <Head title={t('App Settings')} />
       <div className="xl:pl-72 w-full">
         <main className="px-12 py-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-semibold">Apps</h1>
+              <h1 className="text-4xl font-semibold">{t('Apps')}</h1>
               <p className="text-text-muted mt-1">
                 Manage the applications that are available in your Project NOMAD instance. Nightly update checks will automatically detect when new versions of these apps are available.
               </p>

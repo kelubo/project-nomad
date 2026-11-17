@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import StyledModal from './StyledModal'
 import { formatBytes } from '~/lib/util'
@@ -87,13 +88,13 @@ export default function ServiceStatsModal({
           </p>
         ) : (
           <>
-            <Bar label="CPU" percent={stats.cpuPercent} value={`${stats.cpuPercent.toFixed(1)}%`} />
+            <Bar label={t('CPU')} percent={stats.cpuPercent} value={`${stats.cpuPercent.toFixed(1)}%`} />
             <Bar
-              label="Memory"
+              label={t('Memory')}
               percent={stats.memPercent}
               value={`${formatBytes(stats.memUsageBytes)} / ${formatBytes(stats.memLimitBytes)} (${stats.memPercent.toFixed(1)}%)`}
             />
-            <p className="text-xs text-text-muted">Updates every 2 seconds.</p>
+            <p className="text-xs text-text-muted">{t('Updates every 2 seconds.')}</p>
           </>
         )}
       </div>

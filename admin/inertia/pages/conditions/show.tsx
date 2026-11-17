@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { Head, Link } from '@inertiajs/react'
 import { IconArrowLeft, IconLeaf } from '@tabler/icons-react'
 import AppLayout from '~/layouts/AppLayout'
@@ -58,7 +59,7 @@ export default function ConditionsShow({ condition, drugs, remedies, drugRowCoun
         {/* Drug list / empty states */}
         {noData ? (
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-            <p className="text-lg font-semibold mb-2">No drug data yet</p>
+            <p className="text-lg font-semibold mb-2">{t('No drug data yet')}</p>
             <p className="mb-6 opacity-70">
               Download the offline FDA drug labels from Drug Reference to see matches for this
               situation.
@@ -81,7 +82,7 @@ export default function ConditionsShow({ condition, drugs, remedies, drugRowCoun
         ) : (
           <>
             <div className="flex items-baseline justify-between mb-2">
-              <h2 className="text-base font-semibold">Over-the-counter options</h2>
+              <h2 className="text-base font-semibold">{t('Over-the-counter options')}</h2>
               <span className="text-xs text-gray-500">
                 {drugs.length} result{drugs.length !== 1 ? 's' : ''}
               </span>
@@ -101,7 +102,7 @@ export default function ConditionsShow({ condition, drugs, remedies, drugRowCoun
               <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-desert-tan/20 text-desert-tan-dark">
                 <IconLeaf size={16} />
               </span>
-              <h2 className="text-base font-semibold text-desert-tan-dark">Natural remedies</h2>
+              <h2 className="text-base font-semibold text-desert-tan-dark">{t('Natural remedies')}</h2>
               <span className="text-xs text-desert-stone ml-auto">
                 {remedies.length} {remedies.length !== 1 ? 'remedies' : 'remedy'}
               </span>
@@ -130,7 +131,7 @@ export default function ConditionsShow({ condition, drugs, remedies, drugRowCoun
         {/* ── Source citation ───────────────────────────────────────────────── */}
         <footer className="mt-8 pt-4 border-t border-gray-200 text-xs text-gray-500 space-y-1">
           <p>
-            <strong>Source:</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
+            <strong>{t('Source:')}</strong> U.S. Food &amp; Drug Administration drug labeling, via{' '}
             <strong>openFDA</strong> — public domain (CC0 1.0). NOMAD is not affiliated with or
             endorsed by the FDA.
           </p>
@@ -174,14 +175,14 @@ function NaturalRemedyCard({ remedy }: { remedy: NaturalRemedy }) {
         <p className="text-desert-green-darker">{remedy.uses}</p>
         {remedy.how && (
           <p className="text-xs text-desert-green-darker bg-desert-sand/40 rounded px-2 py-1.5 border border-desert-stone-lighter/40">
-            <strong>How:</strong> {remedy.how}
+            <strong>{t('How:')}</strong> {remedy.how}
           </p>
         )}
         <p className="text-xs text-desert-stone-dark border-l-2 border-desert-tan-lighter pl-2">
-          <strong className="text-desert-tan-dark">Evidence:</strong> {remedy.evidence}
+          <strong className="text-desert-tan-dark">{t('Evidence:')}</strong> {remedy.evidence}
         </p>
         <p className="text-xs text-desert-red-dark bg-desert-red/5 rounded px-2 py-1.5 border border-desert-red-lighter/30">
-          <strong>Cautions:</strong> {remedy.cautions}
+          <strong>{t('Cautions:')}</strong> {remedy.cautions}
         </p>
       </div>
     </div>

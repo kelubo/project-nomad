@@ -1,3 +1,4 @@
+import { tGlobal as t } from '~/lib/i18n'
 import { useEffect, useState } from 'react'
 import StyledButton from '~/components/StyledButton'
 import StyledSectionHeader from '~/components/StyledSectionHeader'
@@ -84,12 +85,12 @@ export default function ContentAutoUpdateSection() {
 
   return (
     <>
-      <StyledSectionHeader title="Automatic Content Updates" className="mt-8" />
+      <StyledSectionHeader title={t('Automatic Content Updates')} className="mt-8" />
       <div className="bg-surface-primary rounded-lg border shadow-md overflow-hidden mt-6 p-6">
         {autoDisabled && (
           <Alert
             type="warning"
-            title="Automatic Content Updates Disabled"
+            title={t('Automatic Content Updates Disabled')}
             message={
               status?.autoDisabledReason ||
               'Automatic content updates were disabled after repeated failures.'
@@ -103,14 +104,14 @@ export default function ContentAutoUpdateSection() {
           checked={enabled}
           onChange={(value) => toggleMutation.mutate(value)}
           disabled={toggleMutation.isPending || isLoading}
-          label="Enable Automatic Content Updates"
+          label={t('Enable Automatic Content Updates')}
           description="Automatically download newer versions of your installed Information Library content (ZIM files) and maps during your chosen window. Content downloads can be very large, so set a per-window data cap to limit how much is pulled at once. We recommend allowing at least 0.5 GB per update window to ensure most updates can be pulled in a timely manner, but you can set a lower cap if you have very limited bandwidth and don't mind some updates being skipped (they will still appear in the UI and can be updated manually). If an update repeatedly fails to download within the window, it will be automatically disabled and require manual intervention to re-enable."
         />
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Input
             name="contentWindowStart"
-            label="Window Start"
+            label={t('Window Start')}
             type="time"
             value={windowStart}
             onChange={(e) => setWindowStart(e.target.value)}
@@ -119,7 +120,7 @@ export default function ContentAutoUpdateSection() {
           />
           <Input
             name="contentWindowEnd"
-            label="Window End"
+            label={t('Window End')}
             type="time"
             value={windowEnd}
             onChange={(e) => setWindowEnd(e.target.value)}
@@ -133,7 +134,7 @@ export default function ContentAutoUpdateSection() {
             >
               Cool-off Period
             </label>
-            <p className="mt-1 text-sm text-text-muted">Delay after a new version appears</p>
+            <p className="mt-1 text-sm text-text-muted">{t('Delay after a new version appears')}</p>
             <select
               id="contentCooloff"
               value={cooloff}
@@ -150,7 +151,7 @@ export default function ContentAutoUpdateSection() {
           </div>
           <Input
             name="contentDataCap"
-            label="Data Cap (GB)"
+            label={t('Data Cap (GB)')}
             type="number"
             min="0"
             step="1"
